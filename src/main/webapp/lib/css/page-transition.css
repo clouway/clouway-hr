@@ -1,0 +1,24 @@
+/*.ng-enter {*/
+    /*transition: 0.75s;*/
+    /*opacity: 0;*/
+/*}*/
+
+/*.ng-enter-active {*/
+    /*opacity: 1;*/
+/*}*/
+
+/*.ng-enter-stagger {*/
+    /*transition-delay: 0.1s;*/
+/*}*/
+/*.ng-leave {*/
+    /*transition: 0.5s;*/
+    /*opacity: 1;*/
+/*}*/
+
+/*.ng-leave-active {*/
+    /*opacity: 0;*/
+/*}*/
+
+.ng-leave-stagger {
+    transition-delay: 0.1s;
+}

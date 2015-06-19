@@ -5,5 +5,5 @@ import com.clouway.hr.core.TeamRepository;
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
-public class PersistentTeamRepository implements TeamRepository{
+public class PersistentTeamRepository implements TeamRepository {
 }
