@@ -7,7 +7,6 @@ import com.google.sitebricks.At;
 import com.google.sitebricks.client.transport.Json;
 import com.google.sitebricks.headless.Reply;
 import com.google.sitebricks.headless.Service;
-import com.google.sitebricks.http.Get;
 import com.google.sitebricks.http.Put;
 
 /**
