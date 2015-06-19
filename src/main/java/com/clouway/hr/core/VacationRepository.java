@@ -8,4 +8,6 @@ public interface VacationRepository {
   void updateStatus(Long id, String status);
 
   void add(Long id, String status);
+
+  String getStatus(Long id);
 }

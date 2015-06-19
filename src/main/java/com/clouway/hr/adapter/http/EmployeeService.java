@@ -19,12 +19,11 @@ public class EmployeeService {
 
   @Inject
   public EmployeeService(VacationRepository vacationRepository) {
-
     this.vacationRepository = vacationRepository;
   }
 
   @Post
-  public Reply<Object> requestVacation(Request request) {
+  public Reply requestVacation(Request request) {
     VacationDto vacation = request.read(VacationDto.class).as(Json.class);
     vacationRepository.add(vacation.getVacationId(), vacation.getStatus());
 

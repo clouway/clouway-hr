@@ -2,6 +2,7 @@ package com.clouway.hr;
 
 import com.clouway.hr.adapter.db.PersistentVacationRepository;
 import com.clouway.hr.core.VacationRepository;
+import com.clouway.hr.core.VacationStatus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -24,7 +25,6 @@ public class AppConfig extends GuiceServletContextListener {
               @Override
               protected void configureSitebricks() {
                 scan(AppConfig.class.getPackage());
-
               }
             },
 
@@ -40,13 +40,24 @@ public class AppConfig extends GuiceServletContextListener {
               @Override
               protected void configure() {
                 bind(VacationRepository.class).to(PersistentVacationRepository.class);
-
               }
 
               @Provides
               public ObjectDatastore getDataStore() {
                 return new AnnotationObjectDatastore();
               }
+
+              @Provides
+              public VacationStatus getVacationStatuses() {
+                VacationStatus statuses = new VacationStatus();
+                statuses.add("pending");
+                statuses.add("approved");
+                statuses.add("reject");
+
+                return statuses;
+              }
+
+
             });
   }
 }

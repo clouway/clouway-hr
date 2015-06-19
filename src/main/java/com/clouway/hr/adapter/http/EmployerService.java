@@ -1,5 +1,6 @@
 package com.clouway.hr.adapter.http;
 
+import com.clouway.hr.core.IncorrectVacationStatusException;
 import com.clouway.hr.core.VacationRepository;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -15,7 +16,7 @@ import com.google.sitebricks.http.Put;
 @At("/rest/employer")
 @Service
 public class EmployerService {
-  VacationRepository vacationRepository;
+  private VacationRepository vacationRepository;
 
   @Inject
   public EmployerService(VacationRepository vacationRepository) {
@@ -23,9 +24,13 @@ public class EmployerService {
   }
 
   @Put
-  @At("/change/:id/type/:status")
-  public Reply<ResponseMessageDto> changeStatus(@Named("id") String id, @Named("status") String status) {
-    vacationRepository.updateStatus(Long.parseLong(id), status);
+  @At("/vacation/:id/type/:status")
+  public Reply<ResponseMessageDto> changeVacationStatus(@Named("id") String id, @Named("status") String status) {
+    try {
+      vacationRepository.updateStatus(Long.parseLong(id), status);
+    } catch (IncorrectVacationStatusException e) {
+      return Reply.with(new ResponseMessageDto("incorrect status")).as(Json.class);
+    }
 
     return Reply.with(new ResponseMessageDto("success")).as(Json.class);
   }
