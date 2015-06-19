@@ -3,6 +3,7 @@ package com.clouway.hr.adapter.db;
 import com.clouway.hr.core.VacationRepository;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.inject.util.Providers;
 import com.vercer.engine.persist.ObjectDatastore;
 import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
 import org.junit.After;
