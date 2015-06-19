@@ -19,12 +19,10 @@ public class PersistentVacationRepository implements VacationRepository {
 
   @Override
   public void updateStatus(Long id, String status) {
-
     VacationEntity entity = datastore.get().load(VacationEntity.class, id);
 
-    entity.changeStatus(status);
-
-    datastore.get().update(entity);
+    VacationEntity vacationEntity = new VacationEntity(entity.getVacationId(), status);
+    datastore.get().store(vacationEntity);
   }
 
   @Override

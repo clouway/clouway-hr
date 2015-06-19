@@ -26,8 +26,4 @@ class VacationEntity {
   public Long getVacationId() {
     return vacationId;
   }
-
-  public void changeStatus(String status) {
-    this.status = status;
-  }
 }

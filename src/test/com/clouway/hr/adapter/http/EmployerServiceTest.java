@@ -2,8 +2,6 @@ package com.clouway.hr.adapter.http;
 
 import com.clouway.hr.core.VacationRepository;
 import com.google.sitebricks.headless.Reply;
-import com.vercer.engine.persist.ObjectDatastore;
-import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -31,7 +29,7 @@ public class EmployerServiceTest {
     context.checking(new Expectations() {{
       oneOf(vacationRepository).updateStatus(id, "approved");
     }});
-    Reply<Object> actualReply = employerService.approveVacation(id.toString(), "approved");
+    Reply<Object> actualReply = employerService.changeStatus(id.toString(), "approved");
 
     assertThat(actualReply, is(Reply.saying().ok()));
   }
