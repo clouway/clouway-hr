@@ -4,9 +4,11 @@ import com.clouway.hr.core.VacationRepository;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.google.sitebricks.At;
+import com.google.sitebricks.client.transport.Json;
 import com.google.sitebricks.headless.Reply;
 import com.google.sitebricks.headless.Service;
 import com.google.sitebricks.http.Get;
+import com.google.sitebricks.http.Put;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
@@ -21,11 +23,11 @@ public class EmployerService {
     this.vacationRepository = vacationRepository;
   }
 
-  @Get
+  @Put
   @At("/change/:id/type/:status")
-  public Reply changeStatus(@Named("id") String id, @Named("status") String status) {
+  public Reply<ResponseMessageDto> changeStatus(@Named("id") String id, @Named("status") String status) {
     vacationRepository.updateStatus(Long.parseLong(id), status);
 
-    return Reply.saying().ok();
+    return Reply.with(new ResponseMessageDto("success")).as(Json.class);
   }
 }
