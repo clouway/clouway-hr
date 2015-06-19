@@ -29,6 +29,6 @@ public class PersistentVacationRepository implements VacationRepository {
 
   @Override
   public void add(Long id, String status) {
-
+    datastore.get().store(new VacationEntity(id, status));
   }
 }

@@ -35,7 +35,7 @@ public class PersistentVacationRepositoryTest {
   @Test
   public void updateVacationStatus() {
     VacationRepository vacationRepository = new PersistentVacationRepository(of(datastore));
-    pretendRegisteredVacationRequestIs(new VacationEntity());
+    vacationRepository.add(1l, "pending");
 
     vacationRepository.updateStatus(1l, "approved");
     VacationEntity vacation = datastore.load(VacationEntity.class, 1l);
@@ -43,9 +43,4 @@ public class PersistentVacationRepositoryTest {
     assertThat(vacation.getStatus(), is("approved"));
     assertThat(vacation.getVacationId(), is(1l));
   }
-
-  private void pretendRegisteredVacationRequestIs(VacationEntity entity) {
-    datastore.store(entity);
-  }
-
 }

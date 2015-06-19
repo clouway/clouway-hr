@@ -34,6 +34,5 @@ public class EmployeeServiceTest {
     Reply<Object> actualReply = employeeService.requestVacation(fakeRequest);
 
     assertThat(actualReply, is(Reply.saying().ok()));
-
   }
 }
