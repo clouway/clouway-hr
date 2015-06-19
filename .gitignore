@@ -3,3 +3,9 @@
 target
 eclipse-launch-profiles
 nbactions.xml
+ng-boilerplate/*.sw*
+ng-boilerplate/*~
+ng-boilerplate/build/
+ng-boilerplate/bin/
+ng-boilerplate/node_modules/
+ng-boilerplate/vendor/
