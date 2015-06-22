@@ -12,7 +12,7 @@ import java.io.OutputStream;
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
 public class FakeRequest implements Request {
-  public VacationDto dto;
+  public VacationRequestDto dto;
 
   @Override
   public <E> RequestRead<E> read(Class<E> aClass) {

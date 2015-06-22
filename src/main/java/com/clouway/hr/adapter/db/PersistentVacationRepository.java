@@ -1,5 +1,6 @@
 package com.clouway.hr.adapter.db;
 
+import com.clouway.hr.adapter.http.VacationRequestDto;
 import com.clouway.hr.core.IncorrectVacationStatusException;
 import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.VacationStatus;
@@ -12,35 +13,51 @@ import com.vercer.engine.persist.ObjectDatastore;
  */
 public class PersistentVacationRepository implements VacationRepository {
 
-  private final Provider<ObjectDatastore> datastore;
+  private final ObjectDatastore datastore;
   private Provider<VacationStatus> statuses;
 
   @Inject
   public PersistentVacationRepository(Provider<ObjectDatastore> datastore, Provider<VacationStatus> statuses) {
-    this.datastore = datastore;
+    this.datastore = datastore.get();
     this.statuses = statuses;
   }
 
   @Override
-  public void updateStatus(Long id, String status) {
-    if (!statuses.get().getStatuses().contains(status)) {
-      throw new IncorrectVacationStatusException();
-    }
-    VacationEntity entity = datastore.get().load(VacationEntity.class, id);
-    VacationEntity vacationEntity = new VacationEntity(entity.getVacationId(), status);
+  public void updateStatus(Long vacationId, String status) {
+    checkStatus(status);
 
-    datastore.get().store(vacationEntity);
+    VacationEntity entity = datastore.load(VacationEntity.class, vacationId);
+    entity = VacationEntity.newBuilder()
+            .vacationId(entity.getVacationId())
+            .status(status)
+            .build();
+
+    datastore.store(entity);
   }
 
   @Override
-  public void add(Long id, String status) {
-    datastore.get().store(new VacationEntity(id, status));
+  public void add(VacationRequestDto vacation) {
+    VacationEntity entity = VacationEntity.newBuilder()
+            .vacationId(vacation.getUserId())
+            .dateFrom(vacation.getFromDate())
+            .dateTo(vacation.getToDate())
+            .status("pending")
+            .description(vacation.getDescription())
+            .build();
+
+    datastore.store(entity);
   }
 
   @Override
   public String getStatus(Long id) {
-    VacationEntity entity = datastore.get().load(VacationEntity.class, id);
+    VacationEntity entity = datastore.load(VacationEntity.class, id);
 
     return entity.getStatus();
+  }
+
+  private void checkStatus(String status) {
+    if (!statuses.get().getStatuses().contains(status)) {
+      throw new IncorrectVacationStatusException();
+    }
   }
 }

@@ -26,10 +26,16 @@ public class EmployeeServiceTest {
     EmployeeService employeeService = new EmployeeService(vacationRepository);
     FakeRequest fakeRequest = new FakeRequest();
     final Long id = 1l;
-    fakeRequest.dto = new VacationDto(id, "pending");
+
+    final VacationRequestDto vacation = new VacationRequestDto(id, 1L, 2L, "description");
+//            .vacationId(id)
+//            .status("pending")
+//            .build();
+
+    fakeRequest.dto = vacation;
 
     context.checking(new Expectations() {{
-      oneOf(vacationRepository).add(id, "pending");
+      oneOf(vacationRepository).add(vacation);
     }});
     Reply<Object> actualReply = employeeService.requestVacation(fakeRequest);
 

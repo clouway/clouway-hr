@@ -70,7 +70,7 @@ public class EmployerServiceTest {
 
     EmployerService employer = new EmployerService(repository);
     employer.changeVacationStatus("1", incorrectStatus);
-    String nonExistentStatus = repository.getStatus(1l);
+    String nonExistentStatus = repository.getStatus(1L);
 
     assertFalse(nonExistentStatus.equals(incorrectStatus));
   }
@@ -78,7 +78,14 @@ public class EmployerServiceTest {
   private void addRequestVacation() {
     EmployeeService service = new EmployeeService(repository);
     FakeRequest fakeRequest = new FakeRequest();
-    fakeRequest.dto = new VacationDto(1l, "pending");
+
+    fakeRequest.dto = new VacationRequestDto(1L, 2L, 1L, "some description");
+//            .vacationId(1L)
+//            .dateFrom(2l)
+//            .dateTo(2l)
+//            .userId(1l)
+//            .status("pending")
+//            .build();
 
     service.requestVacation(fakeRequest);
   }

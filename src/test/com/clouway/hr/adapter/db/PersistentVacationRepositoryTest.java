@@ -1,6 +1,6 @@
 package com.clouway.hr.adapter.db;
 
-import com.clouway.hr.adapter.http.VacationDto;
+import com.clouway.hr.adapter.http.VacationRequestDto;
 import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.VacationStatus;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.google.inject.util.Providers.of;
-import static org.hamcrest.core.Is.is;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
@@ -39,13 +38,13 @@ public class PersistentVacationRepositoryTest {
   @Test
   public void updateVacationStatus() {
     VacationRepository vacationRepository = new PersistentVacationRepository(of(datastore), of(status));
-    VacationDto vacation = VacationDto.newBuilder()
-            .vacationId(1l)
-            .status("pending")
-            .dateFrom(2L)
-            .dateTo(2L)
-            .userId(1L)
-            .build();
+    VacationRequestDto vacation = new VacationRequestDto(1L, 2L, 2L, "some description");
+//            .vacationId(1l)
+//            .status("pending")
+//            .dateFrom(2L)
+//            .dateTo(2L)
+//            .userId(1L)
+//            .build();
 
     vacationRepository.add(vacation);
     vacationRepository.updateStatus(1l, "approved");

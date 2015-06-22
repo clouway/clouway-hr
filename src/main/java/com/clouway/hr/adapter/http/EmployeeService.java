@@ -23,9 +23,11 @@ public class EmployeeService {
   }
 
   @Post
+  @At("/vacation-request")
   public Reply requestVacation(Request request) {
-    VacationDto vacation = request.read(VacationDto.class).as(Json.class);
-    vacationRepository.add(vacation.getVacationId(), vacation.getStatus());
+    VacationRequestDto vacation = request.read(VacationRequestDto.class).as(Json.class);
+
+    vacationRepository.add(vacation);
 
     return Reply.saying().ok();
   }

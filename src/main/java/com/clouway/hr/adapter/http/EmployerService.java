@@ -29,9 +29,13 @@ public class EmployerService {
     try {
       vacationRepository.updateStatus(Long.parseLong(id), status);
     } catch (IncorrectVacationStatusException e) {
-      return Reply.with(new ResponseMessageDto("incorrect status")).as(Json.class);
+      return replyWith("incorrect status");
     }
 
-    return Reply.with(new ResponseMessageDto("success")).as(Json.class);
+    return replyWith("success");
+  }
+
+  private Reply<ResponseMessageDto> replyWith(String message) {
+    return Reply.with(new ResponseMessageDto(message)).as(Json.class);
   }
 }
