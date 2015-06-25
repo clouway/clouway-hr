@@ -26,9 +26,8 @@ public class EmployeeService {
   @At("/vacation-request")
   public Reply requestVacation(Request request) {
     VacationRequestDto vacation = request.read(VacationRequestDto.class).as(Json.class);
-
     vacationRepository.add(vacation);
 
-    return Reply.saying().ok();
+    return vacation.getToDate() > vacation.getFromDate() ? Reply.saying().ok() : Reply.saying().error();
   }
 }

@@ -5,7 +5,15 @@ import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.VacationStatus;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.google.sitebricks.client.transport.Json;
+import com.google.sitebricks.conversion.Converter;
+import com.google.sitebricks.conversion.ConverterRegistry;
+import com.google.sitebricks.conversion.StandardTypeConverter;
 import com.google.sitebricks.headless.Reply;
 import com.vercer.engine.persist.ObjectDatastore;
 import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
@@ -17,6 +25,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.List;
+
+import static com.clouway.hr.adapter.http.TestReply.sameReply;
 import static com.google.inject.util.Providers.of;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -75,18 +86,54 @@ public class EmployerServiceTest {
     assertFalse(nonExistentStatus.equals(incorrectStatus));
   }
 
+  @Test
+  public void getPendingVacations() {
+    addRequestVacationq();
+
+    EmployerService employer = new EmployerService(repository);
+    List<VacationResponseDto> vacationResponseDtos = Lists.newArrayList();
+    vacationResponseDtos.add(VacationResponseDto.newBuilder()
+            .userId(1L)
+            .dateFrom(2L)
+            .dateTo(1L)
+            .vacationId(1L)
+            .status("pending")
+            .description("some")
+            .build());
+    Reply<List<VacationResponseDto>> actualReply = employer.getPendingVacationRequest();
+
+    sameReply(actualReply, vacationResponseDtos);
+  }
+
   private void addRequestVacation() {
     EmployeeService service = new EmployeeService(repository);
     FakeRequest fakeRequest = new FakeRequest();
 
-    fakeRequest.dto = new VacationRequestDto(1L, 2L, 1L, "some description");
-//            .vacationId(1L)
-//            .dateFrom(2l)
-//            .dateTo(2l)
-//            .userId(1l)
-//            .status("pending")
-//            .build();
+    fakeRequest.dto = new VacationRequestDto(1L, 2L, 1L, "some");
 
     service.requestVacation(fakeRequest);
+  }
+
+  private void addRequestVacationq() {
+    EmployeeService service = new EmployeeService(repository);
+    FakeRequest fakeRequest = new FakeRequest();
+
+    fakeRequest.dto = new VacationRequestDto(1L, 2L, 1L, "some");
+
+    service.requestVacation(fakeRequest);
+
+//    fakeRequest.dto = new VacationRequestDto(3L, 3L, 3L, "pending");
+//    service.requestVacation(fakeRequest);
+//
+//    fakeRequest.dto = new VacationRequestDto(2L, 2L, 3L, "reject");
+//    service.requestVacation(fakeRequest);
+  }
+
+  private Injector createInjector() {
+    return Guice.createInjector(new AbstractModule() {
+      protected void configure() {
+        bind(ConverterRegistry.class).toInstance(new StandardTypeConverter(ImmutableSet.<Converter>of()));
+      }
+    });
   }
 }

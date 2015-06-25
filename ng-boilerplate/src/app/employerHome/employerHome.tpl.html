@@ -1,0 +1,27 @@
+<div>
+    <table class="table">
+        <th>from date</th>
+        <th>to date</th>
+        <th>description</th>
+        <th>status</th>
+        <tr ng-repeat="message in responseMessage">
+            <td>
+                {{message.dateFrom | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.dateTo | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.description}}
+            </td>
+            <td>
+                {{message.status}}
+            </td>
+            <td>
+                <a href="" ng-click="changeStatus('reject', message.vacationId)">reject</a>
+                <a href="" ng-click="changeStatus('accept', message.vacationId)">accept</a>
+            </td>
+        </tr>
+        {{statusMessage}}
+    </table>
+</div>

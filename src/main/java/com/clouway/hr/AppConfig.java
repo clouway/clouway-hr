@@ -20,23 +20,16 @@ public class AppConfig extends GuiceServletContextListener {
   @Override
   protected Injector getInjector() {
     return Guice.createInjector(
-
             new SitebricksModule() {
               @Override
               protected void configureSitebricks() {
                 scan(AppConfig.class.getPackage());
               }
-            },
-
-            new ServletModule() {
+            }, new ServletModule() {
               @Override
               protected void configureServlets() {
-
-
               }
-            },
-
-            new AbstractModule() {
+            }, new AbstractModule() {
               @Override
               protected void configure() {
                 bind(VacationRepository.class).to(PersistentVacationRepository.class);
@@ -56,8 +49,6 @@ public class AppConfig extends GuiceServletContextListener {
 
                 return statuses;
               }
-
-
             });
   }
 }

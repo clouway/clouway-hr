@@ -1,15 +1,22 @@
 package com.clouway.hr.adapter.http;
 
+import com.clouway.hr.adapter.db.PersistentVacationRepository;
 import com.clouway.hr.core.VacationRepository;
+import com.clouway.hr.core.VacationStatus;
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.inject.util.Providers;
 import com.google.sitebricks.headless.Reply;
-import org.jmock.Expectations;
-import org.jmock.auto.Mock;
+import com.vercer.engine.persist.ObjectDatastore;
+import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
 import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
@@ -17,28 +24,50 @@ import static org.junit.Assert.assertThat;
 public class EmployeeServiceTest {
   @Rule
   public JUnitRuleMockery context = new JUnitRuleMockery();
+  private EmployeeService employeeService;
+  private FakeRequest<VacationRequestDto> fakeVacationRequest;
+  private FakeRequest<VacationResponseDto> fakeVacationResponse;
+  private final LocalServiceTestHelper helper =
+          new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+  private final ObjectDatastore datastore = new AnnotationObjectDatastore();
+  private final VacationStatus statuses = new VacationStatus();
 
-  @Mock
-  VacationRepository vacationRepository;
+  @Before
+  public void setUp() throws Exception {
+    helper.setUp();
+    statuses.add("pending");
+    statuses.add("approved");
+    statuses.add("reject");
+
+    VacationRepository repository = new PersistentVacationRepository(Providers.of(datastore), Providers.of(statuses));
+    employeeService = new EmployeeService(repository);
+    fakeVacationRequest = new FakeRequest();
+    fakeVacationResponse = new FakeRequest<>();
+  }
+
+  @After
+  public void tearDown() throws Exception {
+    helper.tearDown();
+  }
 
   @Test
   public void requestVacation() {
-    EmployeeService employeeService = new EmployeeService(vacationRepository);
-    FakeRequest fakeRequest = new FakeRequest();
     final Long id = 1l;
+    fakeVacationRequest.dto = new VacationRequestDto(id, 1L, 2L, "description");
 
-    final VacationRequestDto vacation = new VacationRequestDto(id, 1L, 2L, "description");
-//            .vacationId(id)
-//            .status("pending")
-//            .build();
-
-    fakeRequest.dto = vacation;
-
-    context.checking(new Expectations() {{
-      oneOf(vacationRepository).add(vacation);
-    }});
-    Reply<Object> actualReply = employeeService.requestVacation(fakeRequest);
+    Reply<Object> actualReply = employeeService.requestVacation(fakeVacationRequest);
 
     assertThat(actualReply, is(Reply.saying().ok()));
   }
+
+  @Test
+  public void endDateVacationBiggerThanFromDate() {
+    final Long id = 1l;
+    fakeVacationRequest.dto = new VacationRequestDto(id, 2L, 1L, "description");
+
+    Reply<Object> actualReply = employeeService.requestVacation(fakeVacationRequest);
+
+    assertThat(actualReply, is(Reply.saying().error()));
+  }
+
 }

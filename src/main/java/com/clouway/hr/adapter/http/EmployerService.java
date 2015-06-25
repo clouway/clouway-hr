@@ -8,7 +8,10 @@ import com.google.sitebricks.At;
 import com.google.sitebricks.client.transport.Json;
 import com.google.sitebricks.headless.Reply;
 import com.google.sitebricks.headless.Service;
+import com.google.sitebricks.http.Get;
 import com.google.sitebricks.http.Put;
+
+import java.util.List;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
@@ -33,6 +36,13 @@ public class EmployerService {
     }
 
     return replyWith("success");
+  }
+
+  @Get
+  @At("/vacation/type/pending")
+  public Reply getPendingVacationRequest() {
+    List<VacationResponseDto> vacations = vacationRepository.getStatus("pending");
+    return Reply.with(vacations).as(Json.class);
   }
 
   private Reply<ResponseMessageDto> replyWith(String message) {

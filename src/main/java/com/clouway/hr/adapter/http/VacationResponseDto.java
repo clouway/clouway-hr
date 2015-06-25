@@ -9,14 +9,7 @@ public class VacationResponseDto {
   private Long dateFrom;
   private Long dateTo;
   private Long userId;
-
-  public VacationResponseDto(long vacationId, String status, Long dateFrom, Long dateTo, Long userId) {
-    this.vacationId = vacationId;
-    this.status = status;
-    this.dateFrom = dateFrom;
-    this.dateTo = dateTo;
-    this.userId = userId;
-  }
+  private String description;
 
   public VacationResponseDto() {
   }
@@ -27,6 +20,7 @@ public class VacationResponseDto {
     dateFrom = builder.dateFrom;
     dateTo = builder.dateTo;
     userId = builder.userId;
+    description = builder.description;
   }
 
   public static Builder newBuilder() {
@@ -34,12 +28,13 @@ public class VacationResponseDto {
   }
 
   public static final class Builder {
+
     private long vacationId;
     private String status;
     private Long dateFrom;
     private Long dateTo;
-
     private Long userId;
+    private String description;
 
     private Builder() {
     }
@@ -69,13 +64,18 @@ public class VacationResponseDto {
       return this;
     }
 
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
     public VacationResponseDto build() {
       return new VacationResponseDto(this);
     }
 
   }
 
-  public long getVacationId() {
+  public Long getVacationId() {
     return vacationId;
   }
 
@@ -95,5 +95,7 @@ public class VacationResponseDto {
     return userId;
   }
 
-
+  public String getDescription() {
+    return description;
+  }
 }
