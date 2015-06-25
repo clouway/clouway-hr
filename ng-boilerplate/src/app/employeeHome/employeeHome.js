@@ -28,7 +28,6 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
     var description = $scope.description;
 
     var vacationData = {
-      "userId": 666,
       "fromDate": fromDate,
       "toDate": toDate,
       "description": description

@@ -26,7 +26,6 @@ public class EmployeeServiceTest {
   public JUnitRuleMockery context = new JUnitRuleMockery();
   private EmployeeService employeeService;
   private FakeRequest<VacationRequestDto> fakeVacationRequest;
-  private FakeRequest<VacationResponseDto> fakeVacationResponse;
   private final LocalServiceTestHelper helper =
           new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   private final ObjectDatastore datastore = new AnnotationObjectDatastore();
@@ -42,7 +41,6 @@ public class EmployeeServiceTest {
     VacationRepository repository = new PersistentVacationRepository(Providers.of(datastore), Providers.of(statuses));
     employeeService = new EmployeeService(repository);
     fakeVacationRequest = new FakeRequest();
-    fakeVacationResponse = new FakeRequest<>();
   }
 
   @After

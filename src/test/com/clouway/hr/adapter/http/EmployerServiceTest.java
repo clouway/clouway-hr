@@ -88,7 +88,7 @@ public class EmployerServiceTest {
 
   @Test
   public void getPendingVacations() {
-    addRequestVacationq();
+    addRequestVacation();
 
     EmployerService employer = new EmployerService(repository);
     List<VacationResponseDto> vacationResponseDtos = Lists.newArrayList();
@@ -112,28 +112,5 @@ public class EmployerServiceTest {
     fakeRequest.dto = new VacationRequestDto(1L, 2L, 1L, "some");
 
     service.requestVacation(fakeRequest);
-  }
-
-  private void addRequestVacationq() {
-    EmployeeService service = new EmployeeService(repository);
-    FakeRequest fakeRequest = new FakeRequest();
-
-    fakeRequest.dto = new VacationRequestDto(1L, 2L, 1L, "some");
-
-    service.requestVacation(fakeRequest);
-
-//    fakeRequest.dto = new VacationRequestDto(3L, 3L, 3L, "pending");
-//    service.requestVacation(fakeRequest);
-//
-//    fakeRequest.dto = new VacationRequestDto(2L, 2L, 3L, "reject");
-//    service.requestVacation(fakeRequest);
-  }
-
-  private Injector createInjector() {
-    return Guice.createInjector(new AbstractModule() {
-      protected void configure() {
-        bind(ConverterRegistry.class).toInstance(new StandardTypeConverter(ImmutableSet.<Converter>of()));
-      }
-    });
   }
 }
