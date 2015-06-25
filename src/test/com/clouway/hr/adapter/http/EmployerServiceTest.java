@@ -5,15 +5,8 @@ import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.VacationStatus;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.sitebricks.client.transport.Json;
-import com.google.sitebricks.conversion.Converter;
-import com.google.sitebricks.conversion.ConverterRegistry;
-import com.google.sitebricks.conversion.StandardTypeConverter;
 import com.google.sitebricks.headless.Reply;
 import com.vercer.engine.persist.ObjectDatastore;
 import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
@@ -109,7 +102,12 @@ public class EmployerServiceTest {
     EmployeeService service = new EmployeeService(repository);
     FakeRequest fakeRequest = new FakeRequest();
 
-    fakeRequest.dto = new VacationRequestDto(1L, 2L, 1L, "some");
+    fakeRequest.dto = VacationRequestDto.newBuilder()
+            .userId(1L)
+            .fromDate(2L)
+            .toDate(1L)
+            .description("some")
+            .build();
 
     service.requestVacation(fakeRequest);
   }

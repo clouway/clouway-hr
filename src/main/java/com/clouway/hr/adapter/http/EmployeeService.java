@@ -26,6 +26,10 @@ public class EmployeeService {
   @At("/vacation-request")
   public Reply requestVacation(Request request) {
     VacationRequestDto vacation = request.read(VacationRequestDto.class).as(Json.class);
+    //todo have to get from current user
+    if (vacation.getUserId() == null) {
+      vacation.setUserId(1L);
+    }
     vacationRepository.add(vacation);
 
     return vacation.getToDate() > vacation.getFromDate() ? Reply.saying().ok() : Reply.saying().error();

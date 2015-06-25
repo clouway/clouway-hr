@@ -8,6 +8,7 @@ public class VacationResponseDto {
   private String status;
   private Long dateFrom;
   private Long dateTo;
+  //todo have to be parent
   private Long userId;
   private String description;
 

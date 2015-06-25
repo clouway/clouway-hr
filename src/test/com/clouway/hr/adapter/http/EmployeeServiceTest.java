@@ -51,7 +51,7 @@ public class EmployeeServiceTest {
   @Test
   public void requestVacation() {
     final Long id = 1l;
-    fakeVacationRequest.dto = new VacationRequestDto(id, 1L, 2L, "description");
+    fakeVacationRequest.dto = VacationRequestDto.newBuilder().userId(id).fromDate(1L).toDate(2L).build();
 
     Reply<Object> actualReply = employeeService.requestVacation(fakeVacationRequest);
 
@@ -61,7 +61,7 @@ public class EmployeeServiceTest {
   @Test
   public void endDateVacationBiggerThanFromDate() {
     final Long id = 1l;
-    fakeVacationRequest.dto = new VacationRequestDto(id, 2L, 1L, "description");
+    fakeVacationRequest.dto = VacationRequestDto.newBuilder().userId(id).fromDate(2L).toDate(1L).build();
 
     Reply<Object> actualReply = employeeService.requestVacation(fakeVacationRequest);
 

@@ -38,14 +38,12 @@ public class PersistentVacationRepositoryTest {
   @Test
   public void updateVacationStatus() {
     VacationRepository vacationRepository = new PersistentVacationRepository(of(datastore), of(status));
-    VacationRequestDto vacation = new VacationRequestDto(1L, 2L, 2L, "some description");
-//            .vacationId(1l)
-//            .status("pending")
-//            .dateFrom(2L)
-//            .dateTo(2L)
-//            .userId(1L)
-//            .build();
-
+    VacationRequestDto vacation = VacationRequestDto.newBuilder()
+            .userId(1L)
+            .fromDate(2L)
+            .toDate(2L)
+            .description("some description")
+            .build();
     vacationRepository.add(vacation);
     vacationRepository.updateStatus(1l, "approved");
     String status = vacationRepository.getStatus(1l);

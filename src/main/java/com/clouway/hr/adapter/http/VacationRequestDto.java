@@ -4,6 +4,7 @@ package com.clouway.hr.adapter.http;
  * @author Tihomir Kehayov <kehayov89@gmail.com>
  */
 public class VacationRequestDto {
+  //todo user id have to be @Parent UserEntity
   private Long userId;
   private Long fromDate;
   private Long toDate;
@@ -12,11 +13,54 @@ public class VacationRequestDto {
   public VacationRequestDto() {
   }
 
-  public VacationRequestDto(Long userId, Long fromDate, Long toDate, String description) {
+  private VacationRequestDto(Builder builder) {
+    userId = builder.userId;
+    fromDate = builder.fromDate;
+    toDate = builder.toDate;
+    description = builder.description;
+  }
+
+  public static Builder newBuilder() {
+    return new Builder();
+  }
+
+  public static final class Builder {
+    private Long userId;
+    private Long fromDate;
+    private Long toDate;
+    private String description;
+
+    private Builder() {
+    }
+
+    public Builder userId(Long userId) {
+      this.userId = userId;
+      return this;
+    }
+
+    public Builder fromDate(Long fromDate) {
+      this.fromDate = fromDate;
+      return this;
+    }
+
+    public Builder toDate(Long toDate) {
+      this.toDate = toDate;
+      return this;
+    }
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public VacationRequestDto build() {
+      return new VacationRequestDto(this);
+    }
+  }
+
+  //todo will remove after getting current user
+  public void setUserId(Long userId) {
     this.userId = userId;
-    this.fromDate = fromDate;
-    this.toDate = toDate;
-    this.description = description;
   }
 
   public Long getUserId() {
