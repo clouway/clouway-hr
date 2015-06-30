@@ -86,7 +86,7 @@ public class EmployerServiceTest {
     EmployerService employer = new EmployerService(repository);
     List<VacationResponseDto> vacationResponseDtos = Lists.newArrayList();
     vacationResponseDtos.add(VacationResponseDto.newBuilder()
-            .userId(1L)
+            .userId("gosho@gmail.com")
             .dateFrom(2L)
             .dateTo(1L)
             .vacationId(1L)
@@ -103,7 +103,7 @@ public class EmployerServiceTest {
     FakeRequest fakeRequest = new FakeRequest();
 
     fakeRequest.dto = VacationRequestDto.newBuilder()
-            .userId(1L)
+            .userId("gosho@gmail.com")
             .fromDate(2L)
             .toDate(1L)
             .description("some")

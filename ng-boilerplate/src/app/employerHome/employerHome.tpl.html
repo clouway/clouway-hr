@@ -1,10 +1,14 @@
-<div>
+<div ng-init="getPendingVacations()">
     <table class="table">
+        <th>user</th>
         <th>from date</th>
         <th>to date</th>
         <th>description</th>
         <th>status</th>
         <tr ng-repeat="message in responseMessage">
+            <td>
+                {{message.userId}}
+            </td>
             <td>
                 {{message.dateFrom | date:"dd/MM/yyyy"}}
             </td>
@@ -22,6 +26,6 @@
                 <a href="" ng-click="changeStatus('accept', message.vacationId)">accept</a>
             </td>
         </tr>
-        {{statusMessage}}
+
     </table>
 </div>

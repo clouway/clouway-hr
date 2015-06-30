@@ -2,6 +2,7 @@ package com.clouway.hr.adapter.http;
 
 import com.clouway.hr.core.IncorrectVacationStatusException;
 import com.clouway.hr.core.VacationRepository;
+import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.google.sitebricks.At;
@@ -42,6 +43,7 @@ public class EmployerService {
   @At("/vacation/type/pending")
   public Reply getPendingVacationRequest() {
     List<VacationResponseDto> vacations = vacationRepository.getStatus("pending");
+
     return Reply.with(vacations).as(Json.class);
   }
 

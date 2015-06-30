@@ -7,19 +7,19 @@ import com.vercer.engine.persist.annotation.Key;
  */
 class VacationEntity {
   @Key
-  private long vacationId;
+  private Long id;
 
   private String status;
   private Long dateFrom;
   private Long dateTo;
-  private Long userId;
+  private String userId;
   private String description;
 
   public VacationEntity() {
   }
 
   private VacationEntity(Builder builder) {
-    vacationId = builder.vacationId;
+    id = builder.vacationId;
     status = builder.status;
     dateFrom = builder.dateFrom;
     dateTo = builder.dateTo;
@@ -32,17 +32,17 @@ class VacationEntity {
   }
 
   public static final class Builder {
-    private long vacationId;
+    private Long vacationId;
     private String status;
     private Long dateFrom;
     private Long dateTo;
-    private Long userId;
+    private String userId;
     private String description;
 
     private Builder() {
     }
 
-    public Builder vacationId(long vacationId) {
+    public Builder vacationId(Long vacationId) {
       this.vacationId = vacationId;
       return this;
     }
@@ -62,7 +62,7 @@ class VacationEntity {
       return this;
     }
 
-    public Builder userId(Long userId) {
+    public Builder userId(String userId) {
       this.userId = userId;
       return this;
     }
@@ -77,8 +77,8 @@ class VacationEntity {
     }
   }
 
-  public long getVacationId() {
-    return vacationId;
+  public long getId() {
+    return id;
   }
 
   public String getStatus() {
@@ -93,7 +93,7 @@ class VacationEntity {
     return dateTo;
   }
 
-  public Long getUserId() {
+  public String getUserId() {
     return userId;
   }
 

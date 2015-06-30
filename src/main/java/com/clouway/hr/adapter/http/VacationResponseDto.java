@@ -8,8 +8,7 @@ public class VacationResponseDto {
   private String status;
   private Long dateFrom;
   private Long dateTo;
-  //todo have to be parent
-  private Long userId;
+  private String userId;
   private String description;
 
   public VacationResponseDto() {
@@ -34,7 +33,7 @@ public class VacationResponseDto {
     private String status;
     private Long dateFrom;
     private Long dateTo;
-    private Long userId;
+    private String userId;
     private String description;
 
     private Builder() {
@@ -60,7 +59,7 @@ public class VacationResponseDto {
       return this;
     }
 
-    public Builder userId(Long userId) {
+    public Builder userId(String userId) {
       this.userId = userId;
       return this;
     }
@@ -92,7 +91,7 @@ public class VacationResponseDto {
     return dateTo;
   }
 
-  public Long getUserId() {
+  public String getUserId() {
     return userId;
   }
 

@@ -16,7 +16,7 @@ public interface VacationRepository {
 
   String getStatus(Long id);
 
-  List<VacationResponseDto> get(long userId);
+  List<VacationResponseDto> get(String userId);
 
   List<VacationResponseDto> getStatus(String pending);
 }

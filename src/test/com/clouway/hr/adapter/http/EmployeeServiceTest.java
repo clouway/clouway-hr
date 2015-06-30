@@ -35,7 +35,7 @@ public class EmployeeServiceTest {
   public void setUp() throws Exception {
     helper.setUp();
     statuses.add("pending");
-    statuses.add("approved");
+    statuses.add("approve");
     statuses.add("reject");
 
     VacationRepository repository = new PersistentVacationRepository(Providers.of(datastore), Providers.of(statuses));
@@ -50,8 +50,11 @@ public class EmployeeServiceTest {
 
   @Test
   public void requestVacation() {
-    final Long id = 1l;
-    fakeVacationRequest.dto = VacationRequestDto.newBuilder().userId(id).fromDate(1L).toDate(2L).build();
+    fakeVacationRequest.dto = VacationRequestDto.newBuilder()
+            .userId("gosho@gmail.com")
+            .fromDate(1L)
+            .toDate(2L)
+            .build();
 
     Reply<Object> actualReply = employeeService.requestVacation(fakeVacationRequest);
 
@@ -60,8 +63,7 @@ public class EmployeeServiceTest {
 
   @Test
   public void endDateVacationBiggerThanFromDate() {
-    final Long id = 1l;
-    fakeVacationRequest.dto = VacationRequestDto.newBuilder().userId(id).fromDate(2L).toDate(1L).build();
+    fakeVacationRequest.dto = VacationRequestDto.newBuilder().userId("ivan@gmail.com").fromDate(2L).toDate(1L).build();
 
     Reply<Object> actualReply = employeeService.requestVacation(fakeVacationRequest);
 

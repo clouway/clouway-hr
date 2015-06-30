@@ -15,42 +15,48 @@ ang.config(function myAppConfig($stateProvider, $urlRouterProvider) {
 ang.run(function run() {
 });
 
-ang.factory("HttpService", ["$http", "$q", function ($http, $q) {
-  return {
-    get: function (url) {
-      var result = $q.defer();
-      $http.get(url).success(function ($data) {
-        result.resolve($data);
-      }).error(function ($data) {
-        result.reject($data);
-      });
-      return result.promise;
-    },
+ang.service('HttpService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+  var count = 0;
 
-    post: function (url, d) {
-      var result = $q.defer();
+  this.get = function (url, data) {
+    return this.send('GET', url, data);
+  };
 
-      $http.post(url, d)
-              .success(function ($data) {
-                console.log($data);
-                result.resolve($data);
-              })
-              .error(function ($data) {
-                result.reject($data);
-              });
-      return result.promise;
-    },
+  this.post = function (url, data) {
+    return this.send('POST', url, data);
+  };
 
-    put: function (url) {
-      var result = $q.defer();
-      $http.put(url).success(function ($data) {
-        result.resolve($data);
-      }).error(function ($data) {
-        result.reject($data);
-      });
+  this.put = function (url, data) {
+    return this.send('PUT', url, data);
+  };
 
-      return result.promise;
-    }
+  this.send = function (method, url, data) {
+    var deferred = $q.defer();
+    count++;
+
+    $http({method: method, url: url, data: data})
+            .success(function (data) {
+              deferred.resolve(data);
+              count--;
+
+              if (count === 0) {
+                $rootScope.loadingInProgress = false;
+              }
+            })
+
+            .error(function (data) {
+              deferred.reject(data);
+              count--;
+
+              if (count === 0) {
+                $rootScope.loadingInProgress = false;
+              }
+
+            });
+
+    $rootScope.loadingInProgress = true;
+
+    return deferred.promise;
   };
 }]);
 
@@ -61,4 +67,3 @@ ang.controller('AppCtrl', function AppCtrl($scope, $location) {
     }
   });
 });
-

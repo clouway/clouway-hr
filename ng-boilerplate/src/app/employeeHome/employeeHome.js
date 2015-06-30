@@ -19,7 +19,6 @@ ang.config(function config($stateProvider) {
 
 
 ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function ($scope, $http, HttpService) {
-
   $scope.responseMessage = '';
   $scope.vacationRequest = function vacationRequest() {
 
@@ -36,12 +35,21 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
     HttpService.post('/rest/employee/vacation-request', vacationData)
             .then(function (message) {
               $scope.responseMessage = "success";
+              displayMessage($scope.responseMessage, 'success');
             }, function (reason) {
               $scope.responseMessage = "incorrect date";
-
+              displayMessage($scope.responseMessage, 'danger');
             });
   };
 
+
+  var displayMessage = function (message, type) {
+    $.bootstrapGrowl($scope.responseMessage, {
+      type: type,
+      width: 'auto',
+      align: 'left'
+    });
+  };
   //DATEPICKER
 
   $scope.clear = function () {
@@ -52,7 +60,6 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
   // Disable weekend selection
   $scope.disabled = function (date, mode) {
     return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-
   };
 
   $scope.open = function ($event) {
@@ -80,11 +87,4 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
   afterTomorrow.setDate(tomorrow.getDate() + 2);
 
   //DATEPICKER
-
-
-  $scope.dropdownDemoItems = [
-    "The first choice!",
-    "And another choice for you.",
-    "but wait! A third!"
-  ];
 }]);

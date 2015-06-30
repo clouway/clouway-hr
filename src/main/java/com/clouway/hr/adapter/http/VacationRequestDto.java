@@ -5,7 +5,7 @@ package com.clouway.hr.adapter.http;
  */
 public class VacationRequestDto {
   //todo user id have to be @Parent UserEntity
-  private Long userId;
+  private String userId;
   private Long fromDate;
   private Long toDate;
   private String description;
@@ -25,7 +25,7 @@ public class VacationRequestDto {
   }
 
   public static final class Builder {
-    private Long userId;
+    private String userId;
     private Long fromDate;
     private Long toDate;
     private String description;
@@ -33,7 +33,7 @@ public class VacationRequestDto {
     private Builder() {
     }
 
-    public Builder userId(Long userId) {
+    public Builder userId(String userId) {
       this.userId = userId;
       return this;
     }
@@ -59,11 +59,11 @@ public class VacationRequestDto {
   }
 
   //todo will remove after getting current user
-  public void setUserId(Long userId) {
+  public void setUserId(String userId) {
     this.userId = userId;
   }
 
-  public Long getUserId() {
+  public String getUserId() {
     return userId;
   }
 

@@ -35,12 +35,16 @@ public class PersistentVacationRepository implements VacationRepository {
     checkStatus(status);
 
     VacationEntity entity = datastore.load(VacationEntity.class, vacationId);
-    entity = VacationEntity.newBuilder()
-            .vacationId(entity.getVacationId())
+    VacationEntity newVacation = VacationEntity.newBuilder()
+            .vacationId(vacationId)
+            .userId(entity.getUserId())
+            .description(entity.getDescription())
+            .dateFrom(entity.getDateFrom())
+            .dateTo(entity.getDateFrom())
             .status(status)
             .build();
 
-    datastore.store(entity);
+    datastore.store(newVacation);
   }
 
   @Override
@@ -48,7 +52,6 @@ public class PersistentVacationRepository implements VacationRepository {
     VacationEntity entity = VacationEntity.newBuilder()
             .userId(vacation.getUserId())
             .description(vacation.getDescription())
-            .vacationId(vacation.getUserId())
             .dateFrom(vacation.getFromDate())
             .dateTo(vacation.getToDate())
             .status("pending")
@@ -65,7 +68,7 @@ public class PersistentVacationRepository implements VacationRepository {
   }
 
   @Override
-  public List<VacationResponseDto> get(long userId) {
+  public List<VacationResponseDto> get(String userId) {
     Iterator<VacationEntity> vacationIterator = datastore.find(VacationEntity.class);
     List<VacationResponseDto> vacations = new ArrayList<>();
 
@@ -98,7 +101,7 @@ public class PersistentVacationRepository implements VacationRepository {
       VacationResponseDto responseDto = VacationResponseDto.newBuilder()
               .status(vacationEntity.getStatus())
               .userId(vacationEntity.getUserId())
-              .vacationId(vacationEntity.getVacationId())
+              .vacationId(vacationEntity.getId())
               .dateFrom(vacationEntity.getDateFrom())
               .dateTo(vacationEntity.getDateTo())
               .description(vacationEntity.getDescription())

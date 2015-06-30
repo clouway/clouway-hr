@@ -39,7 +39,7 @@ public class PersistentVacationRepositoryTest {
   public void updateVacationStatus() {
     VacationRepository vacationRepository = new PersistentVacationRepository(of(datastore), of(status));
     VacationRequestDto vacation = VacationRequestDto.newBuilder()
-            .userId(1L)
+            .userId("gosho@gmail.com")
             .fromDate(2L)
             .toDate(2L)
             .description("some description")

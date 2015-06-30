@@ -44,7 +44,7 @@ public class AppConfig extends GuiceServletContextListener {
               public VacationStatus getVacationStatuses() {
                 VacationStatus statuses = new VacationStatus();
                 statuses.add("pending");
-                statuses.add("approved");
+                statuses.add("accept");
                 statuses.add("reject");
 
                 return statuses;
