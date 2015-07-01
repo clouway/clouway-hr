@@ -32,8 +32,8 @@ describe('EmployerHomeCtrl', function () {
 
     it("get pending vacations", function () {
       scope.changeStatus('reject', 1);
-
-      expect(HttpService.put).toHaveBeenCalledWith('/r/employer/vacation/1/type/reject');
+//ss
+      expect(HttpService.put).toHaveBeenCalledWith('/r/vacation/1/type/reject');
     });
   });
 })

@@ -29,7 +29,7 @@ ang.controller('EmployerHomeCtrl', ['$scope', '$http', 'HttpService', function (
   };
 
   $scope.changeStatus = function (status, vacationId) {
-    var url = '/r/employer/vacation/' + vacationId + '/type/' + status;
+    var url = '/r/vacation/' + vacationId + '/type/' + status;
     HttpService.put(url).then(function (data) {
       $scope.getPendingVacations();
       displayMessage("success", "success");
