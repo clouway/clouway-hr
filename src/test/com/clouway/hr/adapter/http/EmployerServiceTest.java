@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.clouway.hr.adapter.http.TestReply.sameReply;
+import static com.clouway.hr.adapter.http.ReplyMatcher.contains;
 import static com.google.inject.util.Providers.of;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -94,8 +94,7 @@ public class EmployerServiceTest {
             .description("some")
             .build());
     Reply<List<VacationResponseDto>> actualReply = employer.getPendingVacationRequest();
-
-    sameReply(actualReply, vacationResponseDtos);
+    assertThat(actualReply, contains(vacationResponseDtos));
   }
 
   private void addRequestVacation() {
