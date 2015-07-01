@@ -25,11 +25,13 @@ public class AppConfig extends GuiceServletContextListener {
               protected void configureSitebricks() {
                 scan(AppConfig.class.getPackage());
               }
-            }, new ServletModule() {
+            },
+            new ServletModule() {
               @Override
               protected void configureServlets() {
               }
-            }, new AbstractModule() {
+            },
+            new AbstractModule() {
               @Override
               protected void configure() {
                 bind(VacationRepository.class).to(PersistentVacationRepository.class);

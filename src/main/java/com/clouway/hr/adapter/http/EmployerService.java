@@ -2,7 +2,6 @@ package com.clouway.hr.adapter.http;
 
 import com.clouway.hr.core.IncorrectVacationStatusException;
 import com.clouway.hr.core.VacationRepository;
-import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.google.sitebricks.At;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
-@At("/rest/employer")
+@At("/r/employer")
 @Service
 public class EmployerService {
   private VacationRepository vacationRepository;

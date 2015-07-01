@@ -12,7 +12,7 @@ import com.google.sitebricks.http.Post;
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
-@At("/rest/employee")
+@At("/r/employee")
 @Service
 public class EmployeeService {
   private final VacationRepository vacationRepository;
@@ -23,7 +23,7 @@ public class EmployeeService {
   }
 
   @Post
-  @At("/vacation-request")
+  @At("/vacationRequest")
   public Reply requestVacation(Request request) {
     VacationRequestDto vacation = request.read(VacationRequestDto.class).as(Json.class);
     //todo have to retrieve from current user
