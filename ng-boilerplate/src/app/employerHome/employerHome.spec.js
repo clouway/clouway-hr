@@ -5,7 +5,7 @@ describe('EmployerHomeCtrl', function () {
   describe('isCurrentUrl', function () {
     var $httpBackend, HttpService, controller, scope, defer;
 
-    beforeEach(module('ngBoilerplate.employerHome'));
+    beforeEach(module('clouwayHr.employerHome'));
 
     beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, $q) {
       scope = $rootScope.$new();

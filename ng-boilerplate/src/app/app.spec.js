@@ -2,7 +2,7 @@ describe('AppCtrl', function () {
   describe('isCurrentUrl', function () {
     var $httpBackend, httpRequest, $rootScope;
 
-    beforeEach(module('ngBoilerplate'));
+    beforeEach(module('clouwayHr'));
 
     beforeEach(function () {
 

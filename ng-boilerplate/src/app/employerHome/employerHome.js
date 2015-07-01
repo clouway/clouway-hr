@@ -1,4 +1,4 @@
-var ang = angular.module('ngBoilerplate.employerHome', [
+var ang = angular.module('clouwayHr.employerHome', [
   'ui.router',
   'placeholders',
   'ui.bootstrap'

@@ -1,10 +1,9 @@
-var ang = angular.module('ngBoilerplate', [
+var ang = angular.module('clouwayHr', [
   'templates-app',
   'templates-common',
-  'ngBoilerplate.home',
-  'ngBoilerplate.about',
-  'ngBoilerplate.employeeHome',
-  'ngBoilerplate.employerHome',
+  'clouwayHr.home',
+  'clouwayHr.employeeHome',
+  'clouwayHr.employerHome',
   'ui.router'
 ]);
 
