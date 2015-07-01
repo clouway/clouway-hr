@@ -2,9 +2,8 @@ package com.clouway.hr.adapter.db;
 
 import com.clouway.hr.adapter.http.VacationRequestDto;
 import com.clouway.hr.adapter.http.VacationResponseDto;
-import com.clouway.hr.core.IncorrectVacationStatusException;
+import com.clouway.hr.core.Status;
 import com.clouway.hr.core.VacationRepository;
-import com.clouway.hr.core.VacationStatus;
 import com.google.appengine.repackaged.com.google.api.client.util.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -22,18 +21,16 @@ import static com.google.appengine.api.datastore.Query.FilterOperator.EQUAL;
 public class PersistentVacationRepository implements VacationRepository {
 
   private final ObjectDatastore datastore;
-  private Provider<VacationStatus> statuses;
+  private Provider<Status> statuses;
 
   @Inject
-  public PersistentVacationRepository(Provider<ObjectDatastore> datastore, Provider<VacationStatus> statuses) {
+  public PersistentVacationRepository(Provider<ObjectDatastore> datastore, Provider<Status> statuses) {
     this.datastore = datastore.get();
     this.statuses = statuses;
   }
 
   @Override
   public void updateStatus(Long vacationId, String status) {
-    checkStatus(status);
-
     VacationEntity entity = datastore.load(VacationEntity.class, vacationId);
     VacationEntity newVacation = VacationEntity.newBuilder()
             .vacationId(vacationId)
@@ -111,11 +108,5 @@ public class PersistentVacationRepository implements VacationRepository {
     }
 
     return responseDtoList;
-  }
-
-  private void checkStatus(String status) {
-    if (!statuses.get().getStatuses().contains(status)) {
-      throw new IncorrectVacationStatusException();
-    }
   }
 }

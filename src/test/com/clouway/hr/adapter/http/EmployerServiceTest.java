@@ -1,6 +1,7 @@
 package com.clouway.hr.adapter.http;
 
 import com.clouway.hr.adapter.db.PersistentVacationRepository;
+import com.clouway.hr.core.Status;
 import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.VacationStatus;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -39,7 +40,7 @@ public class EmployerServiceTest {
   private final LocalServiceTestHelper helper =
           new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   private VacationRepository repository;
-  private VacationStatus status = new VacationStatus();
+  private Status status = new VacationStatus("", "", "");
 
   @Before
   public void setUp() {
@@ -54,7 +55,7 @@ public class EmployerServiceTest {
 
   @Test
   public void changeVacationStatus() {
-    EmployerService employerService = new EmployerService(vacationRepository);
+    EmployerService employerService = new EmployerService(vacationRepository, of(status));
     final Long id = 1l;
 
     context.checking(new Expectations() {{
@@ -68,22 +69,10 @@ public class EmployerServiceTest {
   }
 
   @Test
-  public void changeIncorrectStatus() {
-    final String incorrectStatus = "incorrectStatus";
-    addRequestVacation();
-
-    EmployerService employer = new EmployerService(repository);
-    employer.changeVacationStatus("1", incorrectStatus);
-    String nonExistentStatus = repository.getStatus(1L);
-
-    assertFalse(nonExistentStatus.equals(incorrectStatus));
-  }
-
-  @Test
   public void getPendingVacations() {
     addRequestVacation();
 
-    EmployerService employer = new EmployerService(repository);
+    EmployerService employer = new EmployerService(repository, of(status));
     List<VacationResponseDto> vacationResponseDtos = Lists.newArrayList();
     vacationResponseDtos.add(VacationResponseDto.newBuilder()
             .userId("gosho@gmail.com")

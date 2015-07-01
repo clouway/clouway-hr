@@ -8,29 +8,28 @@ import java.util.List;
  * @author Tihomir Kehayov <kehayov89@gmail.com>
  */
 public class VacationStatus implements Status {
-  private int status;
-  private List<String> statuses = Lists.newArrayList();
+  private final String acceptMessage;
+  private final String pendingMessage;
+  private final String rejectMessage;
 
-  public void add(String type) {
-    statuses.add(type);
-  }
-
-  public List<String> getStatuses() {
-    return statuses;
-  }
-
-  @Override
-  public int accept() {
-    return 0;
+  public VacationStatus(String acceptMessage, String pendingMessage, String rejectMessage) {
+    this.acceptMessage = acceptMessage;
+    this.pendingMessage = pendingMessage;
+    this.rejectMessage = rejectMessage;
   }
 
   @Override
-  public int reject() {
-    return 1;
+  public String getAccept() {
+    return acceptMessage;
   }
 
   @Override
-  public int pending() {
-    return 2;
+  public String getReject() {
+    return rejectMessage;
+  }
+
+  @Override
+  public String getPending() {
+    return pendingMessage;
   }
 }

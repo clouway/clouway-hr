@@ -1,6 +1,7 @@
 package com.clouway.hr.adapter.db;
 
 import com.clouway.hr.adapter.http.VacationRequestDto;
+import com.clouway.hr.core.Status;
 import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.VacationStatus;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -20,14 +21,11 @@ public class PersistentVacationRepositoryTest {
   private final LocalServiceTestHelper helper =
           new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   private ObjectDatastore datastore = new AnnotationObjectDatastore();
-  private VacationStatus status = new VacationStatus();
-
+  private Status status = new VacationStatus("", "", "");
 
   @Before
   public void setUp() {
     helper.setUp();
-    status.add("pending");
-    status.add("approved");
   }
 
   @After
@@ -46,7 +44,6 @@ public class PersistentVacationRepositoryTest {
             .build();
     vacationRepository.add(vacation);
     vacationRepository.updateStatus(1l, "approved");
-    String status = vacationRepository.getStatus(1l);
   }
 
 

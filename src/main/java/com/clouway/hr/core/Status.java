@@ -4,9 +4,9 @@ package com.clouway.hr.core;
  * @author Tihomir Kehayov <kehayov89@gmail.com>
  */
 public interface Status {
-  int accept();
+  String getAccept();
 
-  int reject();
+  String getReject();
 
-  int pending();
+  String getPending();
 }

@@ -1,6 +1,7 @@
 package com.clouway.hr.adapter.http;
 
 import com.clouway.hr.adapter.db.PersistentVacationRepository;
+import com.clouway.hr.core.Status;
 import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.VacationStatus;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -29,14 +30,14 @@ public class EmployeeServiceTest {
   private final LocalServiceTestHelper helper =
           new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
   private final ObjectDatastore datastore = new AnnotationObjectDatastore();
-  private final VacationStatus statuses = new VacationStatus();
+  private final Status statuses = new VacationStatus("accept", "pending", "reject");
 
   @Before
   public void setUp() throws Exception {
     helper.setUp();
-    statuses.add("pending");
-    statuses.add("approve");
-    statuses.add("reject");
+//    statuses.add("pending");
+//    statuses.add("approve");
+//    statuses.add("getReject");
 
     VacationRepository repository = new PersistentVacationRepository(Providers.of(datastore), Providers.of(statuses));
     employeeService = new EmployeeService(repository);
