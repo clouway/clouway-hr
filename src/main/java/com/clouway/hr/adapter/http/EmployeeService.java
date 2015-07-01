@@ -12,22 +12,26 @@ import com.google.sitebricks.http.Post;
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
-@At("/rest/employee")
+@At("/r/employee")
 @Service
 public class EmployeeService {
   private final VacationRepository vacationRepository;
 
   @Inject
   public EmployeeService(VacationRepository vacationRepository) {
-
     this.vacationRepository = vacationRepository;
   }
 
   @Post
-  public Reply<Object> requestVacation(Request request) {
-    VacationDto vacation = request.read(VacationDto.class).as(Json.class);
-    vacationRepository.add(vacation.getVacationId(), vacation.getStatus());
+  @At("/vacationRequest")
+  public Reply requestVacation(Request request) {
+    VacationRequestDto vacation = request.read(VacationRequestDto.class).as(Json.class);
+    //todo have to retrieve from current user
+    if (vacation.getUserId() == null) {
+      vacation.setUserId("ivan@gmail.com");
+    }
+    vacationRepository.add(vacation);
 
-    return Reply.saying().ok();
+    return vacation.getToDate() > vacation.getFromDate() ? Reply.saying().ok() : Reply.saying().error();
   }
 }

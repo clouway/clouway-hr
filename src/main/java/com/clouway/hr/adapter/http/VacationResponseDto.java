@@ -1,25 +1,21 @@
-package com.clouway.hr.adapter.db;
-
-import com.vercer.engine.persist.annotation.Key;
+package com.clouway.hr.adapter.http;
 
 /**
- * @author Tihomir Kehayov <kehayov89@gmail.com>
+ * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
-class VacationEntity {
-  @Key
-  private Long id;
-
+public class VacationResponseDto {
+  private long vacationId;
   private String status;
   private Long dateFrom;
   private Long dateTo;
   private String userId;
   private String description;
 
-  public VacationEntity() {
+  public VacationResponseDto() {
   }
 
-  private VacationEntity(Builder builder) {
-    id = builder.vacationId;
+  private VacationResponseDto(Builder builder) {
+    vacationId = builder.vacationId;
     status = builder.status;
     dateFrom = builder.dateFrom;
     dateTo = builder.dateTo;
@@ -32,7 +28,8 @@ class VacationEntity {
   }
 
   public static final class Builder {
-    private Long vacationId;
+
+    private long vacationId;
     private String status;
     private Long dateFrom;
     private Long dateTo;
@@ -42,7 +39,7 @@ class VacationEntity {
     private Builder() {
     }
 
-    public Builder vacationId(Long vacationId) {
+    public Builder vacationId(long vacationId) {
       this.vacationId = vacationId;
       return this;
     }
@@ -72,13 +69,14 @@ class VacationEntity {
       return this;
     }
 
-    public VacationEntity build() {
-      return new VacationEntity(this);
+    public VacationResponseDto build() {
+      return new VacationResponseDto(this);
     }
+
   }
 
-  public long getId() {
-    return id;
+  public Long getVacationId() {
+    return vacationId;
   }
 
   public String getStatus() {
