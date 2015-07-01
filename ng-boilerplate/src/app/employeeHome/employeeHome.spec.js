@@ -31,7 +31,7 @@ describe('EmployeeHome', function () {
       defer.resolve({responseMessage: 'success'});
       scope.vacationRequest();
 
-      expect(HttpService.post).toHaveBeenCalledWith('/rest/employee/vacation-request', vacationData);
+      expect(HttpService.post).toHaveBeenCalledWith('/r/employee/vacationRequest', vacationData);
       scope.$digest();
 
       expect(scope.responseMessage).toEqual('success');

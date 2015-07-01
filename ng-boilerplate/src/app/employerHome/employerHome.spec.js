@@ -24,8 +24,8 @@ describe('EmployerHomeCtrl', function () {
       };
       defer.resolve(responseMessage);
 
-      scope.getPendingVacations('/rest/employer/vacation/type/pending');
-      expect(HttpService.get).toHaveBeenCalledWith('/rest/employer/vacation/type/pending');
+      scope.getPendingVacations('/r/employer/vacation/type/pending');
+      expect(HttpService.get).toHaveBeenCalledWith('/r/employer/vacation/type/pending');
       scope.$digest();
       expect(scope.responseMessage).toEqual(responseMessage);
     });
@@ -33,7 +33,7 @@ describe('EmployerHomeCtrl', function () {
     it("get pending vacations", function () {
       scope.changeStatus('reject', 1);
 
-      expect(HttpService.put).toHaveBeenCalledWith('/rest/employer/vacation/1/type/reject');
+      expect(HttpService.put).toHaveBeenCalledWith('/r/employer/vacation/1/type/reject');
     });
   });
 })

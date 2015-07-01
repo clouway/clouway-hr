@@ -6,7 +6,7 @@ var ang = angular.module('clouwayHr.employerHome', [
 
 ang.config(function config($stateProvider) {
   $stateProvider.state('employerHome', {
-    url: '/employer-home',
+    url: '/employerHome',
     views: {
       "main": {
         controller: 'EmployerHomeCtrl',
@@ -21,7 +21,7 @@ ang.controller('EmployerHomeCtrl', ['$scope', '$http', 'HttpService', function (
   $scope.responseMessage = '';
 
   $scope.getPendingVacations = function () {
-    HttpService.get('/rest/employer/vacation/type/pending').then(function (messsage) {
+    HttpService.get('/r/employer/vacation/type/pending').then(function (messsage) {
       $scope.responseMessage = messsage;
     }, function (reason) {
       $scope.errorMessage = "some error ocurred";
@@ -29,8 +29,8 @@ ang.controller('EmployerHomeCtrl', ['$scope', '$http', 'HttpService', function (
   };
 
   $scope.changeStatus = function (status, vacationId) {
-    var url = '/rest/employer/vacation/' + vacationId + '/type/' + status;
-    HttpService.put('/rest/employer/vacation/' + vacationId + '/type/' + status).then(function (data) {
+    var url = '/r/employer/vacation/' + vacationId + '/type/' + status;
+    HttpService.put(url).then(function (data) {
       $scope.getPendingVacations();
       displayMessage("success", "success");
     });

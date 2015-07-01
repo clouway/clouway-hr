@@ -6,7 +6,7 @@ var ang = angular.module('clouwayHr.employeeHome', [
 
 ang.config(function config($stateProvider) {
   $stateProvider.state('employeeHome', {
-    url: '/employee-home',
+    url: '/employeeHome',
     views: {
       "main": {
         controller: 'EmployeeHomeCtrl',
@@ -32,7 +32,7 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
       "description": description
     };
 
-    HttpService.post('/rest/employee/vacation-request', vacationData)
+    HttpService.post('/r/employee/vacationRequest', vacationData)
             .then(function (message) {
               $scope.responseMessage = "success";
               displayMessage($scope.responseMessage, 'success');
@@ -41,7 +41,6 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
               displayMessage($scope.responseMessage, 'danger');
             });
   };
-
 
   var displayMessage = function (message, type) {
     $.bootstrapGrowl($scope.responseMessage, {
