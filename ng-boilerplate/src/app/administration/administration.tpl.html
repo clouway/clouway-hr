@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<form class="form-inline" style="margin-bottom: 1%">
+    <div class="form-group">
+        <label for="exampleInputSearch2">Search Employee</label>
+        <input type="text" class="form-control" id="exampleInputSearch2" placeholder="georgi" ng-model="searchedName">
+    </div>
+    <a href="" class="btn btn-default" ng-click="searchEmployee(searchedName)">Search</a>
+</form>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Team</th>
+        <th>Email</th>
+        <th>IsAdmin</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+
+    <tr ng-repeat="employee in employees">
+        <td>{{employee.name}}</td>
+        <td>{{employee.team}}</td>
+        <td>{{employee.email}}</td>
+        <td>{{employee.isAdmin}}</td>
+        <td><a href="" class="btn btn-default" data-toggle="modal" data-target="#deleteEmployee" ng-click="sendToModal(employee.email, employee.team, employee.name, employee.isAdmin, $index)">Delete</a></td>
+        <td><a href="" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" ng-click="sendToModal(employee.email, employee.team, employee.name, employee.isAdmin, $index)">Edit</a></td>
+    </tr>
+</table>
+
+<div class="container">
+    <!-- Trigger the modal with a button -->
+    <!-- Modal view for edit employee -->
+    <div class="modal fade" id="editEmployee" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Employee</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" style="margin-left: 10%">
+
+                        <div class="form-group">
+                            <label for="exampleInputNewName2">Name</label>
+                            <input type="text" class="form-control" id="exampleInputNewName2" ng-model="modalName">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputNewTeam2">Team</label>
+                            <input type="text" class="form-control" id="exampleInputNewTeam2" ng-model="modalTeam">
+                        </div>
+                        <select class="form-control" ng-model="modalEmployeeRole">
+                            <option value="false">User</option>
+                            <option value="true">Administrator</option>
+                        </select>
+                        <button type="button" class="btn btn-default" ng-click="editEmployee(modalEmail, modalTeam, modalName, modalPosition)" data-dismiss="modal">Edit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Trigger the modal with a button -->
+    <!-- Modal view for delete employee -->
+    <div class="modal fade" id="deleteEmployee" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Employee</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" style="margin-left: 10%">
+                        Are you sure you want to delete '{{modalEmail}}'?
+                        <button type="button" class="btn btn-default" ng-click="deleteEmployee(modalEmail, modalPosition)" data-dismiss="modal">Delete</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

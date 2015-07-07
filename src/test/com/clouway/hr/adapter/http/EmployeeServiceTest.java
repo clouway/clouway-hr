@@ -26,7 +26,7 @@ public class EmployeeServiceTest {
     EmployeeService employeeService = new EmployeeService(vacationRepository);
     FakeRequest fakeRequest = new FakeRequest();
     final Long id = 1l;
-    fakeRequest.dto = new VacationDto(id, "pending");
+    fakeRequest.dummyObject = new VacationDto(id, "pending");
 
     context.checking(new Expectations() {{
       oneOf(vacationRepository).add(id, "pending");

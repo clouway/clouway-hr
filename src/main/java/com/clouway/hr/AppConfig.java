@@ -1,6 +1,8 @@
 package com.clouway.hr;
 
+import com.clouway.hr.adapter.db.PersistentUserRepository;
 import com.clouway.hr.adapter.db.PersistentVacationRepository;
+import com.clouway.hr.core.UserRepository;
 import com.clouway.hr.core.VacationRepository;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -40,6 +42,7 @@ public class AppConfig extends GuiceServletContextListener {
               @Override
               protected void configure() {
                 bind(VacationRepository.class).to(PersistentVacationRepository.class);
+                bind(UserRepository.class).to(PersistentUserRepository.class);
 
               }
 
