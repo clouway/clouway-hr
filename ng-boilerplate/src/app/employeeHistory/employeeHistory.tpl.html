@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-lg-4">
+        <form ng-submit="clicked()">
+            <div class="input-group">
+                <input type="text" ng-model="q" class="form-control"
+                       placeholder="example: description: vacation / status: reject"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div ng-init="getVacations()">
+    <table class="table">
+        <th>from date</th>
+        <th>to date</th>
+        <th>description</th>
+        <th>status</th>
+        <tr ng-repeat="message in responseMessage | filter:q">
+            <td>
+                {{message.dateFrom | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.dateTo | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.description}}
+            </td>
+            <td>
+                {{message.status}}
+            </td>
+        </tr>
+    </table>
+</div>
+
