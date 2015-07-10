@@ -13,7 +13,7 @@ ang.config(function config($stateProvider) {
         templateUrl: 'employeeHistory/employeeHistory.tpl.html'
       }
     },
-    data: {pageTitle: 'Home'}
+    data: {pageTitle: 'History'}
   });
 });
 

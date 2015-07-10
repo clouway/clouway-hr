@@ -14,7 +14,7 @@ ang.config(function config($stateProvider) {
 
       }
     },
-    data: {pageTitle: 'Home'}
+    data: {pageTitle: 'History'}
   });
 });
 
