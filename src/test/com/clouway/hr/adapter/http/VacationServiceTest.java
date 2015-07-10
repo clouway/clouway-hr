@@ -52,6 +52,7 @@ public class VacationServiceTest {
     Reply<ResponseMessageDto> actualReply = employerService.changeVacationStatus(id.toString(), "approved");
     Reply<ResponseMessageDto> success = Reply.with(new ResponseMessageDto("success")).as(Json.class);
 
+    
     assertThat(actualReply, is(success));
   }
 }
