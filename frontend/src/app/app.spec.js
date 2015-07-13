@@ -1,14 +1,8 @@
 describe( 'AppCtrl', function() {
-  describe( 'isCurrentUrl', function() {
-    var AppCtrl, $location, $scope;
+  describe( 'httpRequest', function() {
+
     var $httpBackend, httpRequest, $rootScope;
     beforeEach( module( 'clouwayHr' ) );
-
-    beforeEach( inject( function( $controller, _$location_, $rootScope ) {
-      $location = _$location_;
-      $scope = $rootScope.$new();
-      AppCtrl = $controller( 'AppCtrl', { $location: $location, $scope: $scope });
-    }));
 
     beforeEach(function () {
 
@@ -19,59 +13,43 @@ describe( 'AppCtrl', function() {
       });
     });
 
-    it( 'should pass a dummy test1', inject( function() {
-      expect( AppCtrl ).toBeTruthy();
-    }));
-
     it('send get request', function () {
 
-      var promise = httpRequest.get('/r/test/', {username: 'Test', password: 'unknown'});
+      var promise = httpRequest.get('/r/get/');
 
-      $httpBackend.expectGET('/r/test/').respond(200, 'response123');
-
-      expect($rootScope.loadingInProgress).toBe(true);
+      $httpBackend.expectGET('/r/get/').respond(200, "data");
 
       promise.then(function (data) {
-        expect(data).toBe('response123');
+        expect(data).toBe("data");
       });
 
       $httpBackend.flush();
-
-      expect($rootScope.loadingInProgress).toBe(false);
     });
 
     it('send put request', function () {
 
-      var promise = httpRequest.put('/r/test/', {username: 'Test', password: 'unknown'});
+      var promise = httpRequest.put('/r/put/', {name: 'Stefan', age: '20'});
 
-      $httpBackend.expectPUT('/r/test/').respond(200, 'response123');
-
-      expect($rootScope.loadingInProgress).toBe(true);
+      $httpBackend.expectPUT('/r/put/').respond(200, 'data');
 
       promise.then(function (data) {
-        expect(data).toBe('response123');
+        expect(data).toBe('data');
       });
 
       $httpBackend.flush();
-
-      expect($rootScope.loadingInProgress).toBe(false);
     });
 
     it('send post request', function () {
 
-      var promise = httpRequest.post('/r/test/', {username: 'Test', password: 'unknown'});
+      var promise = httpRequest.post('/r/post/', {name: 'Ivan', age: '50'});
 
-      $httpBackend.expectPOST('/r/test/').respond(200, 'response123');
-
-      expect($rootScope.loadingInProgress).toBe(true);
+      $httpBackend.expectPOST('/r/post/').respond(200, 'data');
 
       promise.then(function (data) {
-        expect(data).toBe('response123');
+        expect(data).toBe('data');
       });
 
       $httpBackend.flush();
-
-      expect($rootScope.loadingInProgress).toBe(false);
     });
 
   });

@@ -1,6 +1,5 @@
 package com.clouway.hr.adapter.http.oauth2;
 
-import com.clouway.hr.adapter.http.SitebricksReplyAssertion;
 import com.clouway.hr.core.CredentialRepository;
 import com.clouway.hr.core.OAuthHelper;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -21,6 +20,10 @@ import org.junit.Test;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Arrays;
+
+import static com.clouway.hr.adapter.http.SitebricksReplyAssertion.assertIsRepliedWith;
+import static com.clouway.hr.adapter.http.SitebricksReplyAssertion.assertThatReplyRedirectUriIs;
+import static com.clouway.hr.adapter.http.SitebricksReplyAssertion.assertThatReplyStatusIs;
 
 /**
  * Created on 15-7-10.
@@ -63,8 +66,8 @@ public class OAuthServiceTest {
 
     final Reply<String> reply = oAuthService.getCurrentUser();
 
-    SitebricksReplyAssertion.assertThatReplyStatusIs(reply, 200);
-    SitebricksReplyAssertion.assertIsRepliedWith(reply, userEmail);
+    assertThatReplyStatusIs(reply, 200);
+    assertIsRepliedWith(reply, userEmail);
   }
 
   @Test
@@ -95,8 +98,8 @@ public class OAuthServiceTest {
     }});
 
     final Reply<Object> reply = oAuthService.processOAuthCallback();
-    SitebricksReplyAssertion.assertThatReplyStatusIs(reply, 302);
-    SitebricksReplyAssertion.assertRedirectUriIs(reply, "/home");
+    assertThatReplyStatusIs(reply, 302);
+    assertThatReplyRedirectUriIs(reply, "/home");
 
   }
 
@@ -118,8 +121,8 @@ public class OAuthServiceTest {
 
     final Reply reply = oAuthService.createNewCredentialsFlow();
 
-    SitebricksReplyAssertion.assertThatReplyStatusIs(reply, 302);
-    SitebricksReplyAssertion.assertRedirectUriIs(reply, "someAuthorizationUrl");
+    assertThatReplyStatusIs(reply, 302);
+    assertThatReplyRedirectUriIs(reply, "someAuthorizationUrl");
   }
 
 

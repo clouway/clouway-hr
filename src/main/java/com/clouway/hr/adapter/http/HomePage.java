@@ -10,6 +10,6 @@ import com.google.sitebricks.Show;
  */
 
 @At("/home")
-@Show("home.html")
+@Show("WEB-INF/home.html")
 public class HomePage {
 }

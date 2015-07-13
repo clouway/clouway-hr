@@ -24,7 +24,7 @@ public class SitebricksReplyAssertion {
     assertFieldValue("status", reply, expected);
   }
 
-  public static <T> void assertRedirectUriIs(Reply<T> reply, String expected){
+  public static <T> void assertThatReplyRedirectUriIs(Reply<T> reply, String expected){
     assertFieldValue("redirectUri",reply,expected);
   }
 

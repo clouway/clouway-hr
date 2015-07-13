@@ -27,10 +27,9 @@ public class SecurityFilter implements Filter {
   }
 
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-    System.out.println("Second filter");
 
-    HttpServletRequest request = (HttpServletRequest) req;
-    HttpServletResponse response = (HttpServletResponse) resp;
+    final HttpServletRequest request = (HttpServletRequest) req;
+    final HttpServletResponse response = (HttpServletResponse) resp;
 
     final Principal userPrincipal = request.getUserPrincipal();
 

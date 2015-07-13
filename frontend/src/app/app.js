@@ -2,8 +2,8 @@ angular.module('clouwayHr', [
   'templates-app',
   'templates-common',
   'ngBoilerplate.home',
-  'ui.router',
-  'clouwayHr.pendingusers'
+  'ui.router'
+
 
 ])
 
@@ -29,8 +29,6 @@ angular.module('clouwayHr', [
 
         .service('httpRequest', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 
-          var count = 0;
-
           this.get = function (url, data) {
             return this.send('GET', url, data);
           };
@@ -45,29 +43,15 @@ angular.module('clouwayHr', [
 
           this.send = function (method, url, data) {
             var deferred = $q.defer();
-            count++;
 
             $http({method: method, url: url, data: data})
                     .success(function (data) {
                       deferred.resolve(data);
-                      count--;
-
-                      if (count === 0) {
-                        $rootScope.loadingInProgress = false;
-                      }
                     })
 
                     .error(function (data) {
                       deferred.reject(data);
-                      count--;
-
-                      if (count === 0) {
-                        $rootScope.loadingInProgress = false;
-                      }
-
                     });
-
-            $rootScope.loadingInProgress = true;
 
             return deferred.promise;
           };
@@ -86,7 +70,6 @@ angular.module('clouwayHr', [
           $scope.currentUser="";
           httpRequest.get("/oauth/currentuser").then(function (data) {
             $scope.currentUser=data;
-            console.log($scope.currentUser);
           });
 
         }

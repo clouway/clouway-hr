@@ -17,6 +17,6 @@ public class OAuth2Provider {
   public final static String GOOGLE_CLIENT_SECRET = "I01KZ8qt45eorg3HN_QYvd2r";
   public final static String GOOGLE_CLIENT_ID = "515564595569-v12drf6ltbjthgtligs46uue6a3mkmi0.apps.googleusercontent.com";
 
-//  public final static String REDIRECT_URI = "http://localhost:8080/oauth/callback";
+//  public final static String REDIRECT_URI = "http://localhost:8080/oauth/callback"; //for local server testing
   public final static String REDIRECT_URI = "https://clouway-hr-2.appspot.com/oauth/callback";
 }
