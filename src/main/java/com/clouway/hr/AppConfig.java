@@ -2,6 +2,8 @@ package com.clouway.hr;
 
 import com.clouway.hr.adapter.db.PersistentUserRepository;
 import com.clouway.hr.adapter.db.PersistentVacationRepository;
+import com.clouway.hr.adapter.http.oauth2.OauthStateGenerator;
+import com.clouway.hr.core.RandomStringGenerator;
 import com.clouway.hr.core.UserRepository;
 import com.clouway.hr.core.VacationRepository;
 import com.google.inject.AbstractModule;
@@ -43,7 +45,7 @@ public class AppConfig extends GuiceServletContextListener {
               protected void configure() {
                 bind(VacationRepository.class).to(PersistentVacationRepository.class);
                 bind(UserRepository.class).to(PersistentUserRepository.class);
-
+                bind(RandomStringGenerator.class).to(OauthStateGenerator.class);
               }
 
               @Provides

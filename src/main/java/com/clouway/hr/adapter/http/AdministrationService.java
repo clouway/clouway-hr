@@ -37,24 +37,8 @@ public class AdministrationService {
   @Post
   public Reply editEmployee(Request request) {
     EmployeeDto editedEmployee = request.read(EmployeeDto.class).as(Json.class);
-    userRepository.editEmployee(editedEmployee);
+    userRepository.editEmployeeTeam(editedEmployee);
     return Reply.saying().ok();
-  }
-
-  @At("/deleteEmployee")
-  @Post
-  public Reply deleteEmployee(Request request) {
-    EmployeeDto employee = request.read(EmployeeDto.class).as(Json.class);
-    userRepository.deleteEmployee(employee.email);
-    return Reply.saying().ok();
-  }
-
-  @At("/searchEmployee")
-  @Post
-  public Reply searchForEmployee(Request request) {
-    EmployeeDto employee = request.read(EmployeeDto.class).as(Json.class);
-    List<EmployeeDto> result = userRepository.searchEmployeesByName(employee.name);
-    return Reply.with(result).as(Json.class);
   }
 
   @At("/getAll")
@@ -62,5 +46,12 @@ public class AdministrationService {
   public Reply showEmployees() {
     List<EmployeeDto> allEmployees = userRepository.findAllEmployees();
     return Reply.with(allEmployees).as(Json.class);
+  }
+
+  @At("/refreshTeams")
+  @Get
+  public Reply refreshEmployeeTeams() {
+    List<EmployeeDto> employeesWithRefreshedTeams = userRepository.refreshEmployeeTeams();
+    return Reply.with(employeesWithRefreshedTeams).as(Json.class);
   }
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<a href="" class="btn btn-default" ng-click="refreshTeams()">refreshTeams</a>
+
+<p><label>Search: <input ng-model="searchText"></label></p>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Team</th>
+        <th>Email</th>
+        <th>Edit Team</th>
+    </tr>
+
+    <!--<tr ng-repeat="employee in employees"> -->
+    <tr ng-repeat="employee in employees | filter:searchText">
+        <td>{{employee.name}}</td>
+        <td>{{employee.team}}</td>
+        <td>{{employee.email}}</td>
+        <td><a href="" class="btn btn-default" data-toggle="modal" data-target="#editEmployee" ng-click="sendToModal(employee.email, employee.team, employee.name, $index)">Edit Team</a></td>
+    </tr>
+</table>
+
+<div class="container">
+    <!-- Trigger the modal with a button -->
+    <!-- Modal view for edit employee -->
+    <div class="modal fade" id="editEmployee" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Employee</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" style="margin-left: 10%">
+
+                        <div class="form-group">
+                            <label for="exampleInputNewName2">Name</label>
+                            <input type="text" class="form-control" id="exampleInputNewName2" ng-model="modalName" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputNewTeam2">Team</label>
+                            <select class="form-control" id="exampleInputNewTeam2" ng-model="modalTeam">
+                                <option>no team</option>
+                                <option>OSS</option>
+                                <option>BSS</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-default" ng-click="editEmployee(modalEmail, modalTeam, modalName, modalPosition)" data-dismiss="modal">Edit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

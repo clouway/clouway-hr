@@ -37,7 +37,7 @@ public class AdministrationServiceTest {
 
   @Test
   public void addEmployee(){
-    final EmployeeDto employee = new EmployeeDto("ivan.genchev@gmail.com", "OSS", "ivan", false);
+    final EmployeeDto employee = new EmployeeDto("ivan.genchev@gmail.com", "OSS", "ivan");
     fakeRequest.dummyObject = employee;
     context.checking(new Expectations() {{
       oneOf(userRepository).addEmployee(employee);
@@ -48,7 +48,7 @@ public class AdministrationServiceTest {
 
   @Test
   public void addAnotherEmployee(){
-    final EmployeeDto employee = new EmployeeDto("marian.zlatev@gmail.com", "Incubator", "marian", false);
+    final EmployeeDto employee = new EmployeeDto("marian.zlatev@gmail.com", "Incubator", "marian");
     fakeRequest.dummyObject = employee;
     context.checking(new Expectations(){{
       oneOf(userRepository).addEmployee(employee);
@@ -59,63 +59,20 @@ public class AdministrationServiceTest {
 
   @Test
   public void editEmployeeTeam(){
-    final EmployeeDto editedEmployee = new EmployeeDto("tihomir.kehayov@gmail.com", "BSS", "tihomir", false);
+    final EmployeeDto editedEmployee = new EmployeeDto("tihomir.kehayov@gmail.com", "BSS", "tihomir");
     fakeRequest.dummyObject = editedEmployee;
     context.checking(new Expectations(){{
-      oneOf(userRepository).editEmployee(editedEmployee);
+      oneOf(userRepository).editEmployeeTeam(editedEmployee);
     }});
     Reply<Object> actualReply = administrationService.editEmployee(fakeRequest);
     assertThat(actualReply, is(Reply.saying().ok()));
   }
 
   @Test
-  public void deleteEmployee(){
-    final EmployeeDto employee = new EmployeeDto();
-    employee.email = "petar.ivanov@abv.com";
-    fakeRequest.dummyObject = employee;
-    context.checking(new Expectations(){{
-      oneOf(userRepository).deleteEmployee(employee.email);
-    }});
-    Reply<Object> actualReply = administrationService.deleteEmployee(fakeRequest);
-    assertThat(actualReply, is(Reply.saying().ok()));
-  }
-
-  @Test
-  public void searchEmployeeByName(){
-    final List<EmployeeDto> employees = new ArrayList<>();
-    employees.add(new EmployeeDto("petko.petrov@gmail.com", "Incubator", "petko", false));
-    final EmployeeDto employee = new EmployeeDto();
-    employee.name = "petko";
-    fakeRequest.dummyObject = employee;
-    context.checking(new Expectations() {{
-      oneOf(userRepository).searchEmployeesByName(employee.name);
-      will(returnValue(employees));
-    }});
-    Reply<List<EmployeeDto>> actualReply = administrationService.searchForEmployee(fakeRequest);
-    assertThat(actualReply, contains(employees));
-  }
-
-  @Test
-  public void searchForTwoEmployeesByTheirEmails(){
-    final List<EmployeeDto> employees = new ArrayList<>();
-    employees.add(new EmployeeDto("petko.petrov@gmail.com", "Incubator", "petko", false));
-    employees.add(new EmployeeDto("petar.ivanov@gmail.com", "OSS", "petar", false));
-    final EmployeeDto employee = new EmployeeDto();
-    employee.name = "petar";
-    fakeRequest.dummyObject = employee;
-    context.checking(new Expectations(){{
-      oneOf(userRepository).searchEmployeesByName(employee.name);
-      will(returnValue(employees));
-    }});
-    Reply<List<EmployeeDto>> actualReply = administrationService.searchForEmployee(fakeRequest);
-    assertThat(actualReply, contains(employees));
-  }
-
-  @Test
   public void showAllEmployees(){
     final List<EmployeeDto> employees = new ArrayList<>();
-    employees.add(new EmployeeDto("ivan.petrov@gmail.com", "WSS", "ivan", false));
-    employees.add(new EmployeeDto("petar.georgiev@gmail.com", "BSS", "petar", false));
+    employees.add(new EmployeeDto("ivan.petrov@gmail.com", "WSS", "ivan"));
+    employees.add(new EmployeeDto("petar.georgiev@gmail.com", "BSS", "petar"));
     context.checking(new Expectations() {{
       oneOf(userRepository).findAllEmployees();
       will(returnValue(employees));

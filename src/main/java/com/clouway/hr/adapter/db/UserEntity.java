@@ -16,16 +16,14 @@ import java.util.List;
  private String email;
  private String team;
  private String name;
- private boolean isAdmin;
  @Child
  private List<VacationEntity> vacations;
 
- public UserEntity(String email, String team, String name , boolean isAdmin) {
+ public UserEntity(String email, String team, String name) {
   this.key = email;
   this.email = email;
   this.team = team;
   this.name = name;
-  this.isAdmin = isAdmin;
  }
 
  public UserEntity(List<VacationEntity> vacations) {
@@ -47,10 +45,6 @@ import java.util.List;
   return name;
  }
 
- public boolean isAdmin() {
-  return isAdmin;
- }
-
  public List<VacationEntity> getVacations() {
   return vacations;
  }
@@ -63,7 +57,4 @@ import java.util.List;
   this.name = name;
  }
 
- public void setIsAdmin(boolean isAdmin) {
-  this.isAdmin = isAdmin;
- }
 }

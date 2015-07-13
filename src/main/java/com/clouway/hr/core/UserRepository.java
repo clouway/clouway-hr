@@ -10,12 +10,11 @@ import java.util.List;
 public interface UserRepository {
   void addEmployee(EmployeeDto employee);
 
-  void editEmployee(EmployeeDto editedEmployee);
-
-  void deleteEmployee(String employeeEmail);
-
-  List<EmployeeDto> searchEmployeesByName(String searchedEmail);
+  void editEmployeeTeam(EmployeeDto editedEmployee);
 
   List<EmployeeDto> findAllEmployees();
 
+  boolean checkForExistingUser(String email);
+
+  List<EmployeeDto> refreshEmployeeTeams();
 }
