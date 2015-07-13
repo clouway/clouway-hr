@@ -9,6 +9,4 @@ public interface UserRepository {
 
   boolean isAdmin(String email);
 
-  CurrentUser getBySid(String sid);
-
 }
