@@ -2,8 +2,6 @@ package com.clouway.hr.adapter.http;
 
 import com.clouway.hr.core.VacationRepository;
 import com.google.sitebricks.headless.Reply;
-import com.vercer.engine.persist.ObjectDatastore;
-import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;

@@ -9,7 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
