@@ -1,14 +1,11 @@
-package com.clouway.hr.adapter.db;
+package com.clouway.hr.adapter.http;
 
-import com.vercer.engine.persist.annotation.Key;
 
 /**
- * @author Tihomir Kehayov <kehayov89@gmail.com>
+ * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
-class VacationEntity {
-  @Key
-  private Long id;
-
+public class VacationResponseDto {
+  private Long vacationId;
   private String status;
   private Long dateFrom;
   private Long dateTo;
@@ -16,11 +13,12 @@ class VacationEntity {
   private String description;
   private boolean isHidden;
 
-  public VacationEntity() {
+
+  public VacationResponseDto() {
   }
 
-  private VacationEntity(Builder builder) {
-    id = builder.vacationId;
+  private VacationResponseDto(Builder builder) {
+    vacationId = builder.vacationId;
     status = builder.status;
     dateFrom = builder.dateFrom;
     dateTo = builder.dateTo;
@@ -33,11 +31,8 @@ class VacationEntity {
     return new Builder();
   }
 
-  public void setIsHidden(boolean isHidden) {
-    this.isHidden = isHidden;
-  }
-
   public static final class Builder {
+
     private Long vacationId;
     private String status;
     private Long dateFrom;
@@ -84,14 +79,13 @@ class VacationEntity {
       return this;
     }
 
-    public VacationEntity build() {
-      return new VacationEntity(this);
+    public VacationResponseDto build() {
+      return new VacationResponseDto(this);
     }
-
   }
 
-  public long getId() {
-    return id;
+  public Long getVacationId() {
+    return vacationId;
   }
 
   public String getStatus() {
@@ -117,5 +111,4 @@ class VacationEntity {
   public boolean isHidden() {
     return isHidden;
   }
-
 }

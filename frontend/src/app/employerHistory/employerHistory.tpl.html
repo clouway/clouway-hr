@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div class="input-group">
+            <input type="text" ng-model="q" class="form-control" placeholder="example: peter@gmail.com..."/>
+        </div>
+    </div>
+</div>
+<div ng-init="getVacations()" class="example-animate-container">
+    <table class="table">
+        <th>user</th>
+        <th>from date</th>
+        <th>to date</th>
+        <th>description</th>
+        <th>status</th>
+        <tr class="animate-repeat" ng-repeat="message in responseMessage | filter:q">
+            <td>
+                {{message.userId}}
+            </td>
+            <td>
+                {{message.dateFrom | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.dateTo | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.description}}
+            </td>
+            <td>
+                {{message.status}}
+            </td>
+            <td ng-if="message.dateTo > currentTime">
+                <a href="" ng-click="changeStatus('reject', message.vacationId)">reject</a>
+                <a href="" ng-click="changeStatus('accept', message.vacationId)">accept</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
