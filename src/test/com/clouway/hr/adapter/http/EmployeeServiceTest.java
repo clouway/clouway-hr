@@ -111,8 +111,6 @@ public class EmployeeServiceTest {
     context.checking(new Expectations() {{
       oneOf(currentDate).getTime();
       will(returnValue(date));
-//      oneOf(currentUser).isAdmin();
-//      will(returnValue(true));
     }});
   }
 }

@@ -5,11 +5,13 @@ import com.clouway.hr.adapter.http.VacationResponseDto;
 import com.clouway.hr.core.Status;
 import com.clouway.hr.core.User;
 import com.clouway.hr.core.VacationRepository;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.appengine.repackaged.com.google.api.client.util.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.vercer.engine.persist.FindCommand;
 import com.vercer.engine.persist.FindCommand.RootFindCommand;
 import com.vercer.engine.persist.ObjectDatastore;
 
@@ -19,7 +21,6 @@ import java.util.List;
 
 import static com.google.appengine.api.datastore.Query.FilterOperator.EQUAL;
 import static com.google.appengine.api.datastore.Query.FilterOperator.IN;
-import static com.google.appengine.api.datastore.Query.FilterOperator.NOT_EQUAL;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
@@ -27,6 +28,18 @@ import static com.google.appengine.api.datastore.Query.FilterOperator.NOT_EQUAL;
 public class PersistentVacationRepository implements VacationRepository {
   private final ObjectDatastore datastore;
   private final Status statuses;
+
+  private class CriteriaSearch {
+    private final String field;
+    private final FilterOperator operator;
+    private final Object value;
+
+    public CriteriaSearch(String field, FilterOperator operator, Object value) {
+      this.field = field;
+      this.operator = operator;
+      this.value = value;
+    }
+  }
 
   @Inject
   public PersistentVacationRepository(Provider<ObjectDatastore> datastore, Provider<Status> statuses) {
@@ -37,7 +50,7 @@ public class PersistentVacationRepository implements VacationRepository {
   @Override
   public void updateStatus(Long vacationId, String status) {
     VacationEntity entity = datastore.load(VacationEntity.class, vacationId);
-    VacationEntity newVacation = newVacationEntity(vacationId, entity.getUserId(), entity.getDescription(), entity.getDateFrom(), entity.getDateTo(), status);
+    VacationEntity newVacation = newVacationEntity(entity, status);
 
     datastore.store(newVacation);
   }
@@ -56,33 +69,16 @@ public class PersistentVacationRepository implements VacationRepository {
 
   @Override
   public List<VacationResponseDto> get(String userId) {
-    Iterator<VacationEntity> vacationIterator = datastore.find(VacationEntity.class);
-    List<VacationResponseDto> vacations = new ArrayList<>();
+    Iterator vacationIterator = findWith(new CriteriaSearch("userId", EQUAL, userId));
 
-    while (vacationIterator.hasNext()) {
-      VacationEntity entity = vacationIterator.next();
-
-      vacations.add(newResponseVacationDto(entity));
-    }
-
-    return vacations;
+    return iterateVacations(vacationIterator);
   }
 
   @Override
-  public List<VacationResponseDto> getStatus(String type) {
-    Iterator<VacationEntity> statuses = datastore.find()
-            .type(VacationEntity.class)
-            .addFilter("status", EQUAL, type)
-            .returnResultsNow();
+  public List<VacationResponseDto> getStatus(String vacationType) {
+    Iterator<VacationEntity> statuses = findWith(new CriteriaSearch("status", EQUAL, vacationType));
 
-    List<VacationResponseDto> responseDtoList = Lists.newArrayList();
-    while (statuses.hasNext()) {
-      VacationEntity vacationEntity = statuses.next();
-
-      responseDtoList.add(newResponseVacationDto(vacationEntity));
-    }
-
-    return responseDtoList;
+    return iterateVacations(statuses);
   }
 
   @Override
@@ -93,8 +89,53 @@ public class PersistentVacationRepository implements VacationRepository {
     return getHistory(filter);
   }
 
+  @Override
+  public void hide(Long vacationId) {
+    VacationEntity vacationEntity = datastore.load(VacationEntity.class, vacationId);
+    VacationEntity newVacationEntity = VacationEntity.newBuilder()
+            .vacationId(vacationEntity.getId())
+            .userId(vacationEntity.getUserId())
+            .dateFrom(vacationEntity.getDateFrom())
+            .dateTo(vacationEntity.getDateTo())
+            .description(vacationEntity.getDescription())
+            .status(vacationEntity.getStatus())
+            .isHidden(true)
+            .build();
+
+    datastore.store(newVacationEntity);
+  }
+
+  @Override
+  public List<VacationResponseDto> getUnHidden(User currentUser) {
+    Iterator results = findWith(new CriteriaSearch("isHidden", EQUAL, false), new CriteriaSearch("userId", EQUAL, currentUser.getEmail()));
+
+    return iterateVacations(results);
+  }
+
+  private List<VacationResponseDto> iterateVacations(Iterator<VacationEntity> vacationIterator) {
+    List<VacationResponseDto> vacations = Lists.newArrayList();
+    while (vacationIterator.hasNext()) {
+      VacationEntity entity = vacationIterator.next();
+      vacations.add(newResponseVacationDto(entity));
+    }
+
+    return vacations;
+  }
+
   private void sortUser(RootFindCommand<VacationEntity> filter) {
     filter.addSort("dateTo", SortDirection.DESCENDING);
+  }
+
+  private Iterator<VacationEntity> findWith(CriteriaSearch... criteriaSearches) {
+    FindCommand queryResultIteratorFuture = datastore.find();
+    RootFindCommand<VacationEntity> type = queryResultIteratorFuture.type(VacationEntity.class);
+
+    for (CriteriaSearch criteriaSearch : criteriaSearches) {
+      type.addFilter(criteriaSearch.field, criteriaSearch.operator, criteriaSearch.value);
+    }
+    QueryResultIterator<VacationEntity> vacationEntityQueryResultIterator = type.returnResultsNow();
+
+    return vacationEntityQueryResultIterator;
   }
 
   private RootFindCommand<VacationEntity> filterUser(User currentUser) {
@@ -115,16 +156,9 @@ public class PersistentVacationRepository implements VacationRepository {
   }
 
   private List<VacationResponseDto> getHistory(RootFindCommand<VacationEntity> rootFindCommand) {
-    List<VacationResponseDto> responseDtoList = Lists.newArrayList();
-
     QueryResultIterator<VacationEntity> vacationEntityIterator = rootFindCommand.returnResultsNow();
-    while (vacationEntityIterator.hasNext()) {
-      VacationEntity vacationEntity = vacationEntityIterator.next();
 
-      responseDtoList.add(newResponseVacationDto(vacationEntity));
-    }
-
-    return responseDtoList;
+    return iterateVacations(vacationEntityIterator);
   }
 
   private VacationResponseDto newResponseVacationDto(VacationEntity vacationEntity) {
@@ -135,6 +169,7 @@ public class PersistentVacationRepository implements VacationRepository {
             .dateFrom(vacationEntity.getDateFrom())
             .dateTo(vacationEntity.getDateTo())
             .status(vacationEntity.getStatus())
+            .isHidden(vacationEntity.isHidden())
             .build();
   }
 
@@ -148,13 +183,13 @@ public class PersistentVacationRepository implements VacationRepository {
             .build();
   }
 
-  private VacationEntity newVacationEntity(Long vacationId, String userId, String description, Long dateFrom, Long dateTo, String status) {
+  private VacationEntity newVacationEntity(VacationEntity entity, String status) {
     return VacationEntity.newBuilder()
-            .vacationId(vacationId)
-            .userId(userId)
-            .description(description)
-            .dateFrom(dateFrom)
-            .dateTo(dateTo)
+            .vacationId(entity.getId())
+            .userId(entity.getUserId())
+            .description(entity.getDescription())
+            .dateFrom(entity.getDateFrom())
+            .dateTo(entity.getDateTo())
             .status(status)
             .build();
   }

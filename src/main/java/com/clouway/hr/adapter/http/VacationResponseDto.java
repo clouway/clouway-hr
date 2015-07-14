@@ -1,5 +1,6 @@
 package com.clouway.hr.adapter.http;
 
+
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
@@ -10,6 +11,8 @@ public class VacationResponseDto {
   private Long dateTo;
   private String userId;
   private String description;
+  private boolean isHidden;
+
 
   public VacationResponseDto() {
   }
@@ -21,6 +24,7 @@ public class VacationResponseDto {
     dateTo = builder.dateTo;
     userId = builder.userId;
     description = builder.description;
+    isHidden = builder.isHidden;
   }
 
   public static Builder newBuilder() {
@@ -35,6 +39,7 @@ public class VacationResponseDto {
     private Long dateTo;
     private String userId;
     private String description;
+    private boolean isHidden;
 
     private Builder() {
     }
@@ -69,10 +74,14 @@ public class VacationResponseDto {
       return this;
     }
 
+    public Builder isHidden(boolean isHidden) {
+      this.isHidden = isHidden;
+      return this;
+    }
+
     public VacationResponseDto build() {
       return new VacationResponseDto(this);
     }
-
   }
 
   public Long getVacationId() {
@@ -97,5 +106,9 @@ public class VacationResponseDto {
 
   public String getDescription() {
     return description;
+  }
+
+  public boolean isHidden() {
+    return isHidden;
   }
 }

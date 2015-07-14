@@ -21,4 +21,8 @@ public interface VacationRepository {
   List<VacationResponseDto> getStatus(String pending);
 
   List<VacationResponseDto> getHistory(User currentUser);
+
+  void hide(Long vacationId);
+
+  List<VacationResponseDto> getUnHidden(User currentUser);
 }

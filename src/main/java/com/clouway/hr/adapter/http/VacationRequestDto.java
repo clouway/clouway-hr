@@ -4,7 +4,6 @@ package com.clouway.hr.adapter.http;
  * @author Tihomir Kehayov <kehayov89@gmail.com>
  */
 public class VacationRequestDto {
-  //todo user id have to be @Parent UserEntity
   private String userId;
   private Long fromDate;
   private Long toDate;

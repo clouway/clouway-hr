@@ -41,4 +41,29 @@
 <textarea ng-model="description" rows="4" cols="50">description</textarea><br>
 <button type="submit" class="btn btn-primary" ng-click="vacationRequest()">send vacation request</button>
 
+<div ng-init="getUnHiddenVacations()">
+    <table class="table">
+        <th>from date</th>
+        <th>to date</th>
+        <th>description</th>
+        <th>status</th>
+        <tr ng-repeat="vacation in unhiddenVacations">
+            <td>
+                {{vacation.dateFrom | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{vacation.dateTo | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{vacation.description}}
+            </td>
+            <td>
+                {{vacation.status}}
+            </td>
+            <td>
+                <a href="" ng-click="hide(vacation.vacationId, $index)">hide</a>
+            </td>
+        </tr>
+    </table>
 
+</div>

@@ -14,6 +14,7 @@ class VacationEntity {
   private Long dateTo;
   private String userId;
   private String description;
+  private boolean isHidden;
 
   public VacationEntity() {
   }
@@ -25,10 +26,15 @@ class VacationEntity {
     dateTo = builder.dateTo;
     userId = builder.userId;
     description = builder.description;
+    isHidden = builder.isHidden;
   }
 
   public static Builder newBuilder() {
     return new Builder();
+  }
+
+  public void setIsHidden(boolean isHidden) {
+    this.isHidden = isHidden;
   }
 
   public static final class Builder {
@@ -38,6 +44,7 @@ class VacationEntity {
     private Long dateTo;
     private String userId;
     private String description;
+    private boolean isHidden;
 
     private Builder() {
     }
@@ -72,9 +79,15 @@ class VacationEntity {
       return this;
     }
 
+    public Builder isHidden(boolean isHidden) {
+      this.isHidden = isHidden;
+      return this;
+    }
+
     public VacationEntity build() {
       return new VacationEntity(this);
     }
+
   }
 
   public long getId() {
@@ -100,4 +113,9 @@ class VacationEntity {
   public String getDescription() {
     return description;
   }
+
+  public boolean isHidden() {
+    return isHidden;
+  }
+
 }

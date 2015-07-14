@@ -36,10 +36,25 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
             .then(function (message) {
               $scope.responseMessage = "success";
               displayMessage($scope.responseMessage, 'success');
+              $scope.getUnHiddenVacations();
             }, function (reason) {
               $scope.responseMessage = "incorrect date";
               displayMessage($scope.responseMessage, 'danger');
             });
+  };
+
+  $scope.getUnHiddenVacations = function () {
+    HttpService.get('/r/vacation/unhidden').then(function (data) {
+      $scope.unhiddenVacations = data;
+    });
+  };
+
+  $scope.hide = function (vacationId, vacationPosition) {
+    var url = "/r/vacation/hide/" + vacationId;
+
+    HttpService.put(url).then(function () {
+      $scope.unhiddenVacations.splice(vacationPosition, 1);
+    });
   };
 
   var displayMessage = function (message, type) {
@@ -49,6 +64,7 @@ ang.controller('EmployeeHomeCtrl', ['$scope', '$http', 'HttpService', function (
       align: 'left'
     });
   };
+
   //DATEPICKER
 
   $scope.clear = function () {

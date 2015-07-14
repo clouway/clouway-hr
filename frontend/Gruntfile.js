@@ -174,11 +174,15 @@ module.exports = function (grunt) {
       web_app: {
         files: [{
           cwd: 'bin',
-          src: ["**"],           // copy all files and subfolders
-          dest: '../src/main/webapp',    // destination folder
-          expand: true       // required when using cwd
-        }
-        ]
+          src: ["**"],
+          dest: '../src/main/webapp',
+          expand: true
+        }, {
+          src: ['**'],
+          dest: '../src/main/webapp/fonts',
+          cwd: '<%= vendor_dir %>/bootstrap/fonts',
+          expand: true
+        }]
       }
     },
 
