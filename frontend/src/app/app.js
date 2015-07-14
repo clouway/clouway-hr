@@ -3,8 +3,8 @@ angular.module('clouway-hr', [
   'templates-common',
   'home',
   'ui.router',
-  'administration'
-
+  'administration',
+  'angular-loading-bar'
 ])
 
         .config(function myAppConfig($stateProvider, $urlRouterProvider) {

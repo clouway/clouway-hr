@@ -5,8 +5,7 @@
 var myApp = angular.module('administration', [
   'ui.router',
   'placeholders',
-  'ui.bootstrap',
-  'angular-loading-bar'
+  'ui.bootstrap'
 ])
         .config(function config($stateProvider) {
           $stateProvider.state('administration', {

@@ -3,6 +3,7 @@ package com.clouway.hr.adapter.db;
 import com.clouway.hr.adapter.http.DirectoryDto;
 import com.clouway.hr.adapter.http.EmployeeDto;
 import com.clouway.hr.core.UserRepository;
+import com.google.api.services.admin.directory.model.Group;
 import com.google.api.services.admin.directory.model.Member;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.inject.Inject;
@@ -62,7 +63,8 @@ public class PersistentUserRepository implements UserRepository {
     List<EmployeeDto> employees = findAllEmployees();
     for (EmployeeDto employee : employees){
       try {
-        employee.team = DirectoryDto.directory.groups().list().setUserKey(employee.email).execute().getGroups().get(0).getName();
+        List<Group> groupList = DirectoryDto.directory.groups().list().setUserKey(employee.email).execute().getGroups();
+        employee.team = groupList.get(0).getName();
         refreshTeamInDb(employee);
       } catch (IOException e) {
         e.printStackTrace();
