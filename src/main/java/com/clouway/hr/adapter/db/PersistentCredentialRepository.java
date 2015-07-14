@@ -1,7 +1,7 @@
 package com.clouway.hr.adapter.db;
 
 import com.clouway.hr.core.CredentialRepository;
-import com.clouway.hr.core.OAuthHelper;
+import com.clouway.hr.core.OAuthAuthentication;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.inject.Inject;
 import com.vercer.engine.persist.ObjectDatastore;
@@ -15,14 +15,14 @@ import com.vercer.engine.persist.ObjectDatastore;
 public class PersistentCredentialRepository implements CredentialRepository {
 
   private final ObjectDatastore datastore;
-  private final OAuthHelper oAuthHelper;
+  private final OAuthAuthentication oAuthAuthentication;
 
 
   @Inject
-  public PersistentCredentialRepository(ObjectDatastore datastore, OAuthHelper oAuthHelper) {
+  public PersistentCredentialRepository(ObjectDatastore datastore, OAuthAuthentication oAuthAuthentication) {
 
     this.datastore = datastore;
-    this.oAuthHelper = oAuthHelper;
+    this.oAuthAuthentication = oAuthAuthentication;
   }
 
 
@@ -36,7 +36,7 @@ public class PersistentCredentialRepository implements CredentialRepository {
       final String accessToken = credentialEntity.getAccessToken();
       final String refreshToken = credentialEntity.getRefreshToken();
 
-      return oAuthHelper.getGoogleCredential(accessToken, refreshToken);
+      return oAuthAuthentication.getGoogleCredential(accessToken, refreshToken);
     }
 
     return null;

@@ -1,6 +1,6 @@
 package com.clouway.hr.adapter.http.oauth2;
 
-import com.clouway.hr.core.OAuthHelper;
+import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthScopes;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 
-public class OAuthAuthentication implements OAuthHelper {
+public class OAuthAuthenticationImpl implements OAuthAuthentication {
 
   private final List<String> scopes;
   private final JacksonFactory jsonFactory;
@@ -35,7 +35,7 @@ public class OAuthAuthentication implements OAuthHelper {
 
 
   @Inject
-  public OAuthAuthentication(@OAuthScopes List<String> scopes, JacksonFactory jsonFactory, HttpTransport httpTransport) {
+  public OAuthAuthenticationImpl(@OAuthScopes List<String> scopes, JacksonFactory jsonFactory, HttpTransport httpTransport) {
 
     this.scopes = scopes;
     this.jsonFactory = jsonFactory;

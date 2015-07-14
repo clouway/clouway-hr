@@ -1,7 +1,7 @@
 package com.clouway.hr.adapter.http.oauth2;
 
 import com.clouway.hr.core.CredentialRepository;
-import com.clouway.hr.core.OAuthHelper;
+import com.clouway.hr.core.OAuthAuthentication;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -37,7 +37,7 @@ public class OAuthServiceTest {
   public JUnitRuleMockery context = new JUnitRuleMockery();
 
   @Mock
-  OAuthHelper oAuthHelper;
+  OAuthAuthentication oAuthAuthentication;
   @Mock
   CredentialRepository credentialRepository;
   @Mock
@@ -51,7 +51,7 @@ public class OAuthServiceTest {
   @Test
   public void getCurrentUser() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthHelper, credentialRepository, userService);
+    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, credentialRepository, userService);
 
     final String userEmail = "email@domain.com";
 
@@ -73,7 +73,7 @@ public class OAuthServiceTest {
   @Test
   public void processOAuthCallback() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthHelper, credentialRepository, userService);
+    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, credentialRepository, userService);
 
     final String userEmail = "email@domain.com";
     final String userDomain = "domain.com";
@@ -88,9 +88,9 @@ public class OAuthServiceTest {
     context.checking(new Expectations() {{
       oneOf(request).getParameter("code");
       will(returnValue("someCodeValue"));
-      oneOf(oAuthHelper).getGoogleTokenResponse("someCodeValue");
+      oneOf(oAuthAuthentication).getGoogleTokenResponse("someCodeValue");
       will(returnValue(googleTokenResponse));
-      oneOf(oAuthHelper).getGoogleCredential(googleTokenResponse);
+      oneOf(oAuthAuthentication).getGoogleCredential(googleTokenResponse);
       will(returnValue(credentials));
       oneOf(userService).getCurrentUser();
       will(returnValue(googleUser));
@@ -106,17 +106,17 @@ public class OAuthServiceTest {
   @Test
   public void createNewCredentialFlow() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthHelper, credentialRepository, userService);
+    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, credentialRepository, userService);
     final GoogleAuthorizationCodeFlow googleAuthorizationFlow = getGoogleAuthorizationCodeFlow();
 
     context.checking(new Expectations() {{
-      oneOf(oAuthHelper).getGoogleAuthorizationFlow();
+      oneOf(oAuthAuthentication).getGoogleAuthorizationFlow();
       will(returnValue(googleAuthorizationFlow));
-      oneOf(oAuthHelper).generateGoogleSecurityState();
+      oneOf(oAuthAuthentication).generateGoogleSecurityState();
       will(returnValue("someSecurityState"));
-      oneOf(oAuthHelper).getAuthorizationUrl(googleAuthorizationFlow, "someSecurityState");
+      oneOf(oAuthAuthentication).getAuthorizationUrl(googleAuthorizationFlow, "someSecurityState");
       will(returnValue("someAuthorizationUrl"));
-      oneOf(oAuthHelper).setGoogleSecurityState(request, "someSecurityState");
+      oneOf(oAuthAuthentication).setGoogleSecurityState(request, "someSecurityState");
     }});
 
     final Reply reply = oAuthService.createNewCredentialsFlow();

@@ -2,7 +2,7 @@ package com.clouway.hr.adapter.db;
 
 import com.clouway.hr.adapter.http.oauth2.OAuth2Provider;
 import com.clouway.hr.core.CredentialRepository;
-import com.clouway.hr.core.OAuthHelper;
+import com.clouway.hr.core.OAuthAuthentication;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -42,8 +42,8 @@ public class PersistentCredentialRepositoryTest {
   private final String accessToken = "accessToken";
   private final String refreshToken = "refreshToken";
 
-  private final OAuthHelper oAuthHelper = context.mock(OAuthHelper.class);
-  private final CredentialRepository credentialRepository = new PersistentCredentialRepository(datastore, oAuthHelper);
+  private final OAuthAuthentication oAuthAuthentication = context.mock(OAuthAuthentication.class);
+  private final CredentialRepository credentialRepository = new PersistentCredentialRepository(datastore, oAuthAuthentication);
 
   @Before
   public void setUp() {
@@ -78,7 +78,7 @@ public class PersistentCredentialRepositoryTest {
     store(userId, googleCredential);
 
     context.checking(new Expectations() {{
-      oneOf(oAuthHelper).getGoogleCredential(accessToken, refreshToken);
+      oneOf(oAuthAuthentication).getGoogleCredential(accessToken, refreshToken);
       will(returnValue(newCredential(accessToken, refreshToken)));
     }});
 

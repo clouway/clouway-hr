@@ -4,10 +4,10 @@ import com.clouway.hr.adapter.db.PersistentCredentialRepository;
 import com.clouway.hr.adapter.db.PersistentVacationRepository;
 import com.clouway.hr.adapter.http.SecurityFilter;
 import com.clouway.hr.adapter.http.oauth2.OAuth2Provider;
-import com.clouway.hr.adapter.http.oauth2.OAuthAuthentication;
+import com.clouway.hr.adapter.http.oauth2.OAuthAuthenticationImpl;
 import com.clouway.hr.adapter.http.oauth2.OAuthCredentialsFilter;
 import com.clouway.hr.core.CredentialRepository;
-import com.clouway.hr.core.OAuthHelper;
+import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthScopes;
 import com.clouway.hr.core.VacationRepository;
 import com.google.api.client.http.HttpTransport;
@@ -62,7 +62,7 @@ public class AppConfig extends GuiceServletContextListener {
 
                 bind(VacationRepository.class).to(PersistentVacationRepository.class);
                 bind(CredentialRepository.class).to(PersistentCredentialRepository.class);
-                bind(OAuthHelper.class).to(OAuthAuthentication.class);
+                bind(OAuthAuthentication.class).to(OAuthAuthenticationImpl.class);
 
               }
 

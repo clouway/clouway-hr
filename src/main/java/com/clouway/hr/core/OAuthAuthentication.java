@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 
-public interface OAuthHelper {
+public interface OAuthAuthentication {
 
   GoogleAuthorizationCodeFlow getGoogleAuthorizationFlow();
 

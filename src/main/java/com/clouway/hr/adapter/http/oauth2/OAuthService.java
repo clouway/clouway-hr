@@ -1,7 +1,7 @@
 package com.clouway.hr.adapter.http.oauth2;
 
 import com.clouway.hr.core.CredentialRepository;
-import com.clouway.hr.core.OAuthHelper;
+import com.clouway.hr.core.OAuthAuthentication;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -30,19 +30,19 @@ import java.security.Principal;
 @At("/oauth")
 class OAuthService {
   private final Provider<HttpServletRequest> requestProvider;
-  private final OAuthHelper oAuthHelper;
+  private final OAuthAuthentication oAuthAuthentication;
   private final CredentialRepository credentialRepository;
   private final UserService userService;
 
 
   @Inject
   public OAuthService(Provider<HttpServletRequest> requestProvider,
-                      OAuthHelper oAuthHelper,
+                      OAuthAuthentication oAuthAuthentication,
                       CredentialRepository credentialRepository,
                       UserService userService) {
 
     this.requestProvider = requestProvider;
-    this.oAuthHelper = oAuthHelper;
+    this.oAuthAuthentication = oAuthAuthentication;
     this.credentialRepository = credentialRepository;
     this.userService = userService;
   }
@@ -55,8 +55,8 @@ class OAuthService {
     HttpServletRequest request = requestProvider.get();
 
     final String authorizationCode = request.getParameter("code");
-    final GoogleTokenResponse googleTokenResponse = oAuthHelper.getGoogleTokenResponse(authorizationCode);
-    final GoogleCredential googleCredential = oAuthHelper.getGoogleCredential(googleTokenResponse);
+    final GoogleTokenResponse googleTokenResponse = oAuthAuthentication.getGoogleTokenResponse(authorizationCode);
+    final GoogleCredential googleCredential = oAuthAuthentication.getGoogleCredential(googleTokenResponse);
 
     final User currentUser = userService.getCurrentUser();
     final String email = currentUser.getEmail();
@@ -83,13 +83,13 @@ class OAuthService {
   @Get
   public Reply createNewCredentialsFlow() {
 
-    final GoogleAuthorizationCodeFlow flow = oAuthHelper.getGoogleAuthorizationFlow();
-    final String securityState = oAuthHelper.generateGoogleSecurityState();
-    final String authorizationUrl = oAuthHelper.getAuthorizationUrl(flow, securityState);
+    final GoogleAuthorizationCodeFlow flow = oAuthAuthentication.getGoogleAuthorizationFlow();
+    final String securityState = oAuthAuthentication.generateGoogleSecurityState();
+    final String authorizationUrl = oAuthAuthentication.getAuthorizationUrl(flow, securityState);
 
     final HttpServletRequest request = requestProvider.get();
 
-    oAuthHelper.setGoogleSecurityState(request, securityState);
+    oAuthAuthentication.setGoogleSecurityState(request, securityState);
 
     return Reply.saying().redirect(authorizationUrl);
   }
