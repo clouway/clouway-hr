@@ -11,17 +11,13 @@ module.exports = function ( karma ) {
     files: [
       <% scripts.forEach( function ( file ) { %>'<%= file %>',
       <% }); %>
-      'src/**/*.js',
-      'src/**/*.coffee',
+      'src/**/*.js'
     ],
     exclude: [
       'src/assets/**/*.js'
     ],
     frameworks: [ 'jasmine' ],
-    plugins: [ 'karma-jasmine', 'karma-firefox-launcher', 'karma-coffee-preprocessor' ],
-    preprocessors: {
-      '**/*.coffee': 'coffee',
-    },
+    plugins: [ 'karma-jasmine', 'karma-phantomjs-launcher' ],
 
     /**
      * How to report, by default.
@@ -42,8 +38,7 @@ module.exports = function ( karma ) {
     autoWatch: false,
 
     /**
-     * The list of browsers to launch to test on. This includes only "Firefox" by
-     * default, but other browser names include:
+     * The list of browsers to launch to test on. This includes:
      * Chrome, ChromeCanary, Firefox, Opera, Safari, PhantomJS
      *
      * Note that you can also use the executable name of the browser, like "chromium"
@@ -55,7 +50,7 @@ module.exports = function ( karma ) {
      * the aesthetic advantage of not launching a browser every time you save.
      */
     browsers: [
-      'Firefox'
+      'PhantomJS'
     ]
   });
 };
