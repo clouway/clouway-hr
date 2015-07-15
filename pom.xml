@@ -6,10 +6,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <groupId>com.clouway.hr</groupId>
-    <artifactId>clouway-hr</artifactId>
+    <artifactId>clouway-hr2</artifactId>
 
     <properties>
-        <app.id>clouway-hr</app.id>
+        <app.id>clouway-hr2</app.id>
         <app.version>1</app.version>
         <appengine.version>1.9.20</appengine.version>
         <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
@@ -72,6 +72,30 @@
             <version>18.0</version>
         </dependency>
 
+        <!--Commons Lang-->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <!--ouath-->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-oauth2</artifactId>
+            <version>v2-rev91-1.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-admin-directory</artifactId>
+            <version>directory_v1-rev53-1.20.0</version>
+        </dependency>
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>com.google.appengine</groupId>
@@ -100,7 +124,16 @@
             <artifactId>jmock-junit4</artifactId>
             <version>2.6.0</version>
         </dependency>
+
+        <!--For Testing-->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.20.0</version>
+        </dependency>
     </dependencies>
+
+
 
     <build>
         <!-- for hot reload of the web application-->
@@ -153,14 +186,6 @@
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
                     <version>${app.version}</version>
-                    <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
-                    <!-- address>0.0.0.0</address>
-                    <port>8080</port -->
-                    <!-- Comment in the below snippet to enable local debugging with a remote debugger
-                         like those included with Eclipse or IntelliJ -->
-                    <!-- jvmFlags>
-                      <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
-                    </jvmFlags -->
                 </configuration>
             </plugin>
             <plugin>

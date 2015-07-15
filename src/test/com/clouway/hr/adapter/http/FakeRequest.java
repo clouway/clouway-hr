@@ -12,14 +12,14 @@ import java.io.OutputStream;
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
  */
 public class FakeRequest implements Request {
-  public VacationDto dto;
+  public Object dummyObject;
 
   @Override
   public <E> RequestRead<E> read(Class<E> aClass) {
     return new RequestRead<E>() {
       @Override
       public E as(Class<? extends Transport> aClass) {
-        return (E) dto;
+        return (E) dummyObject;
       }
     };
   }

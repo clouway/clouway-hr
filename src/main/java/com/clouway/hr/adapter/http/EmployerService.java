@@ -12,7 +12,7 @@ import com.google.sitebricks.headless.Service;
 @At("/rest/employer/")
 @Service
 public class EmployerService {
-  VacationRepository vacationRepository;
+  private final VacationRepository vacationRepository;
 
   @Inject
   public EmployerService(VacationRepository vacationRepository) {

@@ -3,3 +3,5 @@
 target
 eclipse-launch-profiles
 nbactions.xml
+src/main/java/com/clouway/hr/adapter/http/oauth2
+src/main/java/com/clouway/hr/core/RandomStringGenerator.java
