@@ -100,6 +100,14 @@
       <version>2.5</version>
     </dependency>
 
+    <!-- JodaTime-->
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.6</version>
+    </dependency>
+
+
     <!-- Test Dependencies -->
     <dependency>
       <groupId>com.google.appengine</groupId>
@@ -114,6 +122,14 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.squareup.okhttp</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>2.4.0</version>
+      <scope>test</scope>
+    </dependency>
+
+
     <!--Junit-->
     <dependency>
       <groupId>junit</groupId>
@@ -127,6 +143,28 @@
       <groupId>org.jmock</groupId>
       <artifactId>jmock-junit4</artifactId>
       <version>2.6.0</version>
+    </dependency>
+
+    <!-- Google OAuth-->
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.20.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.oauth-client</groupId>
+      <artifactId>google-oauth-client-jetty</artifactId>
+      <version>1.20.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-oauth2</artifactId>
+      <version>v2-rev91-1.20.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-admin-directory</artifactId>
+      <version>directory_v1-rev53-1.20.0</version>
     </dependency>
   </dependencies>
 
@@ -181,14 +219,6 @@
         <configuration>
           <enableJarClasses>false</enableJarClasses>
           <version>${app.version}</version>
-          <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
-          <!-- address>0.0.0.0</address>
-          <port>8080</port -->
-          <!-- Comment in the below snippet to enable local debugging with a remote debugger
-               like those included with Eclipse or IntelliJ -->
-          <!-- jvmFlags>
-            <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
-          </jvmFlags -->
         </configuration>
       </plugin>
       <plugin>
