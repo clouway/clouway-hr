@@ -12,7 +12,7 @@ describe('http request service', function () {
     });
   });
 
-  it('send get request', function () {
+  it('sends get request', function () {
 
     var promise = httpRequest.get('/test/', {date: '22.05.2015'});
 
@@ -26,7 +26,7 @@ describe('http request service', function () {
   });
 
 
-  it('send post request', function () {
+  it('sends post request', function () {
     var promise = httpRequest.post('/test/', {date: '10.12.2013'});
 
     $httpBackend.expectPOST('/test/').respond(200, 'response');
@@ -38,7 +38,7 @@ describe('http request service', function () {
     $httpBackend.flush();
   });
 
-  it('send put request', function () {
+  it('sends put request', function () {
     var promise = httpRequest.put('/test/', {date: '30.04.2000'});
 
     $httpBackend.expectPUT('/test/').respond(200, 'response12345');
