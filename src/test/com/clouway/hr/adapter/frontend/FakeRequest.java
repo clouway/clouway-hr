@@ -1,4 +1,4 @@
-package com.clouway.hr.adapter.http;
+package com.clouway.hr.adapter.frontend;
 
 import com.google.common.collect.Multimap;
 import com.google.inject.TypeLiteral;

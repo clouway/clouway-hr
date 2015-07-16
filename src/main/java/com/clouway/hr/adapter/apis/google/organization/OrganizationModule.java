@@ -1,5 +1,6 @@
 package com.clouway.hr.adapter.apis.google.organization;
 
+import com.clouway.hr.core.EmployeeRepository;
 import com.google.inject.AbstractModule;
 
 /**
@@ -12,6 +13,7 @@ public class OrganizationModule extends AbstractModule {
 
     bind(Organization.class).to(OrganizationImpl.class);
     bind(DirectoryServiceFactory.class).to(DirectoryServiceFactoryImpl.class);
+    bind(EmployeeRepository.class).to(OrganizationImpl.class);
 
   }
 }

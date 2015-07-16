@@ -11,7 +11,11 @@
 
   <properties>
     <app.id>clouway-hr-2</app.id>
+<<<<<<< HEAD
     <app.version>1</app.version>
+=======
+    <app.version>3</app.version>
+>>>>>>> 1784860... move classes
     <appengine.version>1.9.20</appengine.version>
     <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

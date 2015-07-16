@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h1>{{message}}</h1>
+<p><label>Search: <input ng-model="searchText"></label></p>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Edit Team</th>
+    </tr>
+
+    <tr ng-repeat="employee in employees | filter:searchText">
+        <td>{{employee.name}}</td>
+        <td>{{employee.email}}</td>
+        <td><a href="" class="btn btn-default" data-toggle="modal" data-target="#myModal" ng-click="employeeInformation(employee.email, employee.name)">More Info</a></td>
+    </tr>
+</table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Employee Info</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+
+                        <div class="form-group">
+                            <label>Email: </label>{{employeeEmail}}
+                            <label>Name: </label>{{employeeName}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputNewTeam2">Team</label>
+                            <select class="form-control" id="exampleInputNewTeam2" ng-model="employeeTeam">
+                                <option>OSS</option>
+                                <option>BSS</option>
+                                <option disabled>no team</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-default" ng-click="editEmployee(employeeEmail, employeeTeam, employeeName)" data-dismiss="modal">Edit</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

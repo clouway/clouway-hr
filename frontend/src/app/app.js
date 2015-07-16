@@ -2,6 +2,7 @@ angular.module('hr.core', [
   'templates-app',
   'templates-common',
   'ui.router',
+  'hr.administration',
   'hr.vacationRequest',
   'hr.processingVacations'
 ])
@@ -82,6 +83,4 @@ angular.module('hr.core', [
 
             return deferred.promise;
           };
-        }])
-
-;
+        }]);

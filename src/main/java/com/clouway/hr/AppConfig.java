@@ -7,13 +7,12 @@ import com.clouway.hr.adapter.apis.google.user.oauth.OAuthService;
 import com.clouway.hr.adapter.cache.memcache.CacheModule;
 import com.clouway.hr.adapter.db.persistence.PersistenceModule;
 import com.clouway.hr.adapter.frontend.user.UserService;
-import com.clouway.hr.adapter.http.VacationService;
-import com.clouway.hr.vacationstate.VacationStateModule;
+import com.clouway.hr.adapter.frontend.administration.EmployeeService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.inject.servlet.ServletModule;
 import com.google.sitebricks.SitebricksModule;
+import com.google.inject.servlet.ServletModule;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
@@ -34,6 +33,7 @@ public class AppConfig extends GuiceServletContextListener {
             new SitebricksModule() {
               @Override
               protected void configureSitebricks() {
+                at("/employee").serve(EmployeeService.class);
                 at("/oauth").serve(OAuthService.class);
                 at("/r/vacation").serve(VacationService.class);
                 at("/userservices").serve(UserService.class);
