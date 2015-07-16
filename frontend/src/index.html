@@ -13,8 +13,67 @@
   </head>
   <body>
     <div class="container">
-        Another Message...
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
+                        ng-click="menuCollapsed = ! menuCollapsed">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-brand">
+                    clouway hr
+                </div>
+            </div>
+            <div class="collapse navbar-collapse col-lg-19 pull-left" collapse="menuCollapsed">
+                <ul class="nav navbar-nav col-lg-15">
+
+                    <li ui-sref-active="active">
+                        <a href ui-sref="home">
+                            <i class="fa fa-home"></i>
+                            administration
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href ui-sref="employeeHistory">
+                            <i class="fa fa-history"></i>
+                            employee history
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href ui-sref="employerHistory">
+                            <i class="fa fa-history"></i>
+                            employer history
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href ui-sref="employeeHome">
+                            <i class="fa fa-home"></i>
+                            employee home
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href ui-sref="employerHome">
+                            <i class="fa fa-home"></i>
+                            employer home
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href ui-sref="administration">
+                            <i class="fa fa-users"></i>
+                            Administration
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <a href="/oauth/logout" class="btn btn-default" style="margin-top: 10px;margin-right: 15px">Log out</a>
+            </ul>
+        </div>
     </div>
+
+    <div class="container" ui-view="main"></div>
 
     <script src="http://localhost:35729/livereload.js"></script>
   </body>
