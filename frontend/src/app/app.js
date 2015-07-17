@@ -1,8 +1,17 @@
-angular.module( 'hr.core', [
+angular.module('hr.core', [
   'templates-app',
   'templates-common',
-  'ui.router'
+  'ui.router',
+  'hr.vacationRequest',
+  'hr.processingVacations'
 ])
+        .constant('appURL', {
+          pendingVacations: '/r/vacation/type/pending',
+          vacationRequest: '/r/vacation/vacationRequest',
+          unhiddenVacations: '/r/vacation/unhidden',
+          hideVacation: '/r/vacation/hide/'
+        })
+
         .config(function myAppConfig($stateProvider, $urlRouterProvider) {
           $urlRouterProvider.otherwise('/');
         })
@@ -37,6 +46,13 @@ angular.module( 'hr.core', [
           });
         })
 
+        .service('appConstants', ['$http', '$q', '$rootScope', 'appURL', function ($http, $q, $rootScope, appURL) {
+          this.getAppURL = function () {
+
+            return appURL;
+          };
+        }])
+
         .service('httpRequest', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 
           this.get = function (url, data) {
@@ -66,4 +82,6 @@ angular.module( 'hr.core', [
 
             return deferred.promise;
           };
-        }]);
+        }])
+
+;

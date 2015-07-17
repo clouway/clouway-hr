@@ -3,10 +3,11 @@ package com.clouway.hr;
 import com.clouway.hr.adapter.apis.google.organization.OrganizationModule;
 import com.clouway.hr.adapter.apis.google.user.oauth.OAuthCredentialsFilter;
 import com.clouway.hr.adapter.apis.google.user.oauth.OAuthModule;
-import com.clouway.hr.adapter.apis.google.user.oauth.OAuthService;
 import com.clouway.hr.adapter.cache.memcache.CacheModule;
 import com.clouway.hr.adapter.db.persistence.PersistenceModule;
 import com.clouway.hr.adapter.frontend.user.UserService;
+import com.clouway.hr.adapter.http.VacationService;
+import com.google.appengine.api.oauth.OAuthService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -33,6 +34,7 @@ public class AppConfig extends GuiceServletContextListener {
               @Override
               protected void configureSitebricks() {
                 at("/oauth").serve(OAuthService.class);
+                at("/r/vacation").serve(VacationService.class);
                 at("/userservices").serve(UserService.class);
               }
             }

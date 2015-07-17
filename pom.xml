@@ -10,7 +10,7 @@
   <artifactId>clouway-hr</artifactId>
 
   <properties>
-    <app.id>clouway-hr</app.id>
+    <app.id>clouway-hr-2</app.id>
     <app.version>1</app.version>
     <appengine.version>1.9.20</appengine.version>
     <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>

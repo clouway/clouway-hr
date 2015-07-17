@@ -1,0 +1,30 @@
+<div ng-init="getVacations()">
+    <table class="table">
+        <th>user</th>
+        <th>from date</th>
+        <th>to date</th>
+        <th>description</th>
+        <th>status</th>
+        <tr ng-repeat="message in responseMessage">
+            <td>
+                {{message.userId}}
+            </td>
+            <td>
+                {{message.fromDate| date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.toDate | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{message.description}}
+            </td>
+            <td>
+                {{message.status}}
+            </td>
+            <td>
+                <a href="" ng-click="changeStatus('reject', message.vacationId)">reject</a>
+                <a href="" ng-click="changeStatus('accept', message.vacationId)">accept</a>
+            </td>
+        </tr>
+    </table>
+</div>

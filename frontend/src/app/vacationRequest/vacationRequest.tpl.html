@@ -1,0 +1,70 @@
+<div>
+    <div>
+        <div class="row">
+            <div class="col-md-3">
+                <h5><strong>from date</strong></h5>
+
+                <p class="input-group">
+
+                    <input type="text" class="form-control" datepicker-popup ng-model="fromDate" is-open="opened"
+                           pick-a-date="startDate"
+                           min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions"
+                           date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <h5><strong>to date</strong></h5>
+
+                <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup ng-model="toDate" is-open="opened"
+                           pick-a-date="endDate"
+                           min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions"
+                           date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openTo($event)"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                </p>
+            </div>
+
+        </div>
+        <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+        <hr/>
+
+    </div>
+</div>
+<h5><strong>description</strong></h5>
+<textarea ng-model="description" rows="4" cols="50">description</textarea><br>
+<button type="submit" class="btn btn-primary" ng-click="vacationRequest()">send vacation request</button>
+
+<div ng-init="getUnHiddenVacations()">
+    <table class="table">
+        <th>from date</th>
+        <th>to date</th>
+        <th>description</th>
+        <th>status</th>
+        <tr ng-repeat="vacation in unhiddenVacations">
+            <td>
+                {{vacation.fromDate | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{vacation.toDate | date:"dd/MM/yyyy"}}
+            </td>
+            <td>
+                {{vacation.description}}
+            </td>
+            <td>
+                {{vacation.status}}
+            </td>
+            <td>
+                <a href="" ng-click="hide(vacation.vacationId, $index)">hide</a>
+            </td>
+        </tr>
+    </table>
+
+</div>

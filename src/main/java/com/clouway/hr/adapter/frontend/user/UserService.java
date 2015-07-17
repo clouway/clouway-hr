@@ -1,6 +1,6 @@
 package com.clouway.hr.adapter.frontend.user;
 
-import com.clouway.hr.core.user.CurrentUser;
+import com.clouway.hr.core.user.User;
 import com.google.inject.Inject;
 import com.google.sitebricks.At;
 import com.google.sitebricks.client.transport.Json;
@@ -16,10 +16,10 @@ import com.google.sitebricks.http.Get;
 @At("/userservices")
 public class UserService {
 
-  private final CurrentUser currentUser;
+  private final User currentUser;
 
   @Inject
-  public UserService(CurrentUser currentUser) {
+  public UserService(User currentUser) {
 
     this.currentUser = currentUser;
   }
