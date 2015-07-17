@@ -1,11 +1,14 @@
 package com.clouway.hr.adapter.http.oauth2;
 
+import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
+import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
+import com.google.api.client.auth.oauth.OAuthGetAccessToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
-import com.google.appengine.api.users.User;
+import com.google.api.services.admin.directory.model.Group;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.inject.Inject;
@@ -18,7 +21,8 @@ import com.google.sitebricks.http.Get;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.security.Principal;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created on 15-7-9.
@@ -32,19 +36,19 @@ public class OAuthService {
   private final Provider<HttpServletRequest> requestProvider;
   private final OAuthAuthentication oAuthAuthentication;
   private final TokenRepository tokenRepository;
-  private final UserService userService;
+  private final OAuthUser oAuthUser;
 
 
   @Inject
   public OAuthService(Provider<HttpServletRequest> requestProvider,
                       OAuthAuthentication oAuthAuthentication,
                       TokenRepository tokenRepository,
-                      UserService userService) {
+                      OAuthUser oAuthUser) {
 
     this.requestProvider = requestProvider;
     this.oAuthAuthentication = oAuthAuthentication;
     this.tokenRepository = tokenRepository;
-    this.userService = userService;
+    this.oAuthUser = oAuthUser;
   }
 
 
@@ -57,14 +61,15 @@ public class OAuthService {
     final String authorizationCode = request.getParameter("code");
     final GoogleTokenResponse googleTokenResponse = oAuthAuthentication.getGoogleTokenResponse(authorizationCode);
     final GoogleCredential googleCredential = oAuthAuthentication.getGoogleCredential(googleTokenResponse);
-
-    final User currentUser = userService.getCurrentUser();
-    final String email = currentUser.getEmail();
+    final String email = oAuthUser.getEmail();
 
     final String accessToken = googleCredential.getAccessToken();
     final String refreshToken = googleCredential.getRefreshToken();
 
     tokenRepository.store(email, accessToken, refreshToken);
+    System.out.println(googleTokenResponse.getAccessToken());
+    System.out.println(googleTokenResponse.getRefreshToken());
+    OAuthAuthenticationImpl.requestNewAccessToken(googleTokenResponse.getRefreshToken());
 
     return Reply.saying().redirect("/");
 
@@ -73,12 +78,14 @@ public class OAuthService {
 
   @At("/currentuser")
   @Get
-  public Reply<String> getCurrentUser() {
+  public Reply<CurrentUser> getCurrentUser() {
 
-    final HttpServletRequest request = requestProvider.get();
-    final Principal principal = request.getUserPrincipal();
+    final String email = oAuthUser.getEmail();
+    final List<Group> userGroups = oAuthUser.getGroups(email);
+    final Set<String> roles = oAuthUser.getRoles(email, userGroups);
+    final CurrentUser currentUser = new CurrentUser(email, roles.contains("OWNER") || roles.contains("MANAGER"));
 
-    return Reply.with(principal.getName()).as(Json.class);
+    return Reply.with(currentUser).as(Json.class);
   }
 
 
@@ -103,9 +110,12 @@ public class OAuthService {
   public Reply logOut() {
 
     final UserService userService = UserServiceFactory.getUserService();
+    System.out.println(userService.isUserAdmin());
     final String logoutURL = userService.createLogoutURL("http://google.com");
 
     return Reply.saying().redirect(logoutURL);
   }
+
+
 
 }

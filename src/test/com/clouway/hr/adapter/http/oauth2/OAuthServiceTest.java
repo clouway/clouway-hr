@@ -1,14 +1,15 @@
 package com.clouway.hr.adapter.http.oauth2;
 
+import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
+import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
+import com.google.api.services.admin.directory.model.Group;
 import com.google.inject.util.Providers;
 import com.google.sitebricks.headless.Reply;
 import org.jmock.Expectations;
@@ -18,8 +19,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.contains;
 import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.hasStatusCode;
@@ -42,43 +44,42 @@ public class OAuthServiceTest {
   @Mock
   TokenRepository tokenRepository;
   @Mock
-  UserService userService;
-  @Mock
   HttpServletRequest request;
   @Mock
-  Principal principal;
+  OAuthUser oAuthUser;
 
 
   @Test
   public void getCurrentUser() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, userService);
+    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
 
     final String userEmail = "email@domain.com";
 
     context.checking(new Expectations() {{
 
-      oneOf(request).getUserPrincipal();
-      will(returnValue(principal));
-      oneOf(principal).getName();
+      oneOf(oAuthUser).getEmail();
       will(returnValue(userEmail));
+      oneOf(oAuthUser).getGroups(userEmail);
+      oneOf(oAuthUser).getRoles(userEmail, new ArrayList<Group>());
+      will(returnValue(new HashSet<String>() {{
+        add("MEMBER");
+      }}));
 
     }});
 
-    final Reply<String> reply = oAuthService.getCurrentUser();
+    final Reply<CurrentUser> reply = oAuthService.getCurrentUser();
 
-    assertThat(reply, contains(userEmail));
+    assertThat(reply, contains(new CurrentUser(userEmail, false)));
     assertThat(reply, hasStatusCode(200));
   }
 
   @Test
   public void processOAuthCallback() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, userService);
+    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
 
     final String userEmail = "email@domain.com";
-    final String userDomain = "domain.com";
-    final User googleUser = new User(userEmail, userDomain);
 
     final GoogleTokenResponse googleTokenResponse = new GoogleTokenResponse();
 
@@ -91,8 +92,8 @@ public class OAuthServiceTest {
       will(returnValue(googleTokenResponse));
       oneOf(oAuthAuthentication).getGoogleCredential(googleTokenResponse);
       will(returnValue(fakeCredentials));
-      oneOf(userService).getCurrentUser();
-      will(returnValue(googleUser));
+      oneOf(oAuthUser).getEmail();
+      will(returnValue(userEmail));
       oneOf(tokenRepository).store(userEmail, "accessTokenValue", "refreshTokenValue");
     }});
 
@@ -105,7 +106,7 @@ public class OAuthServiceTest {
   @Test
   public void createNewCredentialFlow() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, userService);
+    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
     final GoogleAuthorizationCodeFlow googleAuthorizationFlow = getGoogleAuthorizationCodeFlow();
 
     context.checking(new Expectations() {{

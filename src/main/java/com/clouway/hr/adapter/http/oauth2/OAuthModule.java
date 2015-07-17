@@ -2,7 +2,7 @@ package com.clouway.hr.adapter.http.oauth2;
 
 import com.clouway.hr.adapter.db.PersistentTokenRepository;
 import com.clouway.hr.core.OAuthAuthentication;
-import com.clouway.hr.core.OAuthScopes;
+import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -31,6 +31,7 @@ public class OAuthModule extends AbstractModule {
 
     bind(TokenRepository.class).to(PersistentTokenRepository.class);
     bind(OAuthAuthentication.class).to(OAuthAuthenticationImpl.class);
+    bind(OAuthUser.class).to(OAuthUserImpl.class);
 
   }
 

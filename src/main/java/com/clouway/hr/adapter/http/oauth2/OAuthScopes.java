@@ -1,4 +1,4 @@
-package com.clouway.hr.core;
+package com.clouway.hr.adapter.http.oauth2;
 
 import com.google.inject.BindingAnnotation;
 

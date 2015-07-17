@@ -21,6 +21,13 @@
     <maven>3.1.0</maven>
   </prerequisites>
 
+  <repositories>
+    <repository>
+      <id>twig</id>
+      <url>http://mvn.twig-persist.googlecode.com/hg</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <!-- Compile/runtime dependencies -->
     <dependency>
@@ -143,6 +150,25 @@
       <artifactId>google-api-client</artifactId>
       <version>1.20.0</version>
     </dependency>
+
+
+
+
+    <!--<dependency>-->
+      <!--<groupId>com.google.api.client</groupId>-->
+      <!--<artifactId>google-api-client-auth-oauth2</artifactId>-->
+      <!--<version>1.2.3-alpha</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+      <!--<groupId>com.google.api.client</groupId>-->
+      <!--<artifactId>google-api-client-auth-oauth2</artifactId>-->
+      <!--<version>1.1.1-alpha</version>-->
+    <!--</dependency>-->
+
+
+
+
+
     <dependency>
       <groupId>com.google.oauth-client</groupId>
       <artifactId>google-oauth-client-jetty</artifactId>

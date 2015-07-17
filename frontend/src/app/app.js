@@ -10,11 +10,14 @@ angular.module( 'hr.core', [
         .run(function run() {
         })
 
-        .controller('AppCtrl', function AppCtrl($scope) {
+        .controller('AppCtrl', function AppCtrl($scope, httpRequest) {
           $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             if (angular.isDefined(toState.data.pageTitle)) {
               $scope.pageTitle = toState.data.pageTitle;
             }
+          });
+          httpRequest.get('/oauth/currentuser').then(function (data) {
+            $scope.currentuser = data;
           });
         })
 

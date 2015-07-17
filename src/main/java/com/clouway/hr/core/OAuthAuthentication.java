@@ -29,6 +29,8 @@ public interface OAuthAuthentication {
 
   Directory getGoogleDirectoryService(GoogleCredential credential);
 
+  Directory getGoogleDirectoryService(String email);
+
   Userinfoplus getGoogleUserInfo(GoogleCredential credential) throws IOException;
 
   String generateGoogleSecurityState();
