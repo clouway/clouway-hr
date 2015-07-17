@@ -16,6 +16,7 @@ public class PersistenceModule extends AbstractModule {
   protected void configure() {
 
   }
+
   @Provides
   public ObjectDatastore getDataStore() {
     return new AnnotationObjectDatastore();

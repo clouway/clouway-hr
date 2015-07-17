@@ -1,10 +1,10 @@
-angular.module('hr.core', [
+angular.module( 'hr.core', [
   'templates-app',
   'templates-common',
   'ui.router'
 ])
         .config(function myAppConfig($stateProvider, $urlRouterProvider) {
-          $urlRouterProvider.otherwise('/home');
+          $urlRouterProvider.otherwise('/');
         })
 
         .run(function run() {
