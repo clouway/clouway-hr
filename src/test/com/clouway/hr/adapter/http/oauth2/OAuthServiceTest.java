@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Arrays;
 
-import static com.clouway.hr.adapter.http.SitebricksReplyMatchers.hasStatusCode;
-import static com.clouway.hr.adapter.http.SitebricksReplyMatchers.sayRedirectTo;
-import static com.clouway.hr.adapter.http.SitebricksReplyMatchers.contains;
+import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.contains;
+import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.hasStatusCode;
+import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.sayRedirectTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -67,7 +67,7 @@ public class OAuthServiceTest {
 
     final Reply<String> reply = oAuthService.getCurrentUser();
 
-    assertThat(reply,contains(userEmail));
+    assertThat(reply, contains(userEmail));
     assertThat(reply, hasStatusCode(200));
   }
 
@@ -98,8 +98,8 @@ public class OAuthServiceTest {
 
     final Reply<Object> reply = oAuthService.processOAuthCallback();
 
-    assertThat(reply,hasStatusCode(302));
-    assertThat(reply,sayRedirectTo("/"));
+    assertThat(reply, hasStatusCode(302));
+    assertThat(reply, sayRedirectTo("/"));
   }
 
   @Test
@@ -120,7 +120,7 @@ public class OAuthServiceTest {
 
     final Reply reply = oAuthService.createNewCredentialsFlow();
 
-    assertThat(reply,hasStatusCode(302));
+    assertThat(reply, hasStatusCode(302));
     assertThat(reply, sayRedirectTo("someAuthorizationUrl"));
   }
 

@@ -1,7 +1,6 @@
 package com.clouway.hr.adapter.http.oauth2;
 
 import com.clouway.hr.core.TokenRepository;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import org.jmock.Expectations;
@@ -45,8 +44,8 @@ public class OAuthCredentialsFilterTest {
     final String userEmail = "email@domain.com";
     final String userDomain = "domain.com";
     final User googleUser = new User(userEmail, userDomain);
-    final Map<String,String> notNullValue = new HashMap<String,String>(){{
-      put("someKey","someValue");
+    final Map<String, String> notNullValue = new HashMap<String, String>() {{
+      put("someKey", "someValue");
     }};
 
     context.checking(new Expectations() {{
