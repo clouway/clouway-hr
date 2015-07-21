@@ -15,6 +15,7 @@ import com.google.sitebricks.headless.Reply;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -48,11 +49,16 @@ public class OAuthServiceTest {
   @Mock
   OAuthUser oAuthUser;
 
+  private OAuthService oAuthService;
+
+  @Before
+  public void setUp() throws Exception {
+    oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
+  }
 
   @Test
   public void getCurrentUser() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
 
     final String userEmail = "email@domain.com";
 
@@ -76,8 +82,6 @@ public class OAuthServiceTest {
 
   @Test
   public void processOAuthCallback() throws Exception {
-
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
 
     final String userEmail = "email@domain.com";
 
@@ -106,7 +110,6 @@ public class OAuthServiceTest {
   @Test
   public void createNewCredentialFlow() throws Exception {
 
-    final OAuthService oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
     final GoogleAuthorizationCodeFlow googleAuthorizationFlow = getGoogleAuthorizationCodeFlow();
 
     context.checking(new Expectations() {{
