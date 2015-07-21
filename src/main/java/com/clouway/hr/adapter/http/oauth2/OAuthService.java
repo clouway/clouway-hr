@@ -4,7 +4,6 @@ import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
-import com.google.api.client.auth.oauth.OAuthGetAccessToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -67,9 +66,6 @@ public class OAuthService {
     final String refreshToken = googleCredential.getRefreshToken();
 
     tokenRepository.store(email, accessToken, refreshToken);
-    System.out.println(googleTokenResponse.getAccessToken());
-    System.out.println(googleTokenResponse.getRefreshToken());
-    OAuthAuthenticationImpl.requestNewAccessToken(googleTokenResponse.getRefreshToken());
 
     return Reply.saying().redirect("/");
 
@@ -110,12 +106,10 @@ public class OAuthService {
   public Reply logOut() {
 
     final UserService userService = UserServiceFactory.getUserService();
-    System.out.println(userService.isUserAdmin());
     final String logoutURL = userService.createLogoutURL("http://google.com");
 
     return Reply.saying().redirect(logoutURL);
   }
-
 
 
 }

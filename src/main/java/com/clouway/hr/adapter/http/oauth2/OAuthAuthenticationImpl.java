@@ -6,10 +6,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleRefreshTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.oauth2.Oauth2;
@@ -172,33 +170,6 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
     final String expectedState = (String) session.getAttribute("oauth2-state");
 
     return incomingState.equals(expectedState);
-  }
-
-  static void requestNewAccessToken(String refreshToken) throws IOException {
-
-    GoogleRefreshTokenRequest refreshTokenRequest = new GoogleRefreshTokenRequest(
-            new NetHttpTransport(),
-            new JacksonFactory(),
-            refreshToken,
-            OAuth2Provider.GOOGLE_CLIENT_ID,
-            OAuth2Provider.GOOGLE_CLIENT_SECRET);
-
-    final GoogleTokenResponse googleTokenResponse = refreshTokenRequest.execute();
-
-    System.out.println(googleTokenResponse.getAccessToken());
-    System.out.println(googleTokenResponse.getRefreshToken());
-
-//      RefreshAccessTokenRequest request = new RefreshAccessTokenRequest();
-//      request.clientId = CLIENT_ID;
-//      request.clientSecret = CLIENT_SECRET;
-//      request.refreshToken = refreshToken;
-//      AccessTokenResponse response =
-//              request.execute().parseAs(AccessTokenResponse.class);
-//      System.out.println("Access token: " + response.accessToken);
-//    } catch (HttpResponseException e) {
-//      AccessTokenErrorResponse response =
-//              e.response.parseAs(AccessTokenErrorResponse.class);
-//      System.out.println("Error: " + response.error);
   }
 
 
