@@ -1,4 +1,4 @@
-package com.clouway.hr.adapter.http.oauth2;
+package com.clouway.hr.adapter.user.google.oauth;
 
 /**
  * Created on 15-6-19.

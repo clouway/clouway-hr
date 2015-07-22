@@ -1,11 +1,11 @@
 package com.clouway.hr.adapter.frontend.user;
 
-import com.clouway.hr.core.CurrentUser;
+import com.clouway.hr.core.user.CurrentUser;
 import com.google.sitebricks.headless.Reply;
 import org.junit.Test;
 
-import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.contains;
-import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.hasStatusCode;
+import static com.clouway.hr.test.custom.matchers.SitebricksReplyMatchers.contains;
+import static com.clouway.hr.test.custom.matchers.SitebricksReplyMatchers.hasStatusCode;
 import static org.junit.Assert.*;
 
 /**

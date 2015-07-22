@@ -16,7 +16,7 @@ angular.module( 'hr.core', [
               $scope.pageTitle = toState.data.pageTitle;
             }
           });
-          httpRequest.get('/oauth/currentuser').then(function (data) {
+          httpRequest.get('/userservices/currentuser').then(function (data) {
             $scope.currentuser = data;
           });
         })

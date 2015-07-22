@@ -1,7 +1,7 @@
-package com.clouway.hr.adapter.http.oauth2;
+package com.clouway.hr.adapter.user.google.oauth;
 
-import com.clouway.hr.core.TokenRepository;
-import com.clouway.hr.core.UserTokens;
+import com.clouway.hr.adapter.user.google.oauth.token.TokenRepository;
+import com.clouway.hr.adapter.user.google.oauth.token.UserTokens;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import org.jmock.Expectations;

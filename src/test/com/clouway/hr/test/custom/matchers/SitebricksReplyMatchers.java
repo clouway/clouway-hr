@@ -1,4 +1,4 @@
-package com.clouway.hr.adapter.http.matchers;
+package com.clouway.hr.test.custom.matchers;
 
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import org.hamcrest.Description;

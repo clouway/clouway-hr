@@ -1,4 +1,4 @@
-package com.clouway.hr.core;
+package com.clouway.hr.adapter.user.google.oauth;
 
 import java.util.Set;
 

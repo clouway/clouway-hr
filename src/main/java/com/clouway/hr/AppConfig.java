@@ -1,10 +1,10 @@
 package com.clouway.hr;
 
+import com.clouway.hr.adapter.db.persistence.PersistenceModule;
 import com.clouway.hr.adapter.frontend.user.UserService;
-import com.clouway.hr.adapter.http.oauth2.OAuthCredentialsFilter;
-import com.clouway.hr.adapter.http.oauth2.OAuthModule;
-import com.clouway.hr.adapter.http.oauth2.OAuthService;
-import com.clouway.hr.adapter.persistence.PersistenceModule;
+import com.clouway.hr.adapter.user.google.oauth.OAuthCredentialsFilter;
+import com.clouway.hr.adapter.user.google.oauth.OAuthModule;
+import com.clouway.hr.adapter.user.google.oauth.OAuthService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;

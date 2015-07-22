@@ -1,8 +1,8 @@
-package com.clouway.hr.adapter.db;
+package com.clouway.hr.adapter.db.persistence.oauth.token;
 
-import com.clouway.hr.core.OAuthAuthentication;
-import com.clouway.hr.core.TokenRepository;
-import com.clouway.hr.core.UserTokens;
+import com.clouway.hr.adapter.user.google.oauth.OAuthAuthentication;
+import com.clouway.hr.adapter.user.google.oauth.token.TokenRepository;
+import com.clouway.hr.adapter.user.google.oauth.token.UserTokens;
 import com.google.inject.Inject;
 import com.vercer.engine.persist.ObjectDatastore;
 

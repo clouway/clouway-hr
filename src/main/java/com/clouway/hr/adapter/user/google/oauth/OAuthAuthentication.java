@@ -1,4 +1,4 @@
-package com.clouway.hr.core;
+package com.clouway.hr.adapter.user.google.oauth;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;

@@ -1,7 +1,5 @@
-package com.clouway.hr.adapter.http.oauth2;
+package com.clouway.hr.adapter.user.google.oauth;
 
-import com.clouway.hr.core.OAuthAuthentication;
-import com.clouway.hr.core.OAuthUser;
 import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.admin.directory.model.Group;
 import com.google.appengine.api.users.UserService;

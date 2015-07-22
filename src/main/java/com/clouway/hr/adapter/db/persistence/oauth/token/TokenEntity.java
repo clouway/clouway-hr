@@ -1,4 +1,4 @@
-package com.clouway.hr.adapter.db;
+package com.clouway.hr.adapter.db.persistence.oauth.token;
 
 import com.vercer.engine.persist.annotation.Key;
 

@@ -1,4 +1,4 @@
-package com.clouway.hr.core;
+package com.clouway.hr.core.user;
 
 /**
  * Created on 15-7-20.

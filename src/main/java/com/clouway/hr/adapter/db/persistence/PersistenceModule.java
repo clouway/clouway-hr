@@ -1,4 +1,4 @@
-package com.clouway.hr.adapter.persistence;
+package com.clouway.hr.adapter.db.persistence;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
