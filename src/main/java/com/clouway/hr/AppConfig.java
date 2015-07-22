@@ -1,5 +1,6 @@
 package com.clouway.hr;
 
+import com.clouway.hr.adapter.frontend.user.UserService;
 import com.clouway.hr.adapter.http.oauth2.OAuthCredentialsFilter;
 import com.clouway.hr.adapter.http.oauth2.OAuthModule;
 import com.clouway.hr.adapter.http.oauth2.OAuthService;
@@ -30,6 +31,7 @@ public class AppConfig extends GuiceServletContextListener {
               @Override
               protected void configureSitebricks() {
                 at("/oauth").serve(OAuthService.class);
+                at("/userservices").serve(UserService.class);
               }
             }
     );

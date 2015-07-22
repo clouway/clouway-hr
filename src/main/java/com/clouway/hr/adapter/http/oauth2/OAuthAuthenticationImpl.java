@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created on 15-7-9.
@@ -163,7 +162,7 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
     return resultPath;
   }
 
-  private Directory createDirectory(UserTokens tokens){
+  private Directory createDirectory(UserTokens tokens) {
 
     final GoogleCredential credential = new Builder()
             .setJsonFactory(jsonFactory)

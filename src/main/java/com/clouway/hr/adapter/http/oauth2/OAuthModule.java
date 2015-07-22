@@ -1,6 +1,7 @@
 package com.clouway.hr.adapter.http.oauth2;
 
 import com.clouway.hr.adapter.db.PersistentTokenRepository;
+import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
@@ -13,11 +14,13 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.servlet.RequestScoped;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created on 15-7-15.
@@ -58,6 +61,17 @@ public class OAuthModule extends AbstractModule {
 
             DirectoryScopes.ADMIN_DIRECTORY_USER,
             DirectoryScopes.ADMIN_DIRECTORY_GROUP);
+  }
+
+  @Provides
+  @RequestScoped
+  public CurrentUser getCurrentUser(OAuthUser oAuthUser) {
+
+    final String email = oAuthUser.getEmail();
+    final Set<String> roles = oAuthUser.getRoles();
+    final CurrentUser currentUser = new CurrentUser(email, roles.contains("OWNER") || roles.contains("MANAGER"));
+
+    return currentUser;
   }
 
 }

@@ -10,7 +10,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.admin.directory.model.Group;
 import com.google.common.collect.Sets;
 import com.google.inject.util.Providers;
 import com.google.sitebricks.headless.Reply;
@@ -22,9 +21,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 
 import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.contains;
 import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.hasStatusCode;
@@ -58,26 +55,6 @@ public class OAuthServiceTest {
     oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
   }
 
-  @Test
-  public void getCurrentUser() throws Exception {
-
-
-    final String userEmail = "email@domain.com";
-
-    context.checking(new Expectations() {{
-
-      oneOf(oAuthUser).getEmail();
-      will(returnValue(userEmail));
-      oneOf(oAuthUser).getRoles();
-      will(returnValue(Sets.newHashSet("MEMBER")));
-
-    }});
-
-    final Reply<CurrentUser> reply = oAuthService.getCurrentUser();
-
-    assertThat(reply, contains(new CurrentUser(userEmail, false)));
-    assertThat(reply, hasStatusCode(200));
-  }
 
   @Test
   public void processOAuthCallback() throws Exception {
@@ -97,7 +74,7 @@ public class OAuthServiceTest {
       will(returnValue(fakeCredentials));
       oneOf(oAuthUser).getEmail();
       will(returnValue(userEmail));
-      oneOf(tokenRepository).store(with(same(userEmail)),with(any(UserTokens.class)));
+      oneOf(tokenRepository).store(with(same(userEmail)), with(any(UserTokens.class)));
     }});
 
     final Reply<Object> reply = oAuthService.processOAuthCallback();

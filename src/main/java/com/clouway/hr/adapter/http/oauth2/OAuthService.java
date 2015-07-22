@@ -1,6 +1,5 @@
 package com.clouway.hr.adapter.http.oauth2;
 
-import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
@@ -8,21 +7,17 @@ import com.clouway.hr.core.UserTokens;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
-import com.google.api.services.admin.directory.model.Group;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.sitebricks.At;
-import com.google.sitebricks.client.transport.Json;
 import com.google.sitebricks.headless.Reply;
 import com.google.sitebricks.headless.Service;
 import com.google.sitebricks.http.Get;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created on 15-7-9.
@@ -72,19 +67,6 @@ public class OAuthService {
 
   }
 
-
-  @At("/currentuser")
-  @Get
-  public Reply<CurrentUser> getCurrentUser() {
-
-    final String email = oAuthUser.getEmail();
-    final Set<String> roles = oAuthUser.getRoles();
-    final CurrentUser currentUser = new CurrentUser(email, roles.contains("OWNER") || roles.contains("MANAGER"));
-
-    return Reply.with(currentUser).as(Json.class);
-  }
-
-
   @At("/credential")
   @Get
   public Reply createNewCredentialsFlow() {
@@ -99,7 +81,6 @@ public class OAuthService {
 
     return Reply.saying().redirect(authorizationUrl);
   }
-
 
   @At("/logout")
   @Get
