@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created on 15-7-15.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

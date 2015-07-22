@@ -9,8 +9,6 @@ import com.google.sitebricks.headless.Service;
 import com.google.sitebricks.http.Get;
 
 /**
- * Created on 15-7-22.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

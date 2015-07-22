@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created on 15-7-9.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

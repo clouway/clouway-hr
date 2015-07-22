@@ -9,8 +9,6 @@ import static com.clouway.hr.test.custom.matchers.SitebricksReplyMatchers.hasSta
 import static org.junit.Assert.*;
 
 /**
- * Created on 15-7-22.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

@@ -3,8 +3,6 @@ package com.clouway.hr.adapter.db.persistence.oauth.token;
 import com.vercer.engine.persist.annotation.Key;
 
 /**
- * Created on 15-7-9.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

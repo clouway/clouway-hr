@@ -18,8 +18,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 
 /**
- * Created on 15-7-9.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

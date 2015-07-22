@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * Created on 15-7-9.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

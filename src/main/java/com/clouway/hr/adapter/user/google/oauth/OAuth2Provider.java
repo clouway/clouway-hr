@@ -1,8 +1,6 @@
 package com.clouway.hr.adapter.user.google.oauth;
 
 /**
- * Created on 15-6-19.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

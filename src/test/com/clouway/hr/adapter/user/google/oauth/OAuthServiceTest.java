@@ -24,8 +24,6 @@ import static com.clouway.hr.test.custom.matchers.SitebricksReplyMatchers.sayRed
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Created on 15-7-10.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

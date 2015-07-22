@@ -1,8 +1,6 @@
 package com.clouway.hr.core.user;
 
 /**
- * Created on 15-7-20.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

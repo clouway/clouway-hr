@@ -11,8 +11,6 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Created on 15-7-7.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 @BindingAnnotation

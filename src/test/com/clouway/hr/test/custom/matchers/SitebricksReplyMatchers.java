@@ -9,8 +9,6 @@ import org.hamcrest.TypeSafeMatcher;
 import java.lang.reflect.Field;
 
 /**
- * Created on 15-7-17.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

@@ -7,8 +7,6 @@ import com.google.inject.Inject;
 import com.vercer.engine.persist.ObjectDatastore;
 
 /**
- * Created on 15-7-9.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

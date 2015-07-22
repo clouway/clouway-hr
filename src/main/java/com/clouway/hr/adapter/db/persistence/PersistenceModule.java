@@ -6,8 +6,6 @@ import com.vercer.engine.persist.ObjectDatastore;
 import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
 
 /**
- * Created on 15-7-14.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

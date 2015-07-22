@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created on 15-7-9.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 

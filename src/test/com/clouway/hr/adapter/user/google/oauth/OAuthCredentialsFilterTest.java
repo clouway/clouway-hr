@@ -15,8 +15,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * Created on 15-7-10.
- *
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 
