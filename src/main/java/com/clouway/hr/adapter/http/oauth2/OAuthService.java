@@ -78,8 +78,7 @@ public class OAuthService {
   public Reply<CurrentUser> getCurrentUser() {
 
     final String email = oAuthUser.getEmail();
-    final List<Group> userGroups = oAuthUser.getGroups(email);
-    final Set<String> roles = oAuthUser.getRoles(email, userGroups);
+    final Set<String> roles = oAuthUser.getRoles();
     final CurrentUser currentUser = new CurrentUser(email, roles.contains("OWNER") || roles.contains("MANAGER"));
 
     return Reply.with(currentUser).as(Json.class);

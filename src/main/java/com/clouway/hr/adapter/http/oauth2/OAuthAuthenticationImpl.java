@@ -7,6 +7,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential.Builder;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -107,34 +108,13 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
   }
 
   @Override
-  public GoogleCredential getGoogleCredential(String accessToken, String refreshToken) {
-    return new GoogleCredential.Builder()
-
-            .setJsonFactory(jsonFactory)
-            .setTransport(httpTransport)
-            .setClientSecrets(OAuth2Provider.GOOGLE_CLIENT_SECRET, OAuth2Provider.GOOGLE_CLIENT_ID).build()
-            .setAccessToken(accessToken)
-            .setRefreshToken(refreshToken);
-  }
-
-  @Override
-  public Directory getGoogleDirectoryService(GoogleCredential credential) {
-    return new Directory.Builder(
-            httpTransport,
-            jsonFactory,
-            credential)
-            .build();
-  }
-
-  @Override
   public Directory getGoogleDirectoryService(String email) {
 
     final UserTokens tokens = tokenRepository.get(email);
-    final String accessToken = tokens.getAccessToken();
-    final String refreshToken = tokens.getRefreshToken();
-    final GoogleCredential googleCredential = getGoogleCredential(accessToken, refreshToken);
 
-    return getGoogleDirectoryService(googleCredential);
+    final Directory directory = createDirectory(tokens);
+
+    return directory;
   }
 
   @Override
@@ -173,7 +153,6 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
     return incomingState.equals(expectedState);
   }
 
-
   private String getRedirectUrl() {
 
     final HttpServletRequest request = requestProvider.get();
@@ -182,6 +161,22 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
     final String resultPath = scheme + "://" + host + "/oauth/callback";
 
     return resultPath;
+  }
+
+  private Directory createDirectory(UserTokens tokens){
+
+    final GoogleCredential credential = new Builder()
+            .setJsonFactory(jsonFactory)
+            .setTransport(httpTransport)
+            .setClientSecrets(OAuth2Provider.GOOGLE_CLIENT_SECRET, OAuth2Provider.GOOGLE_CLIENT_ID).build()
+            .setAccessToken(tokens.getAccessToken())
+            .setRefreshToken(tokens.getRefreshToken());
+
+    return new Directory.Builder(
+            httpTransport,
+            jsonFactory,
+            credential)
+            .build();
   }
 
 }

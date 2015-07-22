@@ -11,6 +11,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.admin.directory.model.Group;
+import com.google.common.collect.Sets;
 import com.google.inject.util.Providers;
 import com.google.sitebricks.headless.Reply;
 import org.jmock.Expectations;
@@ -67,11 +68,8 @@ public class OAuthServiceTest {
 
       oneOf(oAuthUser).getEmail();
       will(returnValue(userEmail));
-      oneOf(oAuthUser).getGroups(userEmail);
-      oneOf(oAuthUser).getRoles(userEmail, new ArrayList<Group>());
-      will(returnValue(new HashSet<String>() {{
-        add("MEMBER");
-      }}));
+      oneOf(oAuthUser).getRoles();
+      will(returnValue(Sets.newHashSet("MEMBER")));
 
     }});
 

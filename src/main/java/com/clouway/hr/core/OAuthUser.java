@@ -15,8 +15,6 @@ public interface OAuthUser {
 
   String getEmail();
 
-  List<Group> getGroups(String email);
-
-  Set<String> getRoles(String email, List<Group> userGroups);
+  Set<String> getRoles();
 
 }

@@ -25,10 +25,6 @@ public interface OAuthAuthentication {
 
   GoogleCredential getGoogleCredential(GoogleTokenResponse tokenResponse);
 
-  GoogleCredential getGoogleCredential(String accessToken, String refreshToken);
-
-  Directory getGoogleDirectoryService(GoogleCredential credential);
-
   Directory getGoogleDirectoryService(String email);
 
   Userinfoplus getGoogleUserInfo(GoogleCredential credential) throws IOException;
