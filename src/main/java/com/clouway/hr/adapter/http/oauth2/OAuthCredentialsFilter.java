@@ -1,6 +1,7 @@
 package com.clouway.hr.adapter.http.oauth2;
 
 import com.clouway.hr.core.TokenRepository;
+import com.clouway.hr.core.UserTokens;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.inject.Inject;
@@ -44,7 +45,7 @@ public class OAuthCredentialsFilter implements Filter {
     final User currentUser = userService.getCurrentUser();
     final String userEmail = currentUser.getEmail();
 
-    final Map<String, String> tokens = tokenRepository.get(userEmail);
+    final UserTokens tokens = tokenRepository.get(userEmail);
 
     if (tokens == null) {
 

@@ -2,6 +2,7 @@ package com.clouway.hr.adapter.http.oauth2;
 
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.TokenRepository;
+import com.clouway.hr.core.UserTokens;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
@@ -128,9 +129,9 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
   @Override
   public Directory getGoogleDirectoryService(String email) {
 
-    final Map<String, String> tokens = tokenRepository.get(email);
-    final String accessToken = tokens.get("accessToken");
-    final String refreshToken = tokens.get("refreshToken");
+    final UserTokens tokens = tokenRepository.get(email);
+    final String accessToken = tokens.getAccessToken();
+    final String refreshToken = tokens.getRefreshToken();
     final GoogleCredential googleCredential = getGoogleCredential(accessToken, refreshToken);
 
     return getGoogleDirectoryService(googleCredential);

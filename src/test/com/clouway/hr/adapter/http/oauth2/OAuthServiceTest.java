@@ -4,6 +4,7 @@ import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
+import com.clouway.hr.core.UserTokens;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -98,7 +99,7 @@ public class OAuthServiceTest {
       will(returnValue(fakeCredentials));
       oneOf(oAuthUser).getEmail();
       will(returnValue(userEmail));
-      oneOf(tokenRepository).store(userEmail, "accessTokenValue", "refreshTokenValue");
+      oneOf(tokenRepository).store(with(same(userEmail)),with(any(UserTokens.class)));
     }});
 
     final Reply<Object> reply = oAuthService.processOAuthCallback();

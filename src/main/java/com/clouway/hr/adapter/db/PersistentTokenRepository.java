@@ -2,11 +2,9 @@ package com.clouway.hr.adapter.db;
 
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.TokenRepository;
+import com.clouway.hr.core.UserTokens;
 import com.google.inject.Inject;
 import com.vercer.engine.persist.ObjectDatastore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created on 15-7-9.
@@ -29,7 +27,7 @@ public class PersistentTokenRepository implements TokenRepository {
 
 
   @Override
-  public Map<String, String> get(String userId) {
+  public UserTokens get(String userId) {
 
     final TokenEntity tokenEntity = datastore.load(TokenEntity.class, userId);
 
@@ -38,10 +36,7 @@ public class PersistentTokenRepository implements TokenRepository {
       final String accessToken = tokenEntity.getAccessToken();
       final String refreshToken = tokenEntity.getRefreshToken();
 
-      return new HashMap<String, String>() {{
-        put("accessToken", accessToken);
-        put("refreshToken", refreshToken);
-      }};
+      return new UserTokens(accessToken, refreshToken);
     }
 
     return null;
@@ -49,9 +44,9 @@ public class PersistentTokenRepository implements TokenRepository {
 
 
   @Override
-  public void store(String userId, String accessToken, String refreshToken) {
+  public void store(String userId, UserTokens userTokens) {
 
-    final TokenEntity tokenEntity = new TokenEntity(userId, accessToken, refreshToken);
+    final TokenEntity tokenEntity = new TokenEntity(userId, userTokens.getAccessToken(), userTokens.getRefreshToken());
 
     datastore.store(tokenEntity);
   }

@@ -2,6 +2,7 @@ package com.clouway.hr.adapter.db;
 
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.TokenRepository;
+import com.clouway.hr.core.UserTokens;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.vercer.engine.persist.ObjectDatastore;
@@ -11,8 +12,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -56,7 +55,9 @@ public class PersistentTokenRepositoryTest {
   @Test
   public void store() throws Exception {
 
-    tokenRepository.store(userId, accessToken, refreshToken);
+    final UserTokens userTokens = new UserTokens(accessToken, refreshToken);
+
+    tokenRepository.store(userId, userTokens);
 
     final TokenEntity tokenEntity = datastore.load(TokenEntity.class, userId);
 
@@ -71,17 +72,17 @@ public class PersistentTokenRepositoryTest {
 
     store(userId, accessToken, refreshToken);
 
-    final Map<String, String> tokens = tokenRepository.get(userId);
+    final UserTokens tokens = tokenRepository.get(userId);
 
-    assertThat(tokens.get("accessToken"), is(accessToken));
-    assertThat(tokens.get("refreshToken"), is(refreshToken));
+    assertThat(tokens.getAccessToken(), is(accessToken));
+    assertThat(tokens.getRefreshToken(), is(refreshToken));
 
   }
 
   @Test
   public void getUnexciting() throws Exception {
 
-    final Map<String, String> tokens = tokenRepository.get(userId);
+    final UserTokens tokens = tokenRepository.get(userId);
 
     assertThat(tokens, is(nullValue()));
   }

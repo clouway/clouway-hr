@@ -4,6 +4,7 @@ import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
+import com.clouway.hr.core.UserTokens;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -64,8 +65,8 @@ public class OAuthService {
 
     final String accessToken = googleCredential.getAccessToken();
     final String refreshToken = googleCredential.getRefreshToken();
-
-    tokenRepository.store(email, accessToken, refreshToken);
+    final UserTokens userTokens = new UserTokens(accessToken, refreshToken);
+    tokenRepository.store(email, userTokens);
 
     return Reply.saying().redirect("/");
 
