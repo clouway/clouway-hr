@@ -1,6 +1,5 @@
 package com.clouway.hr.adapter.http.oauth2;
 
-import com.clouway.hr.core.CurrentUser;
 import com.clouway.hr.core.OAuthAuthentication;
 import com.clouway.hr.core.OAuthUser;
 import com.clouway.hr.core.TokenRepository;
@@ -10,7 +9,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.common.collect.Sets;
 import com.google.inject.util.Providers;
 import com.google.sitebricks.headless.Reply;
 import org.jmock.Expectations;
@@ -23,7 +21,6 @@ import org.junit.Test;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
-import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.contains;
 import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.hasStatusCode;
 import static com.clouway.hr.adapter.http.matchers.SitebricksReplyMatchers.sayRedirectTo;
 import static org.hamcrest.MatcherAssert.assertThat;

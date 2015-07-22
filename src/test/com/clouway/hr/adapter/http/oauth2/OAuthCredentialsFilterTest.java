@@ -13,8 +13,6 @@ import org.junit.Test;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created on 15-7-10.
@@ -46,9 +44,6 @@ public class OAuthCredentialsFilterTest {
     final String userDomain = "domain.com";
     final User googleUser = new User(userEmail, userDomain);
     final UserTokens tokens = new UserTokens("someAccessToken", "someRefreshToken");
-    final Map<String, String> notNullValue = new HashMap<String, String>() {{
-      put("someKey", "someValue");
-    }};
 
     context.checking(new Expectations() {{
       oneOf(userService).getCurrentUser();
