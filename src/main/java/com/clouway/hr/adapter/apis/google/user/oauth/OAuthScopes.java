@@ -1,4 +1,4 @@
-package com.clouway.hr.adapter.user.google.oauth;
+package com.clouway.hr.adapter.apis.google.user.oauth;
 
 import com.google.inject.BindingAnnotation;
 

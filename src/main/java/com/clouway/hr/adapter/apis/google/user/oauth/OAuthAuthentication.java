@@ -1,10 +1,9 @@
-package com.clouway.hr.adapter.user.google.oauth;
+package com.clouway.hr.adapter.apis.google.user.oauth;
 
+import com.clouway.hr.adapter.apis.google.user.oauth.token.UserTokens;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
-import com.google.api.services.admin.directory.Directory;
-import com.google.api.services.oauth2.model.Userinfoplus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -23,9 +22,7 @@ public interface OAuthAuthentication {
 
   GoogleCredential getGoogleCredential(GoogleTokenResponse tokenResponse);
 
-  Directory getGoogleDirectoryService(String email);
-
-  Userinfoplus getGoogleUserInfo(GoogleCredential credential) throws IOException;
+  GoogleCredential getGoogleCredential(String email, UserTokens userTokens);
 
   String generateGoogleSecurityState();
 

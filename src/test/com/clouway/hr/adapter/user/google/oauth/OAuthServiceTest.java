@@ -1,12 +1,17 @@
 package com.clouway.hr.adapter.user.google.oauth;
 
-import com.clouway.hr.adapter.user.google.oauth.token.TokenRepository;
-import com.clouway.hr.adapter.user.google.oauth.token.UserTokens;
+import com.clouway.hr.adapter.apis.google.user.oauth.OAuth2Provider;
+import com.clouway.hr.adapter.apis.google.user.oauth.OAuthAuthentication;
+import com.clouway.hr.adapter.apis.google.user.oauth.OAuthService;
+import com.clouway.hr.adapter.apis.google.user.oauth.token.TokenRepository;
+import com.clouway.hr.adapter.apis.google.user.oauth.token.UserTokens;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
 import com.google.inject.util.Providers;
 import com.google.sitebricks.headless.Reply;
 import org.jmock.Expectations;
@@ -39,13 +44,13 @@ public class OAuthServiceTest {
   @Mock
   HttpServletRequest request;
   @Mock
-  OAuthUser oAuthUser;
+  UserService userService;
 
   private OAuthService oAuthService;
 
   @Before
   public void setUp() throws Exception {
-    oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, oAuthUser);
+    oAuthService = new OAuthService(Providers.of(request), oAuthAuthentication, tokenRepository, userService);
   }
 
 
@@ -58,15 +63,17 @@ public class OAuthServiceTest {
 
     final GoogleCredential fakeCredentials = getFakeGoogleCredential("accessTokenValue", "refreshTokenValue");
 
+    final User googleUser = new User(userEmail,"");
+
     context.checking(new Expectations() {{
+      oneOf(oAuthAuthentication).hasValidateGoogleSecurityState(request);
+      will(returnValue(true));
       oneOf(request).getParameter("code");
       will(returnValue("someCodeValue"));
       oneOf(oAuthAuthentication).getGoogleTokenResponse("someCodeValue");
       will(returnValue(googleTokenResponse));
-      oneOf(oAuthAuthentication).getGoogleCredential(googleTokenResponse);
-      will(returnValue(fakeCredentials));
-      oneOf(oAuthUser).getEmail();
-      will(returnValue(userEmail));
+      oneOf(userService).getCurrentUser();
+      will(returnValue(googleUser));
       oneOf(tokenRepository).store(with(same(userEmail)), with(any(UserTokens.class)));
     }});
 
@@ -74,6 +81,28 @@ public class OAuthServiceTest {
 
     assertThat(reply, hasStatusCode(302));
     assertThat(reply, sayRedirectTo("/"));
+  }
+
+  @Test
+  public void processOAuthCallbackWithInvalidSecurityState() throws Exception {
+
+    final String userEmail = "email@domain.com";
+
+    final GoogleTokenResponse googleTokenResponse = new GoogleTokenResponse();
+
+    final GoogleCredential fakeCredentials = getFakeGoogleCredential("accessTokenValue", "refreshTokenValue");
+
+    final User googleUser = new User(userEmail,"");
+
+    context.checking(new Expectations() {{
+      oneOf(oAuthAuthentication).hasValidateGoogleSecurityState(request);
+      will(returnValue(false));
+    }});
+
+    final Reply<Object> reply = oAuthService.processOAuthCallback();
+
+    assertThat(reply, hasStatusCode(302));
+    assertThat(reply, sayRedirectTo("/oauth/credential"));
   }
 
   @Test

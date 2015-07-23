@@ -1,10 +1,12 @@
-package com.clouway.hr.adapter.user.google.oauth.token;
+package com.clouway.hr.adapter.apis.google.user.oauth.token;
+
+import java.io.Serializable;
 
 /**
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 
-public class UserTokens {
+public class UserTokens implements Serializable {
 
   private final String accessToken;
   private final String refreshToken;

@@ -1,8 +1,7 @@
-package com.clouway.hr.adapter.user.google.oauth;
+package com.clouway.hr.adapter.apis.google.organization;
 
 import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.admin.directory.model.Group;
-import com.google.appengine.api.users.UserService;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
@@ -14,31 +13,20 @@ import java.util.Set;
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 
-public class OAuthUserImpl implements OAuthUser {
+public class OrganizationImpl implements Organization {
 
-  private final UserService userService;
-  private final OAuthAuthentication oAuthAuthentication;
+  private final DirectoryServiceFactory directoryServiceFactory;
 
   @Inject
-  public OAuthUserImpl(UserService userService, OAuthAuthentication oAuthAuthentication) {
+  public OrganizationImpl(DirectoryServiceFactory directoryServiceFactory) {
 
-    this.userService = userService;
-    this.oAuthAuthentication = oAuthAuthentication;
+    this.directoryServiceFactory = directoryServiceFactory;
   }
 
-
   @Override
-  public String getEmail() {
-    return userService.getCurrentUser().getEmail();
-  }
+  public Set<String> getUserRoles(String email) {
 
-
-  @Override
-  public Set<String> getRoles() {
-
-    final String email = userService.getCurrentUser().getEmail();
-
-    final Directory directory = oAuthAuthentication.getGoogleDirectoryService(email);
+    final Directory directory = directoryServiceFactory.create(email);
 
     List<Group> userGroups;
     Set<String> roles = Sets.newHashSet();
@@ -59,7 +47,8 @@ public class OAuthUserImpl implements OAuthUser {
       e.printStackTrace();
     }
 
-
     return roles;
   }
+
+
 }

@@ -1,8 +1,11 @@
-package com.clouway.hr.adapter.user.google.oauth;
+package com.clouway.hr.adapter.apis.google.user.oauth;
 
+import com.clouway.hr.adapter.apis.google.organization.Organization;
+import com.clouway.hr.adapter.apis.google.user.oauth.token.TokenRefreshListener;
+import com.clouway.hr.adapter.apis.google.user.oauth.token.TokenRepository;
 import com.clouway.hr.adapter.db.persistence.oauth.token.PersistentTokenRepository;
-import com.clouway.hr.adapter.user.google.oauth.token.TokenRepository;
 import com.clouway.hr.core.user.CurrentUser;
+import com.google.api.client.auth.oauth2.CredentialRefreshListener;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -30,7 +33,7 @@ public class OAuthModule extends AbstractModule {
 
     bind(TokenRepository.class).to(PersistentTokenRepository.class);
     bind(OAuthAuthentication.class).to(OAuthAuthenticationImpl.class);
-    bind(OAuthUser.class).to(OAuthUserImpl.class);
+    bind(CredentialRefreshListener.class).to(TokenRefreshListener.class);
 
   }
 
@@ -61,10 +64,10 @@ public class OAuthModule extends AbstractModule {
 
   @Provides
   @RequestScoped
-  public CurrentUser getCurrentUser(OAuthUser oAuthUser) {
+  public CurrentUser getCurrentUser(UserService userService, Organization organization) {
 
-    final String email = oAuthUser.getEmail();
-    final Set<String> roles = oAuthUser.getRoles();
+    final String email = userService.getCurrentUser().getEmail();
+    final Set<String> roles = organization.getUserRoles(email);
     final CurrentUser currentUser = new CurrentUser(email, roles.contains("OWNER") || roles.contains("MANAGER"));
 
     return currentUser;

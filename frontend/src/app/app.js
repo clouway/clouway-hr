@@ -7,6 +7,22 @@ angular.module( 'hr.core', [
           $urlRouterProvider.otherwise('/');
         })
 
+        .config(function ($httpProvider) {
+          $httpProvider.interceptors.push(function ($q,$location,$window) {
+            return {
+              'response': function (response) {
+                return response;
+              },
+              'responseError': function (rejection) {
+                if (rejection.status === 401) {
+                  $window.location.href = '/oauth/credential';
+                }
+                return $q.reject(rejection);
+              }
+            };
+          });
+        })
+
         .run(function run() {
         })
 

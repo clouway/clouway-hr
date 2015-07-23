@@ -1,19 +1,14 @@
-package com.clouway.hr.adapter.user.google.oauth;
+package com.clouway.hr.adapter.apis.google.user.oauth;
 
-import com.clouway.hr.adapter.user.google.oauth.token.TokenRepository;
-import com.clouway.hr.adapter.user.google.oauth.token.UserTokens;
+import com.clouway.hr.adapter.apis.google.user.oauth.token.UserTokens;
+import com.google.api.client.auth.oauth2.CredentialRefreshListener;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential.Builder;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.admin.directory.Directory;
-import com.google.api.services.oauth2.Oauth2;
-import com.google.api.services.oauth2.Oauth2.Userinfo;
-import com.google.api.services.oauth2.model.Userinfoplus;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.apache.commons.lang.RandomStringUtils;
@@ -33,20 +28,20 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
   private final JacksonFactory jsonFactory;
   private final HttpTransport httpTransport;
   private final Provider<HttpServletRequest> requestProvider;
-  private final TokenRepository tokenRepository;
+  private final CredentialRefreshListener credentialRefreshListener;
 
   @Inject
   public OAuthAuthenticationImpl(@OAuthScopes List<String> scopes,
                                  JacksonFactory jsonFactory,
                                  HttpTransport httpTransport,
                                  Provider<HttpServletRequest> requestProvider,
-                                 TokenRepository tokenRepository) {
+                                 CredentialRefreshListener credentialRefreshListener) {
 
     this.scopes = scopes;
     this.jsonFactory = jsonFactory;
     this.httpTransport = httpTransport;
     this.requestProvider = requestProvider;
-    this.tokenRepository = tokenRepository;
+    this.credentialRefreshListener = credentialRefreshListener;
   }
 
   @Override
@@ -104,26 +99,21 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
   }
 
   @Override
-  public Directory getGoogleDirectoryService(String email) {
+  public GoogleCredential getGoogleCredential(final String email, UserTokens tokens) {
 
-    final UserTokens tokens = tokenRepository.get(email);
+    String accessToken = tokens.getAccessToken();
+    final String refreshToken = tokens.getRefreshToken();
 
-    final Directory directory = createDirectory(tokens);
-
-    return directory;
-  }
-
-  @Override
-  public Userinfoplus getGoogleUserInfo(GoogleCredential credentials) throws IOException {
-    Oauth2 oauth2 = new Oauth2.Builder(
-
-            httpTransport,
-            jsonFactory,
-            credentials)
+    GoogleCredential credential = new GoogleCredential.Builder()
+            .setTransport(httpTransport)
+            .setJsonFactory(jsonFactory)
+            .setClientSecrets(OAuth2Provider.GOOGLE_CLIENT_ID, OAuth2Provider.GOOGLE_CLIENT_SECRET)
+            .addRefreshListener(credentialRefreshListener)
             .build();
 
-    final Userinfo.Get get = oauth2.userinfo().get();
-    return get.execute();
+    credential.setAccessToken(accessToken);
+    credential.setRefreshToken(refreshToken);
+    return credential;
   }
 
   @Override
@@ -157,22 +147,6 @@ public class OAuthAuthenticationImpl implements OAuthAuthentication {
     final String resultPath = scheme + "://" + host + "/oauth/callback";
 
     return resultPath;
-  }
-
-  private Directory createDirectory(UserTokens tokens) {
-
-    final GoogleCredential credential = new Builder()
-            .setJsonFactory(jsonFactory)
-            .setTransport(httpTransport)
-            .setClientSecrets(OAuth2Provider.GOOGLE_CLIENT_SECRET, OAuth2Provider.GOOGLE_CLIENT_ID).build()
-            .setAccessToken(tokens.getAccessToken())
-            .setRefreshToken(tokens.getRefreshToken());
-
-    return new Directory.Builder(
-            httpTransport,
-            jsonFactory,
-            credential)
-            .build();
   }
 
 }
