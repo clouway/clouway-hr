@@ -1,5 +1,9 @@
 package com.clouway.hr.vacationstate;
 
+import com.clouway.hr.adapter.db.PersistentVacationRepository;
+import com.clouway.hr.core.CurrentDate;
+import com.clouway.hr.core.CurrentDateTime;
+import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.vacationstate.ApproveVacationStatus;
 import com.clouway.hr.core.vacationstate.State;
 import com.google.inject.AbstractModule;

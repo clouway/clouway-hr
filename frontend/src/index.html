@@ -28,29 +28,29 @@
             <div class="collapse navbar-collapse col-lg-19 pull-left" collapse="menuCollapsed">
                 <ul class="nav navbar-nav col-lg-15">
 
-                    <li ui-sref-active="active">
-                        <a href ui-sref="employeeHistory">
-                            <i class="fa fa-history"></i>
-                            employee history
-                        </a>
-                    </li>
-                    <li ng-if="currentuser.isAdmin" ui-sref-active="active">
-                        <a href ui-sref="employerHistory">
-                            <i class="fa fa-history"></i>
-                            employer history
-                        </a>
-                    </li>
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a href ui-sref="employeeHistory">-->
+                            <!--<i class="fa fa-history"></i>-->
+                            <!--employee history-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li ng-if="currentuser.isAdmin" ui-sref-active="active">-->
+                        <!--<a href ui-sref="employerHistory">-->
+                            <!--<i class="fa fa-history"></i>-->
+                            <!--employer history-->
+                        <!--</a>-->
+                    <!--</li>-->
 
                     <li ui-sref-active="active">
-                        <a href ui-sref="employeeHome">
+                        <a href ui-sref="vacationRequest">
                             <i class="fa fa-home"></i>
-                            employee home
+                            vacation request
                         </a>
                     </li>
                     <li ng-if="currentuser.isAdmin" ui-sref-active="active">
-                        <a href ui-sref="employerHome">
+                        <a href ui-sref="processingVacations">
                             <i class="fa fa-home"></i>
-                            employer home
+                            processing vacations
                         </a>
                     </li>
                     <li ng-if="currentuser.isAdmin" ui-sref-active="active">

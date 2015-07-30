@@ -20,7 +20,7 @@ public class UserServiceTest {
 
     final String email = "user@email.com";
     final boolean isAdmin = true;
-    final User currentUser = new CurrentUser(email, isAdmin);
+    final CurrentUser currentUser = new CurrentUser(email, isAdmin);
     UserService userService = new UserService(currentUser);
 
     final Reply reply = userService.getCurrentUser();

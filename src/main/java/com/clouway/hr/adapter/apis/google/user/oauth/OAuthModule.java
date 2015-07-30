@@ -35,7 +35,6 @@ public class OAuthModule extends AbstractModule {
     bind(TokenRepository.class).to(PersistentTokenRepository.class);
     bind(OAuthAuthentication.class).to(OAuthAuthenticationImpl.class);
     bind(CredentialRefreshListener.class).to(TokenRefreshListener.class);
-
   }
 
   @Provides

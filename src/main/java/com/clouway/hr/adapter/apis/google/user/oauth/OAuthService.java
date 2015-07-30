@@ -40,7 +40,6 @@ public class OAuthService {
     this.userService = userService;
   }
 
-
   @At("/callback")
   @Get
   public Reply processOAuthCallback() throws IOException {
