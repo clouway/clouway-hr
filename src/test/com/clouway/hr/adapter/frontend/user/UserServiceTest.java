@@ -1,6 +1,7 @@
 package com.clouway.hr.adapter.frontend.user;
 
 import com.clouway.hr.core.user.CurrentUser;
+import com.clouway.hr.core.user.User;
 import com.google.sitebricks.headless.Reply;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class UserServiceTest {
 
     final String email = "user@email.com";
     final boolean isAdmin = true;
-    final CurrentUser currentUser = new CurrentUser(email, isAdmin);
+    final User currentUser = new CurrentUser(email, isAdmin);
     UserService userService = new UserService(currentUser);
 
     final Reply reply = userService.getCurrentUser();

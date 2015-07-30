@@ -5,6 +5,7 @@ import com.clouway.hr.adapter.apis.google.user.oauth.token.TokenRefreshListener;
 import com.clouway.hr.adapter.apis.google.user.oauth.token.TokenRepository;
 import com.clouway.hr.adapter.db.persistence.oauth.token.PersistentTokenRepository;
 import com.clouway.hr.core.user.CurrentUser;
+import com.clouway.hr.core.user.User;
 import com.google.api.client.auth.oauth2.CredentialRefreshListener;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -64,11 +65,11 @@ public class OAuthModule extends AbstractModule {
 
   @Provides
   @RequestScoped
-  public CurrentUser getCurrentUser(UserService userService, Organization organization) {
+  public User getCurrentUser(UserService userService, Organization organization) {
 
     final String email = userService.getCurrentUser().getEmail();
     final Set<String> roles = organization.getUserRoles(email);
-    final CurrentUser currentUser = new CurrentUser(email, roles.contains("OWNER") || roles.contains("MANAGER"));
+    final User currentUser = new CurrentUser(email, roles.contains("OWNER") || roles.contains("MANAGER"));
 
     return currentUser;
   }
