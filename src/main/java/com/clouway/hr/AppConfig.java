@@ -39,6 +39,7 @@ public class AppConfig extends GuiceServletContextListener {
                 at("/oauth").serve(OAuthService.class);
                 at("/r/vacation").serve(VacationService.class);
                 at("/userservices").serve(UserService.class);
+                at("/app").show(AppPage.class);
               }
             }
     );
