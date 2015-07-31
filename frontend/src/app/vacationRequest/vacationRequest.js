@@ -3,7 +3,6 @@
  */
 var ang = angular.module('hr.vacationRequest', [
   'ui.router',
-  //'placeholders',
   'ui.bootstrap'
 ]);
 

@@ -40,7 +40,9 @@
 </div>
 <h5><strong>description</strong></h5>
 <textarea ng-model="description" rows="4" cols="50">description</textarea><br>
-<button type="submit" class="btn btn-primary" ng-click="vacationRequest()">send vacation request</button>
+<div ng-init="isDisabled = false">
+<button type="submit" ng-disabled="isDisabled" class="btn btn-primary" ng-click="vacationRequest()">send vacation request</button>
+<div>
 
 <div ng-init="getUnHiddenVacations()">
     <table class="table">

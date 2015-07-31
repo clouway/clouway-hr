@@ -56,6 +56,10 @@ describe('vacationRequest', function () {
       scope.$digest();
 
       expect(scope.responseMessage).toEqual('success');
+      expect(scope.isDisabled).toEqual(true);
+      expect(scope.fromDate).toEqual(null);
+      expect(scope.toDate).toEqual(null);
+      expect(scope.description).toEqual(null);
     });
 
     it('get unHidden vacations', function () {
