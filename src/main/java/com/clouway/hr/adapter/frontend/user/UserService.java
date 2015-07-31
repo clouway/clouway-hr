@@ -1,6 +1,5 @@
 package com.clouway.hr.adapter.frontend.user;
 
-import com.clouway.hr.core.user.CurrentUser;
 import com.clouway.hr.core.user.User;
 import com.google.inject.Inject;
 import com.google.sitebricks.At;
