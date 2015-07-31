@@ -37,6 +37,8 @@ ang.controller('VacationRequestCtrl', ['$scope', '$http', 'httpRequest', 'appCon
             .then(function (message) {
               $scope.responseMessage = "success";
               displayMessage($scope.responseMessage, 'success');
+              $scope.isDisabled = true;
+              $scope.clear();
             }, function (reason) {
               $scope.responseMessage = "incorrect date";
               displayMessage($scope.responseMessage, 'danger');
@@ -70,6 +72,7 @@ ang.controller('VacationRequestCtrl', ['$scope', '$http', 'httpRequest', 'appCon
   $scope.clear = function () {
     $scope.fromDate = null;
     $scope.toDate = null;
+    $scope.description = null;
   };
 
   // Disable weekend selection
