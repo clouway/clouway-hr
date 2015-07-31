@@ -21,7 +21,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.clouway.hr.adapter.http.FakeRequest.newRequestWith;
+import static com.clouway.hr.adapter.frontend.FakeRequest.newRequestWith;
 import static com.clouway.hr.adapter.http.RandomGenerator.generateVacationDo;
 import static com.clouway.hr.test.custom.matchers.SitebricksReplyMatchers.contains;
 import static org.hamcrest.Matchers.is;
