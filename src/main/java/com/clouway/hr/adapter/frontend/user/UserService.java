@@ -27,7 +27,6 @@ public class UserService {
   @At("/currentuser")
   @Get
   public Reply getCurrentUser() {
-
     return Reply.with(currentUser).as(Json.class);
   }
 
