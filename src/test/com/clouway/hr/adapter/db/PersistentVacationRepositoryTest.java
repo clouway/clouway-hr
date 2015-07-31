@@ -5,7 +5,6 @@ import com.clouway.hr.core.VacationRepository;
 import com.clouway.hr.core.user.User;
 import com.clouway.hr.core.vacationstate.ApproveVacationStatus;
 import com.clouway.hr.core.vacationstate.State;
-import com.clouway.hr.core.vacationstate.VacationStatus;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.vercer.engine.persist.ObjectDatastore;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import static com.clouway.hr.adapter.http.RandomGenerator.generateVacationDo;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 /**

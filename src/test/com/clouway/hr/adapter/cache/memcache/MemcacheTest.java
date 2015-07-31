@@ -48,10 +48,10 @@ public class MemcacheTest {
   public void put() throws Exception {
 
     context.checking(new Expectations() {{
-      oneOf(gaeMemcache).put("key_tokens","value");
+      oneOf(gaeMemcache).put("key_tokens", "value");
     }});
 
-    memcache.put("key","value");
+    memcache.put("key", "value");
 
   }
 

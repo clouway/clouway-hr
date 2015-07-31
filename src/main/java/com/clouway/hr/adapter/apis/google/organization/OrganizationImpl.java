@@ -62,7 +62,7 @@ public class OrganizationImpl implements Organization, EmployeeRepository {
   public void editEmployeeTeam(String email, String newTeam) {
     String domain = "@" + userService.getCurrentUser().getEmail().split("@")[1];
     String oldTeam = null;
-      oldTeam = findTeam(email);
+    oldTeam = findTeam(email);
     Directory directory = directoryServiceFactory.create(userService.getCurrentUser().getEmail());
     try {
       Member member = new Member().setEmail(email);
@@ -84,7 +84,7 @@ public class OrganizationImpl implements Organization, EmployeeRepository {
       e.printStackTrace();
     }
     List<Employee> employees = new ArrayList<>();
-    for (User user : users){
+    for (User user : users) {
       Employee employee = transformToDomain(user);
       employees.add(employee);
     }

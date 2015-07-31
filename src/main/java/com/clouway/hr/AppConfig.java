@@ -13,8 +13,8 @@ import com.clouway.hr.vacationstate.VacationStateModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.sitebricks.SitebricksModule;
 import com.google.inject.servlet.ServletModule;
+import com.google.sitebricks.SitebricksModule;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
@@ -27,7 +27,7 @@ public class AppConfig extends GuiceServletContextListener {
               @Override
               protected void configureServlets() {
 
-                filter("/*").through(OAuthCredentialsFilter.class);
+                filter("/spa").through(OAuthCredentialsFilter.class);
 
               }
             },
@@ -39,6 +39,8 @@ public class AppConfig extends GuiceServletContextListener {
                 at("/oauth").serve(OAuthService.class);
                 at("/r/vacation").serve(VacationService.class);
                 at("/userservices").serve(UserService.class);
+//                at("/app").show(AppPage.class);
+                at("/welcome").show(WelcomePage.class);
               }
             }
     );

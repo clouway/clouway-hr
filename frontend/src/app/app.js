@@ -36,7 +36,7 @@ angular.module('hr.core', [
         .run(function run() {
         })
 
-        .controller('AppCtrl', function AppCtrl($scope, httpRequest) {
+        .controller('AppCtrl', function AppCtrl($scope, httpRequest, $window) {
           $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             if (angular.isDefined(toState.data.pageTitle)) {
               $scope.pageTitle = toState.data.pageTitle;
@@ -45,6 +45,13 @@ angular.module('hr.core', [
           httpRequest.get('/userservices/currentuser').then(function (data) {
             $scope.currentuser = data;
           });
+
+           $scope.logout = function () {
+           httpRequest.get('/oauth/logout').then(function (data) {
+             console.log('asdasdasdasdasdasdasda');
+             $window.location.href = data;
+           });
+           };
         })
 
         .service('appConstants', ['$http', '$q', '$rootScope', 'appURL', function ($http, $q, $rootScope, appURL) {

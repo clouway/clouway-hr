@@ -12,6 +12,13 @@
     </auth-constraint>
   </security-constraint>
 
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Google Login</web-resource-name>
+      <url-pattern>/welcome</url-pattern>
+    </web-resource-collection>
+  </security-constraint>
+
   <filter>
     <filter-name>guiceFilter</filter-name>
     <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>

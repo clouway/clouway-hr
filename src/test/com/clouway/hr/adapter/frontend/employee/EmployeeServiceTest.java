@@ -49,7 +49,7 @@ public class EmployeeServiceTest {
   @Test
   public void showAllEmployees() {
     final List<Employee> employees = new ArrayList<>();
-    Employee employee = employeeService.dtoToDomain(new EmployeeDto("dimitar.dimitrov", "OSS" ,"@milena-m.com"));
+    Employee employee = employeeService.dtoToDomain(new EmployeeDto("dimitar.dimitrov", "OSS", "@milena-m.com"));
     Employee employee1 = employeeService.dtoToDomain(new EmployeeDto("ivan.petrov", "BSS", "@milena-m.com"));
     employees.add(employee);
     employees.add(employee1);

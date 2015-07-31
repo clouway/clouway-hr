@@ -44,7 +44,7 @@ public class EmployeeService {
   @Get
   public Reply showAll() {
     List<Employee> allEmployees = null;
-        allEmployees = employeeRepository.findAllEmployees();
+    allEmployees = employeeRepository.findAllEmployees();
     List<EmployeeDto> employees = domainToDto(allEmployees);
     return Reply.with(employees).as(Json.class);
   }
@@ -61,7 +61,7 @@ public class EmployeeService {
     return new Employee(employeeDto.getEmail(), employeeDto.getTeam(), employeeDto.getName());
   }
 
-  protected List<EmployeeDto> domainToDto (List<Employee> allEmployees) {
+  protected List<EmployeeDto> domainToDto(List<Employee> allEmployees) {
     List<EmployeeDto> employees = new ArrayList<>();
     for (Employee employee : allEmployees) {
       employees.add(new EmployeeDto(employee.email, employee.team, employee.name));
