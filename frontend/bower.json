@@ -6,7 +6,9 @@
     "angular-mocks": "~1.4",
     "bootstrap": "~3.1",
     "angular-bootstrap": "~0.10.0",
-    "angular-ui-router": "~0.2"
+    "angular-ui-router": "~0.2",
+    "angular-loading-bar": "",
+    "bootstrap-growl": ""
   },
   "dependencies": {}
 }

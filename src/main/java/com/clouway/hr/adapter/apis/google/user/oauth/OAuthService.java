@@ -89,8 +89,8 @@ public class OAuthService {
     final String scheme = request.getScheme();
     final String host = request.getHeader("Host");
 
-    final String logoutURL = userService.createLogoutURL(scheme + "://" + host);
+    final String logoutURL = userService.createLogoutURL(scheme + "://" + host+"/welcome");
 
-    return Reply.saying().redirect(logoutURL);
+    return Reply.with(logoutURL);
   }
 }
