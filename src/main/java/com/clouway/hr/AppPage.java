@@ -7,7 +7,7 @@ import com.google.sitebricks.Show;
  * @author Panayot Kulchev <panayotkulchev@gmail.com>
  */
 
-@At("/clouway-vacation")
-@Show ("WEB-INF/welcome.html")
-public class Spa {
+
+@Show ("WEB-INF/app.html")
+public class AppPage {
 }
