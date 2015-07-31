@@ -6,5 +6,4 @@ nbactions.xml
 
 src/main/webapp/assets/
 src/main/webapp/fonts/
-src/main/webapp/index.html
 src/main/webapp/WEB-INF/home.html
