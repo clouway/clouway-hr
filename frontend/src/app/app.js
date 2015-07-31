@@ -25,6 +25,7 @@ angular.module('hr.core', [
               },
               'responseError': function (rejection) {
                 if (rejection.status === 401) {
+                  alert(rejection.status);
                   $window.location.href = '/oauth/credential';
                 }
                 return $q.reject(rejection);

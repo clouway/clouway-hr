@@ -12,13 +12,6 @@
     </auth-constraint>
   </security-constraint>
 
-  <!--<security-constraint>-->
-    <!--<web-resource-collection>-->
-      <!--<web-resource-name>Google Login</web-resource-name>-->
-      <!--<url-pattern>/welcome</url-pattern>-->
-    <!--</web-resource-collection>-->
-  <!--</security-constraint>-->
-
   <welcome-file-list>
     <welcome-file>welcomepage.html</welcome-file>
   </welcome-file-list>
