@@ -8,6 +8,6 @@ import com.google.sitebricks.Show;
  */
 
 @At("/clouway-vacation")
-@Show ("WEB-INF/index.html")
+@Show ("WEB-INF/welcome.html")
 public class Spa {
 }
