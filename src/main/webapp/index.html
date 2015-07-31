@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+<html ng-app="hr.core" ng-controller="AppCtrl">
+<head>
+    <title ng-bind="pageTitle"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
+
+    
+    <link rel="stylesheet" type="text/css" href="vendor/angular-loading-bar/build/loading-bar.min.css"/>
+    
+    <link rel="stylesheet" type="text/css" href="assets/clouway-hr-0.0.1.css"/>
+    
+
+    
+    <script type="text/javascript" src="assets/clouway-hr-0.0.1.js"></script>
+    
 </head>
 <body>
-aaaaaaaaa
+<div class="container">
+    <div class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
+                    ng-click="menuCollapsed = ! menuCollapsed">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">
+                clouway hr
+            </div>
+        </div>
+        <div class="collapse navbar-collapse col-lg-19 pull-left" collapse="menuCollapsed">
+            <ul class="nav navbar-nav col-lg-15">
+
+                <li ui-sref-active="active">
+                    <a href ui-sref="vacationRequest">
+                        <i class="fa fa-plane"></i>
+                        vacation request
+                    </a>
+                </li>
+
+                <li ng-if="currentuser.admin" ui-sref-active="active">
+                    <a href ui-sref="processingVacations">
+                        <i class="fa fa-retweet"></i>
+                        processing vacations
+                    </a>
+                </li>
+                <li ng-if="currentuser.admin" ui-sref-active="active">
+                    <a href ui-sref="administration">
+                        <i class="fa fa-users"></i>
+                        Administration
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <a href="/oauth/logout" class="btn btn-default" style="margin-top: 10px;margin-right: 15px">Log out</a>
+        </ul>
+    </div>
+    <div style="padding: 1px 1px"><h5>Hello, <b>{{currentuser.email}}</b></h5></div>
+</div>
+
+<div class="container" ui-view="main"></div>
+
+<script src="http://localhost:35729/livereload.js"></script>
 </body>
 </html>

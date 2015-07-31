@@ -1,6 +1,5 @@
 package com.clouway.hr;
 
-import com.google.sitebricks.At;
 import com.google.sitebricks.Show;
 
 /**
@@ -8,6 +7,6 @@ import com.google.sitebricks.Show;
  */
 
 
-@Show ("WEB-INF/app.html")
+@Show("index.html")
 public class AppPage {
 }

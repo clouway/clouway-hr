@@ -63,7 +63,7 @@ public class OAuthServiceTest {
 
     final GoogleCredential fakeCredentials = getFakeGoogleCredential("accessTokenValue", "refreshTokenValue");
 
-    final User googleUser = new User(userEmail,"");
+    final User googleUser = new User(userEmail, "");
 
     context.checking(new Expectations() {{
       oneOf(oAuthAuthentication).hasValidateGoogleSecurityState(request);
@@ -92,7 +92,7 @@ public class OAuthServiceTest {
 
     final GoogleCredential fakeCredentials = getFakeGoogleCredential("accessTokenValue", "refreshTokenValue");
 
-    final User googleUser = new User(userEmail,"");
+    final User googleUser = new User(userEmail, "");
 
     context.checking(new Expectations() {{
       oneOf(oAuthAuthentication).hasValidateGoogleSecurityState(request);

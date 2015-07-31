@@ -13,8 +13,8 @@ import com.clouway.hr.vacationstate.VacationStateModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.sitebricks.SitebricksModule;
 import com.google.inject.servlet.ServletModule;
+import com.google.sitebricks.SitebricksModule;
 
 /**
  * @author Dimitar Dimitrov (dimitar.dimitrov045@gmail.com)
