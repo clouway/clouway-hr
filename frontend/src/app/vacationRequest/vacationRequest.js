@@ -43,6 +43,7 @@ ang.controller('VacationRequestCtrl', ['$scope', '$http', 'httpRequest', 'appCon
               $scope.responseMessage = "incorrect date";
               displayMessage($scope.responseMessage, 'danger');
             });
+
   };
 
   $scope.getUnHiddenVacations = function () {
